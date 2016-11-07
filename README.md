@@ -1,12 +1,12 @@
 # API Wrapper For STAT Search Analytics
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Latest Version](https://img.shields.io/github/release/schulzefelix/laravel-stat-search-analytics.svg?style=flat-square)](https://github.com/schulzefelix/laravel-stat-search-analytics/releases)
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
+[![StyleCI](https://styleci.io/repos/72838426/shield)](https://styleci.io/repos/72838426)
+[![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
-
 
 ## Install
 
