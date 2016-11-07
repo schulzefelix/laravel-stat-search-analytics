@@ -10,19 +10,22 @@
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
-            "homepage": ":author_website",
+            "name": "Felix Schulze",
+            "homepage": "https://schulze.co",
             "role": "Developer"
         }
     ],
     "require": {
         "illuminate/support": "~5.1",
-        "php" : "~5.6|~7.0"
+        "php" : "~5.6|~7.0",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
-        "phpunit/phpunit" : "~4.0||~5.0",
-        "squizlabs/php_codesniffer": "^2.3"
+        "phpunit/phpunit" : "~4.0",
+        "squizlabs/php_codesniffer": "^2.3",
+        "orchestra/testbench" : "3.3.x@dev",
+        "orchestra/database" : "3.3.x@dev",
+        "mockery/mockery": "^0.9.5"
     },
     "autoload": {
         "psr-4": {
@@ -31,7 +34,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SchulzeFelix\\laravel-stat-search-analytics\\": "tests"
+            "SchulzeFelix\\Stat\\Tests\\": "tests"
         }
     },
     "scripts": {

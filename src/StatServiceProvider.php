@@ -3,6 +3,7 @@
 namespace SchulzeFelix\Stat;
 
 use Illuminate\Support\ServiceProvider;
+use SchulzeFelix\Stat\Exceptions\InvalidConfiguration;
 
 class StatServiceProvider extends ServiceProvider
 {
@@ -25,11 +26,23 @@ class StatServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/config/laravel-sistrix.php', 'laravel-sistrix');
+        $this->mergeConfigFrom(__DIR__.'/config/laravel-stat-search-analytics.php', 'laravel-stat-search-analytics');
 
-        $sistrixConfig = config('laravel-sistrix');
+        $statConfig = config('laravel-stat-search-analytics');
 
+        $this->app->bind(StatClient::class, function () use ($statConfig) {
+            if (empty($statConfig['key'])) {
+                throw InvalidConfiguration::keyNotSpecified();
+            }
+            return StatClientFactory::createForConfig($statConfig);
+        });
 
+        $this->app->bind(Stat::class, function () {
+            $client = app(StatClient::class);
+            return new Stat($client);
+        });
+
+        $this->app->alias(Stat::class, 'laravel-stat-search-analytics');
 
     }
 }
