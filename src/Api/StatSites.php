@@ -6,7 +6,6 @@ use Illuminate\Support\Collection;
 
 class StatSites extends BaseStat
 {
-
     public function list($project_id) : Collection
     {
         $response = $this->performQuery('sites/list', ['project_id' => $project_id]);

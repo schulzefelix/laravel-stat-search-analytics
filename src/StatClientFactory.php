@@ -6,7 +6,6 @@ use GuzzleHttp\Client;
 
 class StatClientFactory
 {
-
     public static function createForConfig(array $statConfig): StatClient
     {
         $guzzleClient = new Client(
