@@ -30,5 +30,4 @@ class StatClientFactory
         $baseUri = sprintf('https://%s/api/v2/%s/', $statConfig['subdomain'], $statConfig['key']);
         return $baseUri;
     }
-
 }

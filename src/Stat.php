@@ -29,6 +29,4 @@ class Stat
     {
         return new StatSites($this->statClient);
     }
-
-
 }

@@ -11,12 +11,10 @@ class StatSites extends BaseStat
     {
         $response = $this->performQuery('sites/list', ['project_id' => $project_id]);
 
-        if($response['resultsreturned'] == 0)
-        {
+        if ($response['resultsreturned'] == 0) {
             return collect();
         }
 
         return collect($response['Result']);
     }
-
 }

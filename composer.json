@@ -1,7 +1,7 @@
 {
     "name": "schulzefelix/laravel-stat-search-analytics",
     "type": "library",
-    "description": ":package_description",
+    "description": "A Laravel package to retrieve data from Stat.",
     "keywords": [
         "schulzefelix",
         "laravel-stat-search-analytics"

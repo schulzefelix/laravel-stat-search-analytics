@@ -34,5 +34,4 @@ class StatProjects extends BaseStat
 
         return (int)$response['Result']['Id'];
     }
-
 }

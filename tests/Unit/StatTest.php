@@ -20,7 +20,6 @@ class StatTest extends PHPUnit_Framework_TestCase
         $this->statClient = Mockery::mock(StatClient::class);
 
         $this->stat = new Stat($this->statClient);
-
     }
 
     public function tearDown()
@@ -144,7 +143,4 @@ class StatTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(615, $response);
     }
-
-
-
 }

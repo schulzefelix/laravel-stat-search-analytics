@@ -27,12 +27,10 @@ class BaseStat
             $parameters
         );
 
-        if(isset($response['Response']['responsecode']) && $response['Response']['responsecode'] == '200')
-        {
+        if (isset($response['Response']['responsecode']) && $response['Response']['responsecode'] == '200') {
             return $response['Response'];
         }
 
         throw ApiException::apiResultError($response['Result']);
-
     }
 }

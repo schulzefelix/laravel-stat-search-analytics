@@ -43,6 +43,5 @@ class StatServiceProvider extends ServiceProvider
         });
 
         $this->app->alias(Stat::class, 'laravel-stat-search-analytics');
-
     }
 }
