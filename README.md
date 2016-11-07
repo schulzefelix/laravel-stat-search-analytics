@@ -1,4 +1,4 @@
-# API Wrapper For STAT Search Analytics
+# A Laravel API Wrapper For STAT Search Analytics.
 
 [![Latest Version](https://img.shields.io/github/release/schulzefelix/laravel-stat-search-analytics.svg?style=flat-square)](https://github.com/schulzefelix/laravel-stat-search-analytics/releases)
 [![Software License][ico-license]](LICENSE.md)
