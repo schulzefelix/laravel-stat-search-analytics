@@ -470,7 +470,5 @@ class StatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('2016-10-01', $response->first()['date']);
         $this->assertEquals(12, count($response->first()['Google']));
         $this->assertEquals(5, $response->first()['Google']['ElevenToTwenty']);
-
     }
-
 }

@@ -6,7 +6,6 @@ use Illuminate\Support\Collection;
 
 class StatSites extends BaseStat
 {
-
     public function all() : Collection
     {
         $start = 0;
@@ -17,13 +16,12 @@ class StatSites extends BaseStat
             $start += 5000;
             $sites = $sites->merge($response['Result']);
 
-            if(!isset($response['nextpage'])) {
+            if (!isset($response['nextpage'])) {
                 break;
             }
         } while ($response['resultsreturned'] < $response['totalresults']);
 
         return $sites;
-
     }
 
     public function list($project_id) : Collection
@@ -43,12 +41,11 @@ class StatSites extends BaseStat
 
         $rankDistribution = collect($response['RankDistribution']);
 
-        if(isset($response['RankDistribution']['date'])) {
+        if (isset($response['RankDistribution']['date'])) {
             $rankDistribution = collect([$response['RankDistribution']]);
         }
 
         return $rankDistribution;
-
     }
 
     public function create($projectID, $url, $dropWWWprefix = true, $dropDirectories = true)
@@ -65,7 +62,6 @@ class StatSites extends BaseStat
         $response = $this->performQuery('sites/update', $arguments);
 
         return $response['Result'];
-
     }
 
     public function delete($siteID)
@@ -74,5 +70,4 @@ class StatSites extends BaseStat
 
         return (int) $response['Result']['Id'];
     }
-
 }
