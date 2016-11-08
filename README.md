@@ -57,7 +57,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 ## Testing
 
 ``` bash
-$ composer test
+$ vendor/bin/phpunit
 ```
 
 ## Contributing
@@ -66,7 +66,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details
 
 ## Security
 
-If you discover any security related issues, please email schulzefelix@example.com instead of using the issue tracker.
+If you discover any security related issues, please email githubissues@schulze.co instead of using the issue tracker.
 
 ## Credits
 

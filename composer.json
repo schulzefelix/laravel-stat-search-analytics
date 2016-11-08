@@ -4,20 +4,23 @@
     "description": "A Laravel API Wrapper For STAT Search Analytics.",
     "keywords": [
         "schulzefelix",
-        "laravel-stat-search-analytics"
+        "stat-search-analytics",
+        "laravel",
+        "keyword rankings",
     ],
     "homepage": "https://github.com/schulzefelix/laravel-stat-search-analytics",
     "license": "MIT",
     "authors": [
         {
             "name": "Felix Schulze",
+            "email": "githubissues@schulze.co",
             "homepage": "https://schulze.co",
             "role": "Developer"
         }
     ],
     "require": {
+        "php" : "^7.0",
         "illuminate/support": "~5.1",
-        "php" : "~7.0",
         "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
@@ -36,18 +39,5 @@
         "psr-4": {
             "SchulzeFelix\\Stat\\Tests\\": "tests"
         }
-    },
-    "scripts": {
-        "test": "phpunit",
-        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
-        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.1"
-        }
-    },
-    "config": {
-        "sort-packages": true
     }
 }
