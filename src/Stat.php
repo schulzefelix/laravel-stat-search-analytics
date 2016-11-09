@@ -2,6 +2,7 @@
 
 use SchulzeFelix\Stat\Api\StatProjects;
 use SchulzeFelix\Stat\Api\StatSites;
+use SchulzeFelix\Stat\Api\StatTags;
 
 class Stat
 {
@@ -28,5 +29,10 @@ class Stat
     public function sites()
     {
         return new StatSites($this->statClient);
+    }
+
+    public function tags()
+    {
+        return new StatTags($this->statClient);
     }
 }

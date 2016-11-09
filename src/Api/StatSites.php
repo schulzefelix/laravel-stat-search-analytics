@@ -37,6 +37,8 @@ class StatSites extends BaseStat
 
     public function rankingDistributions($siteID, $fromDate, $toDate) : Collection
     {
+        $this->checkMaximumDateRange($fromDate, $toDate);
+
         $response = $this->performQuery('sites/ranking_distributions', ['id' => $siteID, 'from_date' => $fromDate, 'to_date' => $toDate]);
 
         $rankDistribution = collect($response['RankDistribution']);
