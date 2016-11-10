@@ -217,7 +217,7 @@ class TagsTest extends PHPUnit_Framework_TestCase
                 ]
             ]]);
 
-        $response = $this->stat->tags()->rankingDistributions(13, '2016-10-01', '2016-10-02');
+        $response = $this->stat->tags()->rankingDistributions(13, Carbon::createFromDate(2016, 10, 1), Carbon::createFromDate(2016, 10, 2));
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertEquals(2, $response->count());
@@ -266,7 +266,7 @@ class TagsTest extends PHPUnit_Framework_TestCase
 
         $this->setExpectedException(ApiException::class);
 
-        $response = $this->stat->tags()->rankingDistributions(13, '2016-09-01', '2016-10-05');
+        $response = $this->stat->tags()->rankingDistributions(13, Carbon::createFromDate(2016, 9, 1), Carbon::createFromDate(2016, 10, 5));
 
     }
 

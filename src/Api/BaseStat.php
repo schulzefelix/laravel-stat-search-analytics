@@ -42,9 +42,7 @@ class BaseStat
         throw ApiException::resultError($response['Result']);
     }
 
-    protected function checkMaximumDateRange($fromDate, $toDate, $maxDays = 31) {
-        $fromDate = Carbon::parse($fromDate);
-        $toDate = Carbon::parse($toDate);
+    protected function checkMaximumDateRange(Carbon $fromDate, Carbon $toDate, $maxDays = 31) {
 
         if($fromDate->diffInDays($toDate) > $maxDays) {
             throw ApiException::resultError('The maximum date range between from_date and to_date is 31 days.');

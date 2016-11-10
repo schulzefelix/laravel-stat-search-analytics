@@ -36,11 +36,11 @@ class StatTags extends BaseStat
         return $tags;
     }
 
-    public function rankingDistributions($tagID, $fromDate, $toDate)
+    public function rankingDistributions($tagID, Carbon $fromDate, Carbon $toDate)
     {
         $this->checkMaximumDateRange($fromDate, $toDate);
 
-        $response = $this->performQuery('tags/ranking_distributions', ['id' => $tagID, 'from_date' => $fromDate, 'to_date' => $toDate]);
+        $response = $this->performQuery('tags/ranking_distributions', ['id' => $tagID, 'from_date' => $fromDate->toDateString(), 'to_date' => $toDate->toDateString()]);
 
         $rankDistribution = collect($response['RankDistribution']);
 

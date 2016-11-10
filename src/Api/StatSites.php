@@ -66,11 +66,11 @@ class StatSites extends BaseStat
         return $sites;
     }
 
-    public function rankingDistributions($siteID, $fromDate, $toDate) : Collection
+    public function rankingDistributions($siteID, Carbon $fromDate, Carbon $toDate) : Collection
     {
         $this->checkMaximumDateRange($fromDate, $toDate);
 
-        $response = $this->performQuery('sites/ranking_distributions', ['id' => $siteID, 'from_date' => $fromDate, 'to_date' => $toDate]);
+        $response = $this->performQuery('sites/ranking_distributions', ['id' => $siteID, 'from_date' => $fromDate->toDateString(), 'to_date' => $toDate->toDateString()]);
 
         $rankDistribution = collect($response['RankDistribution']);
 
