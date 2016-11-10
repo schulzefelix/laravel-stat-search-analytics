@@ -2,6 +2,7 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
+use Carbon\Carbon;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Mockery;
@@ -10,7 +11,7 @@ use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
-class StatTest extends PHPUnit_Framework_TestCase
+class SitesTest extends PHPUnit_Framework_TestCase
 {
     protected $statClient;
 
@@ -79,6 +80,30 @@ class StatTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertEquals(2, $response->count());
+        $this->assertEquals(10, count($response->first()));
+
+        $this->assertArrayHasKey('id', $response->first());
+        $this->assertArrayHasKey('project_id', $response->first());
+        $this->assertArrayHasKey('folder_id', $response->first());
+        $this->assertArrayHasKey('folder_name', $response->first());
+        $this->assertArrayHasKey('title', $response->first());
+        $this->assertArrayHasKey('url', $response->first());
+        $this->assertArrayHasKey('synced', $response->first());
+        $this->assertArrayHasKey('total_keywords', $response->first());
+        $this->assertArrayHasKey('created_at', $response->first());
+        $this->assertArrayHasKey('updated_at', $response->first());
+
+        $this->assertEquals(1, $response->first()['id']);
+        $this->assertEquals(13, $response->first()['project_id']);
+        $this->assertEquals('22', $response->first()['folder_id']);
+        $this->assertEquals('Blog', $response->first()['folder_name']);
+        $this->assertEquals('gawker.com', $response->first()['title']);
+        $this->assertEquals('gawker.com', $response->first()['url']);
+        $this->assertEquals('N/A', $response->first()['synced']);
+        $this->assertEquals(63, $response->first()['total_keywords']);
+        $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
+        $this->assertInstanceOf(Carbon::class, $response->first()['updated_at']);
+
     }
 
     /** @test */
@@ -125,8 +150,27 @@ class StatTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertEquals(2, $response->count());
-        $this->assertEquals('gawker.com', $response->first()['Title']);
-        $this->assertEquals(63, $response->first()['TotalKeywords']);
+        $this->assertEquals(9, count($response->first()));
+
+        $this->assertArrayHasKey('id', $response->first());
+        $this->assertArrayHasKey('folder_id', $response->first());
+        $this->assertArrayHasKey('folder_name', $response->first());
+        $this->assertArrayHasKey('title', $response->first());
+        $this->assertArrayHasKey('url', $response->first());
+        $this->assertArrayHasKey('synced', $response->first());
+        $this->assertArrayHasKey('total_keywords', $response->first());
+        $this->assertArrayHasKey('created_at', $response->first());
+        $this->assertArrayHasKey('updated_at', $response->first());
+
+        $this->assertEquals(1, $response->first()['id']);
+        $this->assertEquals('22', $response->first()['folder_id']);
+        $this->assertEquals('Blog', $response->first()['folder_name']);
+        $this->assertEquals('gawker.com', $response->first()['title']);
+        $this->assertEquals('gawker.com', $response->first()['url']);
+        $this->assertEquals('N/A', $response->first()['synced']);
+        $this->assertEquals(63, $response->first()['total_keywords']);
+        $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
+        $this->assertInstanceOf(Carbon::class, $response->first()['updated_at']);
     }
 
     /** @test */
@@ -154,8 +198,24 @@ class StatTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->sites()->create(13, 'http://google.com');
 
         $this->assertInternalType('array', $response);
-        $this->assertEquals(146, $response['Id']);
-        $this->assertEquals("google.com", $response['Title']);
+        $this->assertEquals(7, count($response));
+
+        $this->assertArrayHasKey('id', $response);
+        $this->assertArrayHasKey('project_id', $response);
+        $this->assertArrayHasKey('title', $response);
+        $this->assertArrayHasKey('url', $response);
+        $this->assertArrayHasKey('drop_www_prefix', $response);
+        $this->assertArrayHasKey('drop_directories', $response);
+        $this->assertArrayHasKey('created_at', $response);
+
+
+        $this->assertEquals(146, $response['id']);
+        $this->assertEquals("google.com", $response['title']);
+        $this->assertEquals("google.com", $response['url']);
+        $this->assertEquals(true, $response['drop_www_prefix']);
+        $this->assertEquals(true, $response['drop_directories']);
+        $this->assertInstanceOf(Carbon::class, $response['created_at']);
+
     }
 
     /** @test */
@@ -189,8 +249,26 @@ class StatTest extends PHPUnit_Framework_TestCase
         ]);
 
         $this->assertInternalType('array', $response);
-        $this->assertEquals(146, $response['Id']);
-        $this->assertEquals("my site", $response['Title']);
+        $this->assertEquals(8, count($response));
+
+        $this->assertArrayHasKey('id', $response);
+        $this->assertArrayHasKey('project_id', $response);
+        $this->assertArrayHasKey('title', $response);
+        $this->assertArrayHasKey('url', $response);
+        $this->assertArrayHasKey('drop_www_prefix', $response);
+        $this->assertArrayHasKey('drop_directories', $response);
+        $this->assertArrayHasKey('created_at', $response);
+        $this->assertArrayHasKey('updated_at', $response);
+
+
+        $this->assertEquals(146, $response['id']);
+        $this->assertEquals(13, $response['project_id']);
+        $this->assertEquals("my site", $response['title']);
+        $this->assertEquals("google.com", $response['url']);
+        $this->assertEquals(true, $response['drop_www_prefix']);
+        $this->assertEquals(true, $response['drop_directories']);
+        $this->assertInstanceOf(Carbon::class, $response['created_at']);
+        $this->assertInstanceOf(Carbon::class, $response['updated_at']);
     }
 
     /** @test */
@@ -353,9 +431,31 @@ class StatTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertEquals(2, $response->count());
-        $this->assertEquals('2016-10-01', $response->first()['date']);
-        $this->assertEquals(12, count($response->first()['Google']));
-        $this->assertEquals(5, $response->first()['Google']['ElevenToTwenty']);
+        $this->assertEquals(5, count($response->first()));
+
+        $this->assertArrayHasKey('date', $response->first());
+        $this->assertArrayHasKey('google', $response->first());
+        $this->assertArrayHasKey('google_base_rank', $response->first());
+        $this->assertArrayHasKey('yahoo', $response->first());
+        $this->assertArrayHasKey('bing', $response->first());
+
+
+        $this->assertArrayHasKey('one', $response->first()['google']);
+        $this->assertArrayHasKey('two', $response->first()['google']);
+        $this->assertArrayHasKey('three', $response->first()['google']);
+        $this->assertArrayHasKey('four', $response->first()['google']);
+        $this->assertArrayHasKey('five', $response->first()['google']);
+        $this->assertArrayHasKey('six_to_ten', $response->first()['google']);
+        $this->assertArrayHasKey('eleven_to_twenty', $response->first()['google']);
+        $this->assertArrayHasKey('twenty_one_to_thirty', $response->first()['google']);
+        $this->assertArrayHasKey('thirty_one_to_forty', $response->first()['google']);
+        $this->assertArrayHasKey('forty_one_to_fifty', $response->first()['google']);
+        $this->assertArrayHasKey('fifty_one_to_hundred', $response->first()['google']);
+        $this->assertArrayHasKey('non_ranking', $response->first()['google']);
+
+        $this->assertInstanceOf(Carbon::class, $response->first()['date']);
+        $this->assertEquals(12, count($response->first()['google']));
+        $this->assertEquals(5, $response->first()['google']['eleven_to_twenty']);
     }
 
     /** @test */
@@ -379,299 +479,5 @@ class StatTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->sites()->rankingDistributions(13, '2016-09-01', '2016-10-05');
 
     }
-
-    /** @test */
-    public function it_can_list_tags()
-    {
-        $expectedArguments = [
-            'tags/list', ['site_id' => 13, 'results' => 5000]
-        ];
-
-        $this->statClient
-            ->shouldReceive('performQuery')->withArgs($expectedArguments)
-            ->once()
-            ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'resultsreturned' => "100",
-                'totalresults' => "223",
-                'Result' => [
-                    [
-                        'Id' => "13",
-                        'Tag' => "abc",
-                        'Type' => "Standard",
-                        'Keywords' => [
-                            'Id' => [
-                                '4525',
-                                '4526'
-                            ],
-                        ]
-                    ],
-                    [
-                        'Id' => "16902",
-                        'Tag' => "abcd",
-                        'Type' => "Dynamic",
-                        'Keywords' => 'none',
-                    ],
-                ]
-            ]]);
-
-        $response = $this->stat->tags()->list(13);
-
-        $this->assertInstanceOf(Collection::class, $response);
-        $this->assertInstanceOf(Collection::class, $response->first()['Keywords']);
-        $this->assertEquals(2, $response->count());
-    }
-
-
-    /** @test */
-    public function it_can_pull_the_ranking_distributions_for_a_tag()
-    {
-        $expectedArguments = [
-            'tags/ranking_distributions', ['id' => 13, 'from_date' => '2016-10-01' , 'to_date' => '2016-10-02']
-        ];
-
-        $this->statClient
-            ->shouldReceive('performQuery')->withArgs($expectedArguments)
-            ->once()
-            ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'RankDistribution' => [
-                    [
-                        'date' => '2016-10-01',
-                        'Google' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "2",
-                            "Five" => "2",
-                            "SixToTen" => "6",
-                            "ElevenToTwenty" => "5",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "2",
-                            "FortyOneToFifty" => "0",
-                            "FiftyOneToHundred" => "3",
-                            "NonRanking" => "11",
-                        ],
-                        'GoogleBaseRank' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "3",
-                            "Five" => "1",
-                            "SixToTen" => "7",
-                            "ElevenToTwenty" => "5",
-                            "TwentyOneToThirty" => "4",
-                            "ThirtyOneToForty" => "2",
-                            "FortyOneToFifty" => "0",
-                            "FiftyOneToHundred" => "3",
-                            "NonRanking" => "11",
-                        ],
-                        'Yahoo' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "0",
-                            "Five" => "1",
-                            "SixToTen" => "3",
-                            "ElevenToTwenty" => "6",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "4",
-                            "FortyOneToFifty" => "1",
-                            "FiftyOneToHundred" => "0",
-                            "NonRanking" => "16",
-                        ],
-                        'Bing' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "0",
-                            "Five" => "1",
-                            "SixToTen" => "3",
-                            "ElevenToTwenty" => "6",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "4",
-                            "FortyOneToFifty" => "1",
-                            "FiftyOneToHundred" => "0",
-                            "NonRanking" => "16",
-                        ]
-                    ],
-                    [
-                        'date' => '2016-10-02',
-                        'Google' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "2",
-                            "Five" => "2",
-                            "SixToTen" => "6",
-                            "ElevenToTwenty" => "5",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "2",
-                            "FortyOneToFifty" => "0",
-                            "FiftyOneToHundred" => "3",
-                            "NonRanking" => "11",
-                        ],
-                        'GoogleBaseRank' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "3",
-                            "Five" => "1",
-                            "SixToTen" => "7",
-                            "ElevenToTwenty" => "5",
-                            "TwentyOneToThirty" => "4",
-                            "ThirtyOneToForty" => "2",
-                            "FortyOneToFifty" => "0",
-                            "FiftyOneToHundred" => "3",
-                            "NonRanking" => "11",
-                        ],
-                        'Yahoo' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "0",
-                            "Five" => "1",
-                            "SixToTen" => "3",
-                            "ElevenToTwenty" => "6",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "4",
-                            "FortyOneToFifty" => "1",
-                            "FiftyOneToHundred" => "0",
-                            "NonRanking" => "16",
-                        ],
-                        'Bing' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "0",
-                            "Five" => "1",
-                            "SixToTen" => "3",
-                            "ElevenToTwenty" => "6",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "4",
-                            "FortyOneToFifty" => "1",
-                            "FiftyOneToHundred" => "0",
-                            "NonRanking" => "16",
-                        ]
-                    ],
-                ]
-            ]]);
-
-        $response = $this->stat->tags()->rankingDistributions(13, '2016-10-01', '2016-10-02');
-
-        $this->assertInstanceOf(Collection::class, $response);
-        $this->assertEquals(2, $response->count());
-        $this->assertEquals('2016-10-01', $response->first()['date']);
-        $this->assertEquals(12, count($response->first()['Google']));
-        $this->assertEquals(5, $response->first()['Google']['ElevenToTwenty']);
-    }
-
-    /** @test */
-    public function it_should_throw_an_exception_if_the_date_range_is_higher_than_31_days_for_tag_ranking_distribution()
-    {
-        $expectedArguments = [
-            'tags/ranking_distributions', ['id' => 13, 'from_date' => '2016-09-01' , 'to_date' => '2016-10-05']
-        ];
-
-        $this->statClient
-            ->shouldReceive('performQuery')->withArgs($expectedArguments)
-            ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'resultsreturned' => "0",
-                'totalresults' => "0",
-                'Result' => []
-            ]]);
-
-        $this->setExpectedException(ApiException::class);
-
-        $response = $this->stat->tags()->rankingDistributions(13, '2016-09-01', '2016-10-05');
-
-    }
-
-//    /** @test */
-//    public function it_can_list_keywords_for_a_site()
-//    {
-//        $expectedArguments = [
-//            'keywords/list', ['site_id' => 13, 'results' => '5000']
-//        ];
-//
-//        $this->statClient
-//            ->shouldReceive('performQuery')->withArgs($expectedArguments)
-//            ->once()
-//            ->andReturn(['Response' => [
-//                'responsecode' => "200",
-//                'resultsreturned' => "63",
-//                'totalresults' => "150",
-//                'nextpage' => "/keywords/list?site_id=1&start=1000&format=json",
-//                'Result' => [
-//                    [
-//                        'Id' => '11',
-//                        'Keyword' => 'black celebrity gossip',
-//                        'KeywordMarket' => 'US-en',
-//                        'KeywordLocation' => 'Boston',
-//                        'KeywordDevice' => 'Smartphone',
-//                        'KeywordTags' => 'gossip',
-//                        'KeywordStats' => [
-//                            'AdvertiserCompetition' => '0.86748',
-//                            'GlobalSearchVolume' => '80000',
-//                            'RegionalSearchVolume' => '54000',
-//                            'LocalSearchTrendsByMonth' => [
-//                                'Sep' => '49500',
-//                                'Aug' => '60500',
-//                                'Jul' => '49500',
-//                                'Jun' => '49500',
-//                                'May' => '49500',
-//                                'Apr' => '49500',
-//                                'Mar' => '49500',
-//                                'Feb' => '49500',
-//                                'Jan' => '49500',
-//                                'Dec' => '40500',
-//                                'Nov' => '49500'
-//                            ],
-//                            'CPC' => '1.42'
-//                        ],
-//                        'KeywordRanking' => [
-//                            'date' => '2014-07-09',
-//                            'Google' => [
-//                                'Rank' => '1',
-//                                'BaseRank' => '1',
-//                                'Url' => 'www.zillow.com/mortgage-rates/ca/',
-//                            ],
-//                            'Yahoo' => [
-//                                'Rank' => '1',
-//                                'Url' => 'www.zillow.com/mortgage-rates/ca/',
-//                            ],
-//                            'Bing' => [
-//                                'Rank' => '1',
-//                                'Url' => 'www.zillow.com/mortgage-rates/ca/',
-//                            ],
-//                        ],
-//                        'CreatedAt' => '2011-01-25',
-//                        'RequestUrl' => '/rankings?keyword_id=11&format=json&from_date=2011-01-25&to_date=',
-//                    ],
-//                ],
-//            ]]);
-//
-//        $response = $this->stat->keywords()->list(13);
-//    }
-
-//    /** @test */
-//    public function it_can_create_keywords()
-//    {
-//        $expectedArguments = [
-//            'keywords/create', ['site_id' => 13, 'market' => 'US-en' , 'location' => 'Boston', 'device' => 'smartphone', 'type' => 'regular', 'keyword' => 'shirt,shoes', 'tag' => 'clothes']
-//        ];
-//
-//        $this->statClient
-//            ->shouldReceive('performQuery')->withArgs($expectedArguments)
-//            ->once()
-//            ->andReturn(['Response' => [
-//                'responsecode' => "200",
-//                'resultsreturned' => "0",
-//                'totalresults' => "0",
-//                'Result' => []
-//            ]]);
-//    }
-
 
 }

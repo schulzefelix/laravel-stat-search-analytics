@@ -2,6 +2,7 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
+use Carbon\Carbon;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Mockery;
@@ -10,7 +11,7 @@ use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
-class ProjectTest extends PHPUnit_Framework_TestCase
+class ProjectsTest extends PHPUnit_Framework_TestCase
 {
     protected $statClient;
 
@@ -74,7 +75,10 @@ class ProjectTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('updated_at', $response->first());
 
         $this->assertEquals(613, $response->first()['id']);
-        $this->assertEquals('2016-11-03', $response->first()['updated_at']);
+        $this->assertEquals('Muffins', $response->first()['name']);
+        $this->assertEquals(1, $response->first()['total_sites']);
+        $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
+        $this->assertInstanceOf(Carbon::class, $response->first()['updated_at']);
     }
 
     /** @test */
@@ -108,7 +112,8 @@ class ProjectTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(615, $response['id']);
         $this->assertEquals('Cheese Cake', $response['name']);
-        $this->assertEquals('2016-11-06', $response['updated_at']);
+        $this->assertInstanceOf(Carbon::class, $response['created_at']);
+        $this->assertInstanceOf(Carbon::class, $response['updated_at']);
     }
 
     /** @test */
@@ -142,8 +147,8 @@ class ProjectTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(615, $response['id']);
         $this->assertEquals('Cheese Cake Factory', $response['name']);
-        $this->assertEquals('2016-11-06', $response['created_at']);
-        $this->assertEquals('2016-11-07', $response['updated_at']);
+        $this->assertInstanceOf(Carbon::class, $response['created_at']);
+        $this->assertInstanceOf(Carbon::class, $response['updated_at']);
     }
 
     /** @test */
