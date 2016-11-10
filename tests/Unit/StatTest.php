@@ -2,6 +2,7 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit_Framework_TestCase;
@@ -28,122 +29,6 @@ class StatTest extends PHPUnit_Framework_TestCase
         Mockery::close();
     }
 
-
-    /** @test */
-    public function it_can_list_all_projects()
-    {
-        $expectedArguments = [
-            'projects/list', []
-        ];
-        $this->statClient
-            ->shouldReceive('performQuery')->withArgs($expectedArguments)
-            ->once()
-            ->andReturn(['Response' => [
-                'resultsreturned' => "2",
-                'responsecode' => "200",
-                'Result' => [
-                    [
-                        'Id' => 613,
-                        'Name' => "Muffins",
-                        'TotalSites' => "1",
-                        'CreatedAt' => "2016-11-03",
-                        'UpdatedAt' => "2016-11-03",
-                        'RequestUrl' => "/sites/list?project_id=613&format=json",
-                    ],
-                    [
-                        'Id' => 614,
-                        'Name' => "Apple Pie",
-                        'TotalSites' => "2",
-                        'CreatedAt' => "2016-11-05",
-                        'UpdatedAt' => "2016-11-05",
-                        'RequestUrl' => "/sites/list?project_id=613&format=json",
-                    ],
-                ]
-            ]]);
-
-        $response = $this->stat->projects()->list();
-
-        $this->assertInstanceOf(Collection::class, $response);
-        $this->assertEquals(2, $response->count());
-        $this->assertEquals(613, $response->first()['Id']);
-        $this->assertEquals('2016-11-03', $response->first()['UpdatedAt']);
-    }
-
-    /** @test */
-    public function it_can_create_a_new_project()
-    {
-        $expectedArguments = [
-            'projects/create', ['name' => 'Cheese Cake']
-        ];
-        $this->statClient
-            ->shouldReceive('performQuery')->withArgs($expectedArguments)
-            ->once()
-            ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'Result' => [
-                    'Id' => 615,
-                    'Name' => "Cheese Cake",
-                    'CreatedAt' => "2016-11-06",
-                    'UpdatedAt' => "2016-11-06",
-                ]
-            ]]);
-
-        $response = $this->stat->projects()->create('Cheese Cake');
-
-        $this->assertInternalType('array', $response);
-        $this->assertEquals(615, $response['Id']);
-        $this->assertEquals('Cheese Cake', $response['Name']);
-        $this->assertEquals('2016-11-06', $response['UpdatedAt']);
-    }
-
-    /** @test */
-    public function it_can_update_an_existing_project()
-    {
-        $expectedArguments = [
-            'projects/update', ['id' => 615, 'name' => 'Cheese Cake Factory']
-        ];
-        $this->statClient
-            ->shouldReceive('performQuery')->withArgs($expectedArguments)
-            ->once()
-            ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'Result' => [
-                    'Id' => 615,
-                    'Name' => "Cheese Cake Factory",
-                    'CreatedAt' => "2016-11-06",
-                    'UpdatedAt' => "2016-11-07",
-                ]
-            ]]);
-
-        $response = $this->stat->projects()->update(615, 'Cheese Cake Factory');
-
-        $this->assertInternalType('array', $response);
-        $this->assertEquals(615, $response['Id']);
-        $this->assertEquals('Cheese Cake Factory', $response['Name']);
-        $this->assertEquals('2016-11-06', $response['CreatedAt']);
-        $this->assertEquals('2016-11-07', $response['UpdatedAt']);
-    }
-
-    /** @test */
-    public function it_can_delete_a_project()
-    {
-        $expectedArguments = [
-            'projects/delete', ['id' => 615]
-        ];
-        $this->statClient
-            ->shouldReceive('performQuery')->withArgs($expectedArguments)
-            ->once()
-            ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'Result' => [
-                    'Id' => 615
-                ]
-            ]]);
-
-        $response = $this->stat->projects()->delete(615);
-
-        $this->assertEquals(615, $response);
-    }
 
 
     /** @test */
@@ -702,6 +587,91 @@ class StatTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->tags()->rankingDistributions(13, '2016-09-01', '2016-10-05');
 
     }
+
+//    /** @test */
+//    public function it_can_list_keywords_for_a_site()
+//    {
+//        $expectedArguments = [
+//            'keywords/list', ['site_id' => 13, 'results' => '5000']
+//        ];
+//
+//        $this->statClient
+//            ->shouldReceive('performQuery')->withArgs($expectedArguments)
+//            ->once()
+//            ->andReturn(['Response' => [
+//                'responsecode' => "200",
+//                'resultsreturned' => "63",
+//                'totalresults' => "150",
+//                'nextpage' => "/keywords/list?site_id=1&start=1000&format=json",
+//                'Result' => [
+//                    [
+//                        'Id' => '11',
+//                        'Keyword' => 'black celebrity gossip',
+//                        'KeywordMarket' => 'US-en',
+//                        'KeywordLocation' => 'Boston',
+//                        'KeywordDevice' => 'Smartphone',
+//                        'KeywordTags' => 'gossip',
+//                        'KeywordStats' => [
+//                            'AdvertiserCompetition' => '0.86748',
+//                            'GlobalSearchVolume' => '80000',
+//                            'RegionalSearchVolume' => '54000',
+//                            'LocalSearchTrendsByMonth' => [
+//                                'Sep' => '49500',
+//                                'Aug' => '60500',
+//                                'Jul' => '49500',
+//                                'Jun' => '49500',
+//                                'May' => '49500',
+//                                'Apr' => '49500',
+//                                'Mar' => '49500',
+//                                'Feb' => '49500',
+//                                'Jan' => '49500',
+//                                'Dec' => '40500',
+//                                'Nov' => '49500'
+//                            ],
+//                            'CPC' => '1.42'
+//                        ],
+//                        'KeywordRanking' => [
+//                            'date' => '2014-07-09',
+//                            'Google' => [
+//                                'Rank' => '1',
+//                                'BaseRank' => '1',
+//                                'Url' => 'www.zillow.com/mortgage-rates/ca/',
+//                            ],
+//                            'Yahoo' => [
+//                                'Rank' => '1',
+//                                'Url' => 'www.zillow.com/mortgage-rates/ca/',
+//                            ],
+//                            'Bing' => [
+//                                'Rank' => '1',
+//                                'Url' => 'www.zillow.com/mortgage-rates/ca/',
+//                            ],
+//                        ],
+//                        'CreatedAt' => '2011-01-25',
+//                        'RequestUrl' => '/rankings?keyword_id=11&format=json&from_date=2011-01-25&to_date=',
+//                    ],
+//                ],
+//            ]]);
+//
+//        $response = $this->stat->keywords()->list(13);
+//    }
+
+//    /** @test */
+//    public function it_can_create_keywords()
+//    {
+//        $expectedArguments = [
+//            'keywords/create', ['site_id' => 13, 'market' => 'US-en' , 'location' => 'Boston', 'device' => 'smartphone', 'type' => 'regular', 'keyword' => 'shirt,shoes', 'tag' => 'clothes']
+//        ];
+//
+//        $this->statClient
+//            ->shouldReceive('performQuery')->withArgs($expectedArguments)
+//            ->once()
+//            ->andReturn(['Response' => [
+//                'responsecode' => "200",
+//                'resultsreturned' => "0",
+//                'totalresults' => "0",
+//                'Result' => []
+//            ]]);
+//    }
 
 
 }
