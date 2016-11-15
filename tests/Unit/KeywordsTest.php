@@ -11,7 +11,7 @@ use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
-class KeyswordsTest extends PHPUnit_Framework_TestCase
+class KeywordsTest extends PHPUnit_Framework_TestCase
 {
     protected $statClient;
 
@@ -30,7 +30,7 @@ class KeyswordsTest extends PHPUnit_Framework_TestCase
         Mockery::close();
     }
 
-//    /** @test */
+    /** @test */
     public function it_can_list_keywords_for_a_site()
     {
         $expectedArguments = [

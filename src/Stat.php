@@ -4,6 +4,8 @@ use Carbon\Carbon;
 use GuzzleHttp\Exception\ClientException;
 use SchulzeFelix\Stat\Api\StatKeywords;
 use SchulzeFelix\Stat\Api\StatProjects;
+use SchulzeFelix\Stat\Api\StatRankings;
+use SchulzeFelix\Stat\Api\StatSerps;
 use SchulzeFelix\Stat\Api\StatSites;
 use SchulzeFelix\Stat\Api\StatTags;
 
@@ -38,11 +40,21 @@ class Stat
     {
         return new StatTags($this->statClient);
     }
+
     public function keywords()
     {
         return new StatKeywords($this->statClient);
     }
 
+    public function rankings()
+    {
+        return new StatRankings($this->statClient);
+    }
+
+    public function serps()
+    {
+        return new StatSerps($this->statClient);
+    }
 
     public function blockedUntil()
     {
