@@ -167,7 +167,7 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
                 'device' => 'smartphone',
                 'type' => 'regular',
                 'keyword' => 'shirt\,shoes,dress,boots',
-                'tag' => 'clothes',
+                'tag' => 'clothes,brand',
                 'location' => 'Boston'
             ]
         ];
@@ -206,7 +206,7 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
                 ]
             ]]);
 
-        $response = $this->stat->keywords()->create(13, 'US-en', ['shirt,shoes', 'dress', 'boots'], 'clothes', 'Boston', 'smartphone');
+        $response = $this->stat->keywords()->create(13, 'US-en', ['shirt,shoes', 'dress', 'boots'], ['clothes', 'brand'], 'Boston', 'smartphone');
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertArrayHasKey('id', $response->first());

@@ -7,6 +7,10 @@ use Illuminate\Support\Collection;
 
 class StatProjects extends BaseStat
 {
+
+    /**
+     * @return Collection
+     */
     public function list() : Collection
     {
         $response = $this->performQuery('projects/list');
@@ -24,6 +28,10 @@ class StatProjects extends BaseStat
         return $projects;
     }
 
+    /**
+     * @param $name
+     * @return array
+     */
     public function create($name)
     {
         $response = $this->performQuery('projects/create', ['name' => $name]);
@@ -38,6 +46,11 @@ class StatProjects extends BaseStat
         return $project;
     }
 
+    /**
+     * @param $id
+     * @param $name
+     * @return array
+     */
     public function update($id, $name)
     {
         $response = $this->performQuery('projects/update', ['id' => $id, 'name' => $name]);
@@ -52,6 +65,10 @@ class StatProjects extends BaseStat
         return $project;
     }
 
+    /**
+     * @param $id
+     * @return int
+     */
     public function delete($id)
     {
         $response = $this->performQuery('projects/delete', ['id' => $id]);

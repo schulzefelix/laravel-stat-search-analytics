@@ -7,8 +7,10 @@ use Illuminate\Support\Collection;
 
 class StatKeywords extends BaseStat
 {
-
-
+    /**
+     * @param $siteID
+     * @return Collection
+     */
     public function list($siteID) : Collection
     {
         $start = 0;
@@ -43,7 +45,16 @@ class StatKeywords extends BaseStat
 
     }
 
-    public function create($siteID, $market, $keywords, $tag = null, $location = null, $device = 'Desktop') : Collection
+    /**
+     * @param $siteID
+     * @param $market
+     * @param array $keywords
+     * @param array|null $tags
+     * @param null $location
+     * @param string $device
+     * @return Collection
+     */
+    public function create($siteID, $market, array $keywords, array $tags = null, $location = null, $device = 'Desktop') : Collection
     {
         $arguments['site_id'] = $siteID;
         $arguments['market'] = $market;
@@ -53,19 +64,26 @@ class StatKeywords extends BaseStat
                                     return str_replace(',', '\,', $el);
                                 }, $keywords));
 
-        if( ! is_null($tag) && $tag != '')
-            $arguments['tag'] = $tag;
+        if( ! is_null($tags) && count($tags) > 0)
+            $arguments['tag'] = implode(',', $tags);
 
         if( ! is_null($location) && $location != '')
             $arguments['location'] = $location;
 
         $response = $this->performQuery('keywords/create', $arguments);
 
+        $keywords = collect();
+
         if($response['resultsreturned'] == 0) {
-            return collect();
+            return $keywords;
+        }
+        if($response['resultsreturned'] == 1) {
+            $keywords->push($response['Result']);
+        } else {
+            $keywords = collect($response['Result']);
         }
 
-        return collect($response['Result'])->transform(function ($keyword, $key) {
+        return $keywords->transform(function ($keyword, $key) {
             return $this->transformCreatedKeyword($keyword);
         });
 
@@ -97,7 +115,10 @@ class StatKeywords extends BaseStat
     }
 
 
-
+    /**
+     * @param $keyword
+     * @return mixed
+     */
     protected function transformCreatedKeyword($keyword) {
         $modifiedKeyword['id'] = (int)$keyword['Id'];
         $modifiedKeyword['keyword'] = $keyword['Keyword'];
@@ -110,9 +131,11 @@ class StatKeywords extends BaseStat
     }
 
 
-
-
-        protected function transformListedKeyword($keyword) {
+    /**
+     * @param $keyword
+     * @return mixed
+     */
+    protected function transformListedKeyword($keyword) {
         $modifiedKeyword['id'] = (int)$keyword['Id'];
         $modifiedKeyword['keyword'] = $keyword['Keyword'];
         $modifiedKeyword['keyword_market'] = $keyword['KeywordMarket'];
@@ -125,36 +148,43 @@ class StatKeywords extends BaseStat
             $modifiedKeyword['keyword_tags'] = collect(explode(',', $keyword['KeywordTags']));
         }
 
-        // TODO: What if no data is available
-        $modifiedKeyword['keyword_stats']['advertiser_competition'] = (float)$keyword['KeywordStats']['AdvertiserCompetition'];
-        $modifiedKeyword['keyword_stats']['global_search_volume'] = (int)$keyword['KeywordStats']['GlobalSearchVolume'];
-        $modifiedKeyword['keyword_stats']['regional_search_volume'] = (int)$keyword['KeywordStats']['RegionalSearchVolume'];
+        if( is_null($keyword['KeywordStats']) ) {
+            $modifiedKeyword['keyword_stats'] = null;
+        } else {
+            $modifiedKeyword['keyword_stats']['advertiser_competition'] = (float)$keyword['KeywordStats']['AdvertiserCompetition'];
+            $modifiedKeyword['keyword_stats']['global_search_volume'] = (int)$keyword['KeywordStats']['GlobalSearchVolume'];
+            $modifiedKeyword['keyword_stats']['regional_search_volume'] = (int)$keyword['KeywordStats']['RegionalSearchVolume'];
 
-        foreach ($keyword['KeywordStats']['LocalSearchTrendsByMonth'] as $month => $searchVolume) {
-            if($searchVolume == '-') {
-                $searchVolume = '';
-            } else {
-                $searchVolume = (int)$searchVolume;
+            foreach ($keyword['KeywordStats']['LocalSearchTrendsByMonth'] as $month => $searchVolume) {
+                if($searchVolume == '-') {
+                    $searchVolume = '';
+                } else {
+                    $searchVolume = (int)$searchVolume;
+                }
+                $modifiedKeyword['keyword_stats']['local_search_trends_by_month'][strtolower($month)] = $searchVolume;
             }
-            $modifiedKeyword['keyword_stats']['local_search_trends_by_month'][strtolower($month)] = $searchVolume;
+
+            $modifiedKeyword['keyword_stats']['cpc'] = $keyword['KeywordStats']['CPC'];
         }
 
-        $modifiedKeyword['keyword_stats']['cpc'] = $keyword['KeywordStats']['CPC'];
-
-        $modifiedKeyword['keyword_ranking']['date'] = Carbon::parse($keyword['KeywordRanking']['date']);
-        $modifiedKeyword['keyword_ranking']['google'] = [
-            'rank' => (int)$keyword['KeywordRanking']['Google']['Rank'],
-            'base_rank' => (int)$keyword['KeywordRanking']['Google']['BaseRank'],
-            'url' => $keyword['KeywordRanking']['Google']['Url'],
-        ];
-        $modifiedKeyword['keyword_ranking']['yahoo'] = [
-            'rank' => (int)$keyword['KeywordRanking']['Yahoo']['Rank'],
-            'url' => $keyword['KeywordRanking']['Yahoo']['Url'],
-        ];
-        $modifiedKeyword['keyword_ranking']['bing'] = [
-            'rank' => (int)$keyword['KeywordRanking']['Bing']['Rank'],
-            'url' => $keyword['KeywordRanking']['Bing']['Url'],
-        ];
+        if( is_null($keyword['KeywordRanking']) ) {
+            $modifiedKeyword['keyword_ranking'] = null;
+        } else {
+            $modifiedKeyword['keyword_ranking']['date'] = Carbon::parse($keyword['KeywordRanking']['date']);
+            $modifiedKeyword['keyword_ranking']['google'] = [
+                'rank' => (int)$keyword['KeywordRanking']['Google']['Rank'],
+                'base_rank' => (int)$keyword['KeywordRanking']['Google']['BaseRank'],
+                'url' => $keyword['KeywordRanking']['Google']['Url'],
+            ];
+            $modifiedKeyword['keyword_ranking']['yahoo'] = [
+                'rank' => (int)$keyword['KeywordRanking']['Yahoo']['Rank'],
+                'url' => $keyword['KeywordRanking']['Yahoo']['Url'],
+            ];
+            $modifiedKeyword['keyword_ranking']['bing'] = [
+                'rank' => (int)$keyword['KeywordRanking']['Bing']['Rank'],
+                'url' => $keyword['KeywordRanking']['Bing']['Url'],
+            ];
+        }
 
         $modifiedKeyword['created_at'] = Carbon::parse($keyword['CreatedAt']);
 

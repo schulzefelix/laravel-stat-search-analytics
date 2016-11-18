@@ -8,7 +8,10 @@ use Illuminate\Support\Collection;
 class StatTags extends BaseStat
 {
 
-
+    /**
+     * @param $siteID
+     * @return Collection
+     */
     public function list($siteID) : Collection
     {
         $response = $this->performQuery('tags/list', ['site_id' => $siteID, 'results' => 5000]);
@@ -36,6 +39,12 @@ class StatTags extends BaseStat
         return $tags;
     }
 
+    /**
+     * @param $tagID
+     * @param Carbon $fromDate
+     * @param Carbon $toDate
+     * @return Collection
+     */
     public function rankingDistributions($tagID, Carbon $fromDate, Carbon $toDate)
     {
         $this->checkMaximumDateRange($fromDate, $toDate);

@@ -8,7 +8,13 @@ use Illuminate\Support\Collection;
 class StatSerps extends BaseStat
 {
 
-    public function show($keywordID, Carbon $date, $engine = 'google')
+    /**
+     * @param $keywordID
+     * @param Carbon $date
+     * @param string $engine
+     * @return Collection
+     */
+    public function show($keywordID, Carbon $date, $engine = 'google') : Collection
     {
         $response = $this->performQuery('serps/show', ['keyword_id' => $keywordID, 'engine' => $engine, 'date' => $date->toDateString()]);
 

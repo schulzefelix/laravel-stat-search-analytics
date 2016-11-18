@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use GuzzleHttp\Exception\ClientException;
+use SchulzeFelix\Stat\Api\StatBulk;
 use SchulzeFelix\Stat\Api\StatKeywords;
 use SchulzeFelix\Stat\Api\StatProjects;
 use SchulzeFelix\Stat\Api\StatRankings;
@@ -54,6 +55,11 @@ class Stat
     public function serps()
     {
         return new StatSerps($this->statClient);
+    }
+
+    public function bulk()
+    {
+        return new StatBulk($this->statClient);
     }
 
     public function blockedUntil()

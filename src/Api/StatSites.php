@@ -7,6 +7,10 @@ use Illuminate\Support\Collection;
 
 class StatSites extends BaseStat
 {
+
+    /**
+     * @return Collection
+     */
     public function all() : Collection
     {
         $start = 0;
@@ -41,9 +45,13 @@ class StatSites extends BaseStat
         return $sites;
     }
 
-    public function list($project_id) : Collection
+    /**
+     * @param $projectID
+     * @return Collection
+     */
+    public function list($projectID) : Collection
     {
-        $response = $this->performQuery('sites/list', ['project_id' => $project_id]);
+        $response = $this->performQuery('sites/list', ['project_id' => $projectID]);
 
         if ($response['resultsreturned'] == 0) {
             return collect();
@@ -66,6 +74,12 @@ class StatSites extends BaseStat
         return $sites;
     }
 
+    /**
+     * @param $siteID
+     * @param Carbon $fromDate
+     * @param Carbon $toDate
+     * @return Collection
+     */
     public function rankingDistributions($siteID, Carbon $fromDate, Carbon $toDate) : Collection
     {
         $this->checkMaximumDateRange($fromDate, $toDate);
@@ -143,6 +157,13 @@ class StatSites extends BaseStat
         return $rankDistribution;
     }
 
+    /**
+     * @param $projectID
+     * @param $url
+     * @param bool $dropWWWprefix
+     * @param bool $dropDirectories
+     * @return array
+     */
     public function create($projectID, $url, $dropWWWprefix = true, $dropDirectories = true)
     {
         $response = $this->performQuery('sites/create', ['project_id' => $projectID, 'url' => $url, 'drop_www_prefix' => $dropWWWprefix, 'drop_directories' => $dropDirectories]);
@@ -158,6 +179,11 @@ class StatSites extends BaseStat
         ];
     }
 
+    /**
+     * @param $siteID
+     * @param array $attributes
+     * @return array
+     */
     public function update($siteID, array $attributes = [])
     {
         $arguments = ['id' => $siteID] + $attributes;
@@ -176,6 +202,10 @@ class StatSites extends BaseStat
         ];
     }
 
+    /**
+     * @param $siteID
+     * @return int
+     */
     public function delete($siteID)
     {
         $response = $this->performQuery('sites/delete', ['id' => $siteID]);

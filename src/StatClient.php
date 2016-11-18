@@ -23,7 +23,6 @@ class StatClient
     public function performQuery(string $method, array $parameters)
     {
         $request = $this->buildRequest($method, $parameters);
-        dd($request);
         $response = $this->client->get($request);
         return json_decode($response->getBody()->getContents(), true);
     }
