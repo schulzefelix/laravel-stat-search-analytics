@@ -27,6 +27,12 @@ class StatClient
         return json_decode($response->getBody()->getContents(), true);
     }
 
+    public function downloadBulkJobStream($streamUrl)
+    {
+        $response = $this->client->get($streamUrl);
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
     protected function buildRequest($method, $parameters = [])
     {
         $parameterString = '?format=json';

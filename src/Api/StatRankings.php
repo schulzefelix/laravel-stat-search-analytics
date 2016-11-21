@@ -23,12 +23,14 @@ class StatRankings extends BaseStat
                 break;
             }
 
-            // Todo: Check if only one result
-//            if(isset($response['Result']['Id'])) {
-//                $keywords->push($response['Result']);
-//            }
+            if($response['totalresults'] == 1) {
+                $rankings->push($response['Result']);
+            }
 
-            $rankings = $rankings->merge($response['Result']);
+            if($response['totalresults'] > 1) {
+                $rankings = $rankings->merge($response['Result']);
+            }
+
 
             if (!isset($response['nextpage'])) {
                 break;

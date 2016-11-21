@@ -11,7 +11,7 @@ class BaseStat
     /**
      * @var StatClient
      */
-    private $statClient;
+    protected $statClient;
 
     /**
      * BaseStat constructor.

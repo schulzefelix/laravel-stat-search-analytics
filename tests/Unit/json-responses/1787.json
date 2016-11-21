@@ -1,0 +1,254 @@
+{
+  "Response": {
+    "responsecode": "200",
+    "Project": {
+      "Id": "147",
+      "Name": "Development",
+      "TotalSites": "1",
+      "CreatedAt": "2016-11-18",
+      "Site": {
+        "Id": "509",
+        "Url": "example.com",
+        "TotalKeywords": "5",
+        "CreatedAt": "2016-11-18",
+        "Keyword": [
+          {
+            "Id": "660350",
+            "Keyword": "cheese cake test",
+            "KeywordMarket": "DE-de",
+            "KeywordLocation": null,
+            "KeywordDevice": "desktop",
+            "KeywordCategories": null,
+            "KeywordTags": "brand,top10",
+            "KeywordStats": {
+              "AdvertiserCompetition": "0.07",
+              "GlobalSearchVolume": "6600",
+              "TargetedSearchVolume": "6600",
+              "LocalSearchTrendsByMonth": {
+                "Sep": "5400",
+                "Aug": "5400",
+                "Jul": "5400",
+                "Jun": "4400",
+                "May": "5400",
+                "Apr": "5400",
+                "Mar": "6600",
+                "Feb": "6600",
+                "Jan": "8100",
+                "Dec": "8100",
+                "Nov": "6600",
+                "Oct": "6600"
+              },
+              "CPC": "0.40"
+            },
+            "CreatedAt": "2016-11-18",
+            "Ranking": {
+              "date": "2016-11-20",
+              "type": "highest",
+              "Google": {
+                "Rank": "9",
+                "BaseRank": "9",
+                "Url": "www.example.com/"
+              },
+              "Yahoo": {
+                "Rank": null,
+                "Url": null
+              },
+              "Bing": {
+                "Rank": null,
+                "Url": null
+              }
+            }
+          },
+          {
+            "Id": "660351",
+            "Keyword": "muffins",
+            "KeywordMarket": "DE-de",
+            "KeywordLocation": null,
+            "KeywordDevice": "desktop",
+            "KeywordCategories": null,
+            "KeywordTags": "brand,top10",
+            "KeywordStats": {
+              "AdvertiserCompetition": "0.2",
+              "GlobalSearchVolume": "246000",
+              "TargetedSearchVolume": "22200",
+              "LocalSearchTrendsByMonth": {
+                "Sep": "18100",
+                "Aug": "18100",
+                "Jul": "18100",
+                "Jun": "18100",
+                "May": "18100",
+                "Apr": "18100",
+                "Mar": "22200",
+                "Feb": "22200",
+                "Jan": "27100",
+                "Dec": "33100",
+                "Nov": "27100",
+                "Oct": "22200"
+              },
+              "CPC": "0.41"
+            },
+            "CreatedAt": "2016-11-18",
+            "Ranking": {
+              "date": "2016-11-20",
+              "type": "highest",
+              "Google": {
+                "Rank": null,
+                "BaseRank": null,
+                "Url": null
+              },
+              "Yahoo": {
+                "Rank": "29",
+                "Url": "www.example.com/western-digital"
+              },
+              "Bing": {
+                "Rank": "29",
+                "Url": "www.example.com/western-digital"
+              }
+            }
+          },
+          {
+            "Id": "660352",
+            "Keyword": "coffee",
+            "KeywordMarket": "DE-de",
+            "KeywordLocation": null,
+            "KeywordDevice": "desktop",
+            "KeywordCategories": null,
+            "KeywordTags": null,
+            "KeywordStats": {
+              "AdvertiserCompetition": "0.06",
+              "GlobalSearchVolume": "720",
+              "TargetedSearchVolume": "590",
+              "LocalSearchTrendsByMonth": {
+                "Sep": "590",
+                "Aug": "590",
+                "Jul": "590",
+                "Jun": "480",
+                "May": "480",
+                "Apr": "480",
+                "Mar": "590",
+                "Feb": "720",
+                "Jan": "720",
+                "Dec": "880",
+                "Nov": "880",
+                "Oct": "720"
+              },
+              "CPC": "0.15"
+            },
+            "CreatedAt": "2016-11-18",
+            "Ranking": {
+              "date": "2016-11-20",
+              "type": "highest",
+              "Google": {
+                "Rank": "5",
+                "BaseRank": "5",
+                "Url": "www.example.com/"
+              },
+              "Yahoo": {
+                "Rank": "5",
+                "Url": "www.example.com/"
+              },
+              "Bing": {
+                "Rank": "5",
+                "Url": "www.example.com/"
+              }
+            }
+          },
+          {
+            "Id": "660353",
+            "Keyword": "free wifi",
+            "KeywordMarket": "DE-de",
+            "KeywordLocation": null,
+            "KeywordDevice": "desktop",
+            "KeywordCategories": null,
+            "KeywordTags": "brand,typen",
+            "KeywordStats": {
+              "AdvertiserCompetition": "1",
+              "GlobalSearchVolume": "60500",
+              "TargetedSearchVolume": "60500",
+              "LocalSearchTrendsByMonth": {
+                "Sep": "49500",
+                "Aug": "49500",
+                "Jul": "49500",
+                "Jun": "49500",
+                "May": "49500",
+                "Apr": "49500",
+                "Mar": "60500",
+                "Feb": "60500",
+                "Jan": "74000",
+                "Dec": "74000",
+                "Nov": "74000",
+                "Oct": "60500"
+              },
+              "CPC": "0.34"
+            },
+            "CreatedAt": "2016-11-18",
+            "Ranking": {
+              "date": "2016-11-20",
+              "type": "highest",
+              "Google": {
+                "Rank": null,
+                "BaseRank": null,
+                "Url": null
+              },
+              "Yahoo": {
+                "Rank": null,
+                "Url": null
+              },
+              "Bing": {
+                "Rank": null,
+                "Url": null
+              }
+            }
+          },
+          {
+            "Id": "660354",
+            "Keyword": "juice",
+            "KeywordMarket": "DE-de",
+            "KeywordLocation": null,
+            "KeywordDevice": "desktop",
+            "KeywordCategories": null,
+            "KeywordTags": null,
+            "KeywordStats": {
+              "AdvertiserCompetition": "1",
+              "GlobalSearchVolume": "74000",
+              "TargetedSearchVolume": "60500",
+              "LocalSearchTrendsByMonth": {
+                "Sep": "49500",
+                "Aug": "49500",
+                "Jul": "49500",
+                "Jun": "49500",
+                "May": "49500",
+                "Apr": "49500",
+                "Mar": "60500",
+                "Feb": "60500",
+                "Jan": "74000",
+                "Dec": "74000",
+                "Nov": "74000",
+                "Oct": "60500"
+              },
+              "CPC": "0.34"
+            },
+            "CreatedAt": "2016-11-18",
+            "Ranking": {
+              "date": "2016-11-20",
+              "type": "highest",
+              "Google": {
+                "Rank": null,
+                "BaseRank": null,
+                "Url": null
+              },
+              "Yahoo": {
+                "Rank": null,
+                "Url": null
+              },
+              "Bing": {
+                "Rank": null,
+                "Url": null
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

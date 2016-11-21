@@ -42,6 +42,8 @@ class BulkTest extends PHPUnit_Framework_TestCase
             ->once()
             ->andReturn(['Response' => [
                 'responsecode' => "200",
+                'resultsreturned' => "2",
+                'totalresults' => "2",
                 'Result' => [
                     [
                         'Id' => '100',
@@ -256,6 +258,59 @@ class BulkTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(ApiException::class);
         $response = $this->stat->bulk()->siteRankingDistributions(Carbon::now()->addDay());
+    }
+
+
+    /** @test */
+    public function it_can_retrieve_a_bulk_export_for_a_single_project_with_single_site()
+    {
+        $expectedArguments = [
+            'bulk/status', ['id' => 1787]
+        ];
+
+        $this->statClient
+            ->shouldReceive('performQuery')->withArgs($expectedArguments)
+            ->once()
+            ->andReturn(['Response' => [
+                'responsecode' => "200",
+                'Result' => [
+                    'Id' => '1',
+                    'JobType' => 'ranks',
+                    'Format' => 'json',
+                    'Date' => '2016-11-20',
+                    'SiteId' => '19',
+                    'Status' => 'Completed',
+                    'Url' => 'https://try.getstat.com/bulk_reports/download_report/1787?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
+                    'StreamUrl' => 'https://try.getstat.com/bulk_reports/stream_report/1787?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
+                    'CreatedAt' => '2016-11-21',
+                ]
+            ]]);
+
+        $expectedArguments = [
+            'https://try.getstat.com/bulk_reports/stream_report/1787?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18'
+        ];
+        $expectedResponse = json_decode(file_get_contents('tests/Unit/json-responses/1787.json'), true);
+        $this->statClient
+            ->shouldReceive('downloadBulkJobStream')->withArgs($expectedArguments)
+            ->once()
+            ->andReturn($expectedResponse);
+
+
+        $response = $this->stat->bulk()->get(1787);
+
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertEquals(1, $response->count());
+
+        $this->assertEquals(1, $response->first()['total_sites']);
+        $this->assertEquals('Development', $response->first()['name']);
+        $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
+        $this->assertInstanceOf(Collection::class, $response->first()['sites']);
+
+        $this->assertEquals(5, $response->first()['sites']->first()['total_keywords']);
+        $this->assertInstanceOf(Carbon::class, $response->first()['sites']->first()['created_at']);
+        $this->assertInstanceOf(Collection::class, $response->first()['sites']->first()['keywords']);
+
+        $this->assertJsonStringEqualsJsonFile('tests/Unit/json-responses/1787-transformed.json', $response->toJson());
     }
 
 }
