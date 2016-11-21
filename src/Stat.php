@@ -8,6 +8,7 @@ use SchulzeFelix\Stat\Api\StatProjects;
 use SchulzeFelix\Stat\Api\StatRankings;
 use SchulzeFelix\Stat\Api\StatSerps;
 use SchulzeFelix\Stat\Api\StatSites;
+use SchulzeFelix\Stat\Api\StatSubAccounts;
 use SchulzeFelix\Stat\Api\StatTags;
 
 class Stat
@@ -60,6 +61,12 @@ class Stat
     public function bulk()
     {
         return new StatBulk($this->statClient);
+    }
+
+    public function subaccounts()
+    {
+        return new StatSubAccounts($this->statClient);
+
     }
 
     public function blockedUntil()
