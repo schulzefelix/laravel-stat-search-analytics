@@ -45,15 +45,17 @@ class StatBulk extends BaseStat
     }
 
     /**
-     * @param Carbon $date
-     * @param array|null $sites
-     * @param string $rankType
-     * @param array|null $engines
-     * @param bool $currentlyTrackedOnly
-     * @param bool $crawledKeywordsOnly
+     * Schedule the creation of a new bulk export job for ranks.
+     *
+     * @param Carbon $date Note that you cannot create bulk jobs for the current date or dates in the future.
+     * @param array|null $sites If no site IDs are passed in, ranks are reported for all sites in the system on the given date.
+     * @param string $rankType This parameter changes the call between getting the highest ranks for the keywords for the date with the value 'highest', or getting all the ranks for each engine for a keyword for a date with the value 'all'.
+     * @param array|null $engines This parameter lets you choose which search engines to include in the export, defaulting to Google, Yahoo, and Bing. Engines can be passed in a array to get multiple. ['google', 'yahoo', 'bing']
+     * @param bool $currentlyTrackedOnly This parameter will cause the API to output only keywords which currently have tracking on at the time the API request is generated.
+     * @param bool $crawledKeywordsOnly This parameter causes the API to only include output for keywords that were crawled on the date parameter provided.
      * @return int
      */
-    public function ranks(Carbon $date, array $sites = null, $rankType = 'highest', $engines = ['google', 'yahoo', 'bing'], bool $currentlyTrackedOnly = false , bool $crawledKeywordsOnly = false)
+    public function ranks(Carbon $date, array $sites = null, $rankType = 'highest', $engines = null, bool $currentlyTrackedOnly = false , bool $crawledKeywordsOnly = false)
     {
         $this->validateBulkDate($date);
 
@@ -126,11 +128,7 @@ class StatBulk extends BaseStat
 
     public function get($bulkJobID)
     {
-//        $bulkStatus = Cache::remember('bulkstatus' . $bulkJobID, 1200, function () use($bulkJobID) {
-//            return $this->status($bulkJobID);
-//        });
-
-            $bulkStatus = $this->status($bulkJobID);
+        $bulkStatus = $this->status($bulkJobID);
 
         if($bulkStatus['status'] != 'Completed') {
             throw ApiException::resultError('Bulk Job is not completed. Current status: ' . $bulkJobID['status'] . '.');
@@ -261,23 +259,52 @@ class StatBulk extends BaseStat
         $modifiedKeyword['ranking']['type'] = $keyword['Ranking']['type'];
 
         if(isset($keyword['Ranking']['Google'])){
-            $modifiedKeyword['ranking']['google']['rank'] = $keyword['Ranking']['Google']['Rank'];
-            $modifiedKeyword['ranking']['google']['base_rank'] = $keyword['Ranking']['Google']['BaseRank'];
-            $modifiedKeyword['ranking']['google']['url'] = $keyword['Ranking']['Google']['Url'];
+            $modifiedKeyword['ranking']['google'] = $this->analyzeRanking($keyword['Ranking']['Google'], $keyword['Ranking']['type']);
         }
 
         if(isset($keyword['Ranking']['Yahoo'])){
-            $modifiedKeyword['ranking']['yahoo']['rank'] = $keyword['Ranking']['Yahoo']['Rank'];
-            $modifiedKeyword['ranking']['yahoo']['url'] = $keyword['Ranking']['Yahoo']['Url'];
+            $modifiedKeyword['ranking']['yahoo'] = $this->analyzeRanking($keyword['Ranking']['Yahoo'], $keyword['Ranking']['type']);
         }
 
         if(isset($keyword['Ranking']['Bing'])){
-            $modifiedKeyword['ranking']['bing']['rank'] = $keyword['Ranking']['Bing']['Rank'];
-            $modifiedKeyword['ranking']['bing']['url'] = $keyword['Ranking']['Bing']['Url'];
+            $modifiedKeyword['ranking']['bing'] = $this->analyzeRanking($keyword['Ranking']['Bing'], $keyword['Ranking']['type']);
         }
 
 
         return $modifiedKeyword;
+    }
+
+    private function analyzeRanking($rankingForEngine, $rankingType)
+    {
+        if($rankingType == 'highest') {
+            return $this->transformRanking($rankingForEngine);
+        }
+
+        $rankings = collect();
+
+        if(isset($rankingForEngine['Result']['Rank'])){
+            $rankings->push($rankingForEngine['Result']);
+        } else {
+            $rankings = collect($rankingForEngine['Result']);
+        }
+
+        $rankings->transform(function($ranking, $key){
+            $this->transformRanking($ranking);
+        });
+
+        return $rankings;
+
+    }
+
+    private function transformRanking($ranking)
+    {
+        $transformedRanking['rank'] = $ranking['Rank'];
+        if(array_key_exists('BaseRank', $ranking)){
+            $transformedRanking['base_rank'] = $ranking['BaseRank'];
+        }
+        $transformedRanking['url'] = $ranking['Url'];
+
+        return $transformedRanking;
     }
 
 }

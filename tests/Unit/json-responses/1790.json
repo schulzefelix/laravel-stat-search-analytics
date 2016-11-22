@@ -43,20 +43,16 @@
             "CreatedAt": "2016-11-18",
             "Ranking": {
               "date": "2016-11-20",
-              "type": "highest",
+              "type": "all",
               "Google": {
-                "Rank": "9",
-                "BaseRank": "9",
-                "Url": "www.example.com/"
+                "Result": {
+                  "Rank": "9",
+                  "BaseRank": "9",
+                  "Url": "www.example.com/"
+                }
               },
-              "Yahoo": {
-                "Rank": null,
-                "Url": null
-              },
-              "Bing": {
-                "Rank": null,
-                "Url": null
-              }
+              "Yahoo": null,
+              "Bing": null
             }
           },
           {
@@ -90,19 +86,19 @@
             "CreatedAt": "2016-11-18",
             "Ranking": {
               "date": "2016-11-20",
-              "type": "highest",
-              "Google": {
-                "Rank": null,
-                "BaseRank": null,
-                "Url": null
-              },
+              "type": "all",
+              "Google": null,
               "Yahoo": {
-                "Rank": "29",
-                "Url": "www.example.com/muffins"
+                "Result": {
+                  "Rank": "29",
+                  "Url": "www.example.com/muffins"
+                }
               },
               "Bing": {
-                "Rank": "29",
-                "Url": "www.example.com/muffins"
+                "Result": {
+                  "Rank": "29",
+                  "Url": "www.example.com/muffins"
+                }
               }
             }
           },
@@ -137,19 +133,45 @@
             "CreatedAt": "2016-11-18",
             "Ranking": {
               "date": "2016-11-20",
-              "type": "highest",
+              "type": "all",
               "Google": {
-                "Rank": "5",
-                "BaseRank": "5",
-                "Url": "www.example.com/"
+                "Result": {
+                  "Rank": "5",
+                  "BaseRank": "5",
+                  "Url": "www.example.com/"
+                }
               },
               "Yahoo": {
-                "Rank": "5",
-                "Url": "www.example.com/"
+                "Result": [
+                  {
+                    "Rank": "5",
+                    "Url": "www.example.com/"
+                  },
+                  {
+                    "Rank": "18",
+                    "Url": "www.example.com/coffee"
+                  },
+                  {
+                    "Rank": "36",
+                    "Url": "www.example.com/coffee-houses"
+                  }
+                ]
               },
               "Bing": {
-                "Rank": "5",
-                "Url": "www.example.com/"
+                "Result": [
+                  {
+                    "Rank": "5",
+                    "Url": "www.example.com/"
+                  },
+                  {
+                    "Rank": "18",
+                    "Url": "www.example.com/spezial-coffee"
+                  },
+                  {
+                    "Rank": "36",
+                    "Url": "www.example.com/coffee-houses"
+                  }
+                ]
               }
             }
           },
@@ -184,20 +206,10 @@
             "CreatedAt": "2016-11-18",
             "Ranking": {
               "date": "2016-11-20",
-              "type": "highest",
-              "Google": {
-                "Rank": null,
-                "BaseRank": null,
-                "Url": null
-              },
-              "Yahoo": {
-                "Rank": null,
-                "Url": null
-              },
-              "Bing": {
-                "Rank": null,
-                "Url": null
-              }
+              "type": "all",
+              "Google": null,
+              "Yahoo": null,
+              "Bing": null
             }
           },
           {
@@ -231,20 +243,10 @@
             "CreatedAt": "2016-11-18",
             "Ranking": {
               "date": "2016-11-20",
-              "type": "highest",
-              "Google": {
-                "Rank": null,
-                "BaseRank": null,
-                "Url": null
-              },
-              "Yahoo": {
-                "Rank": null,
-                "Url": null
-              },
-              "Bing": {
-                "Rank": null,
-                "Url": null
-              }
+              "type": "all",
+              "Google": null,
+              "Yahoo": null,
+              "Bing": null
             }
           }
         ]
