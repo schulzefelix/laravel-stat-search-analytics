@@ -8,6 +8,9 @@ use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit_Framework_TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
+use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
+use SchulzeFelix\Stat\Objects\StatRankDistribution;
+use SchulzeFelix\Stat\Objects\Stattag;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
@@ -69,16 +72,17 @@ class TagsTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->tags()->list(13);
 
         $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(Stattag::class, $response->first());
         $this->assertEquals(2, $response->count());
-        $this->assertEquals(4, count($response->first()));
+        $this->assertEquals(4, count($response->first()->toArray()));
 
         $this->assertArrayHasKey('id', $response->first());
         $this->assertArrayHasKey('tag', $response->first());
         $this->assertArrayHasKey('type', $response->first());
         $this->assertArrayHasKey('keywords', $response->first());
 
-        $this->assertInstanceOf(Collection::class, $response->first()['keywords']);
-        $this->assertEquals(2, $response->first()['keywords']->count());
+        $this->assertInstanceOf(Collection::class, $response->first()->keywords);
+        $this->assertEquals(2, $response->first()->keywords->count());
 
     }
 
@@ -220,8 +224,11 @@ class TagsTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->tags()->rankingDistributions(13, Carbon::createFromDate(2016, 10, 1), Carbon::createFromDate(2016, 10, 2));
 
         $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(StatRankDistribution::class, $response->first());
         $this->assertEquals(2, $response->count());
-        $this->assertEquals(5, count($response->first()));
+        $this->assertEquals(5, count($response->first()->toArray()));
+        $this->assertInstanceOf(StatEngineRankDistribution::class, $response->first()->google);
+
 
         $this->assertArrayHasKey('date', $response->first());
         $this->assertArrayHasKey('google', $response->first());
@@ -244,7 +251,7 @@ class TagsTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('non_ranking', $response->first()['google']);
 
         $this->assertInstanceOf(Carbon::class, $response->first()['date']);
-        $this->assertEquals(12, count($response->first()['google']));
+        $this->assertEquals(12, count($response->first()->google->toArray()));
         $this->assertEquals(5, $response->first()['google']['eleven_to_twenty']);
     }
 
