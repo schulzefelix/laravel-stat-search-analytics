@@ -8,6 +8,9 @@ use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit_Framework_TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
+use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
+use SchulzeFelix\Stat\Objects\StatRankDistribution;
+use SchulzeFelix\Stat\Objects\StatSite;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
@@ -79,8 +82,8 @@ class SitesTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->sites()->all();
 
         $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(StatSite::class, $response->first());
         $this->assertEquals(2, $response->count());
-        $this->assertEquals(10, count($response->first()));
 
         $this->assertArrayHasKey('id', $response->first());
         $this->assertArrayHasKey('project_id', $response->first());
@@ -149,8 +152,9 @@ class SitesTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->sites()->list(13);
 
         $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(StatSite::class, $response->first());
         $this->assertEquals(2, $response->count());
-        $this->assertEquals(9, count($response->first()));
+        $this->assertEquals(10, count($response->first()->toArray()));
 
         $this->assertArrayHasKey('id', $response->first());
         $this->assertArrayHasKey('folder_id', $response->first());
@@ -197,8 +201,8 @@ class SitesTest extends PHPUnit_Framework_TestCase
 
         $response = $this->stat->sites()->create(13, 'http://google.com');
 
-        $this->assertInternalType('array', $response);
-        $this->assertEquals(7, count($response));
+        $this->assertInstanceOf(StatSite::class, $response);
+        $this->assertEquals(7, count($response->toArray()));
 
         $this->assertArrayHasKey('id', $response);
         $this->assertArrayHasKey('project_id', $response);
@@ -248,8 +252,8 @@ class SitesTest extends PHPUnit_Framework_TestCase
             'drop_directories' => true,
         ]);
 
-        $this->assertInternalType('array', $response);
-        $this->assertEquals(8, count($response));
+        $this->assertInstanceOf(StatSite::class, $response);
+        $this->assertEquals(8, count($response->toArray()));
 
         $this->assertArrayHasKey('id', $response);
         $this->assertArrayHasKey('project_id', $response);
@@ -430,8 +434,10 @@ class SitesTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->sites()->rankingDistributions(13, Carbon::createFromDate(2016, 10, 1), Carbon::createFromDate(2016, 10, 2));
 
         $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(StatRankDistribution::class, $response->first());
         $this->assertEquals(2, $response->count());
-        $this->assertEquals(5, count($response->first()));
+        $this->assertEquals(5, count($response->first()->toArray()));
+        $this->assertInstanceOf(StatEngineRankDistribution::class, $response->first()->google);
 
         $this->assertArrayHasKey('date', $response->first());
         $this->assertArrayHasKey('google', $response->first());
@@ -454,7 +460,7 @@ class SitesTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('non_ranking', $response->first()['google']);
 
         $this->assertInstanceOf(Carbon::class, $response->first()['date']);
-        $this->assertEquals(12, count($response->first()['google']));
+        $this->assertEquals(12, count($response->first()->google->toArray()));
         $this->assertEquals(5, $response->first()['google']['eleven_to_twenty']);
     }
 
