@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit_Framework_TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
+use SchulzeFelix\Stat\Objects\StatProject;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
@@ -66,7 +67,7 @@ class ProjectsTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertEquals(2, $response->count());
-        $this->assertEquals(5, count($response->first()));
+        $this->assertInstanceOf(StatProject::class, $response->first());
 
         $this->assertArrayHasKey('id', $response->first());
         $this->assertArrayHasKey('name', $response->first());
@@ -74,11 +75,11 @@ class ProjectsTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('created_at', $response->first());
         $this->assertArrayHasKey('updated_at', $response->first());
 
-        $this->assertEquals(613, $response->first()['id']);
-        $this->assertEquals('Muffins', $response->first()['name']);
-        $this->assertEquals(1, $response->first()['total_sites']);
-        $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
-        $this->assertInstanceOf(Carbon::class, $response->first()['updated_at']);
+        $this->assertEquals(613, $response->first()->id);
+        $this->assertEquals('Muffins', $response->first()->name);
+        $this->assertEquals(1, $response->first()->total_sites);
+        $this->assertInstanceOf(Carbon::class, $response->first()->created_at);
+        $this->assertInstanceOf(Carbon::class, $response->first()->updated_at);
     }
 
     /** @test */
@@ -102,8 +103,7 @@ class ProjectsTest extends PHPUnit_Framework_TestCase
 
         $response = $this->stat->projects()->create('Cheese Cake');
 
-        $this->assertInternalType('array', $response);
-        $this->assertEquals(4, count($response));
+        $this->assertInstanceOf(StatProject::class, $response);
 
         $this->assertArrayHasKey('id', $response);
         $this->assertArrayHasKey('name', $response);
@@ -137,18 +137,17 @@ class ProjectsTest extends PHPUnit_Framework_TestCase
 
         $response = $this->stat->projects()->update(615, 'Cheese Cake Factory');
 
-        $this->assertInternalType('array', $response);
-        $this->assertEquals(4, count($response));
+        $this->assertInstanceOf(StatProject::class, $response);
 
         $this->assertArrayHasKey('id', $response);
         $this->assertArrayHasKey('name', $response);
         $this->assertArrayHasKey('created_at', $response);
         $this->assertArrayHasKey('updated_at', $response);
 
-        $this->assertEquals(615, $response['id']);
-        $this->assertEquals('Cheese Cake Factory', $response['name']);
-        $this->assertInstanceOf(Carbon::class, $response['created_at']);
-        $this->assertInstanceOf(Carbon::class, $response['updated_at']);
+        $this->assertEquals(615, $response->id);
+        $this->assertEquals('Cheese Cake Factory', $response->name);
+        $this->assertInstanceOf(Carbon::class, $response->created_at);
+        $this->assertInstanceOf(Carbon::class, $response->updated_at);
     }
 
     /** @test */

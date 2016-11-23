@@ -137,6 +137,8 @@ class StatBulk extends BaseStat
         $bulkStream = $this->statClient->downloadBulkJobStream($bulkStatus['stream_url']);
 
         return $this->parseBulkJob($bulkStream['Response']);
+//        $expectedResponse = json_decode(file_get_contents( public_path() . '/1918.json'), true);
+//        return $this->parseBulkJob($expectedResponse['Response']);
     }
 
     /**
@@ -199,21 +201,10 @@ class StatBulk extends BaseStat
         $transformedSite['total_keywords'] = (int)$site['TotalKeywords'];
         $transformedSite['created_at'] = Carbon::parse($site['CreatedAt']);
 
-        if( $site['TotalKeywords'] == 0) {
-            $transformedSite['keywords'] = collect();
-        }
-
-        if( $site['TotalKeywords'] == 1) {
-            $transformedSite['keywords'] = collect([$site['Keyword']]);
-        }
-
-        if( $site['TotalKeywords'] > 1) {
-            $transformedSite['keywords'] = collect($site['Keyword']);
-        }
-
-        $transformedSite['keywords']->transform(function ($keyword, $key) {
+        $transformedSite['keywords'] = collect($site['Keyword'])->transform(function ($keyword, $key) {
             return $this->transformKeyword($keyword);
         });
+
 
         return $transformedSite;
 
