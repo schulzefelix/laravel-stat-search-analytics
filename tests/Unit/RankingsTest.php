@@ -8,6 +8,8 @@ use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit_Framework_TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
+use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordRanking;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
@@ -74,6 +76,10 @@ class RankingsTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertEquals(1, $response->count());
+
+        $this->assertInstanceOf(StatKeywordRanking::class, $response->first());
+        $this->assertInstanceOf(StatKeywordEngineRanking::class, $response->first()->google);
+
 
         $this->assertArrayHasKey('date', $response->first());
         $this->assertArrayHasKey('google', $response->first());

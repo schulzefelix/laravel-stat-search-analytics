@@ -4,6 +4,8 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordRanking;
 
 class StatRankings extends BaseStat
 {
@@ -41,24 +43,24 @@ class StatRankings extends BaseStat
 
         $rankings = $rankings->transform(function ($ranking, $key) {
 
-            return [
-                'date' => Carbon::parse($ranking['date']),
-                'google' => [
+            return new StatKeywordRanking([
+                'date' => $ranking['date'],
+                'google' => new StatKeywordEngineRanking([
                     'rank' => $ranking['Google']['Rank'],
-                    'url' => $ranking['Google']['Url'] ?? '',
                     'base_rank' => $ranking['Google']['BaseRank'],
-                ],
-                'yahoo' => [
+                    'url' => $ranking['Google']['Url'] ?? '',
+                ]),
+                'yahoo' => new StatKeywordEngineRanking([
                     'rank' => $ranking['Yahoo']['Rank'],
                     'url' => $ranking['Yahoo']['Url'] ?? '',
                     'base_rank' => $ranking['Yahoo']['BaseRank'],
-                ],
-                'bing' => [
+                ]),
+                'bing' => new StatKeywordEngineRanking([
                     'rank' => $ranking['Bing']['Rank'],
                     'url' => $ranking['Bing']['Url'] ?? '',
                     'base_rank' => $ranking['Bing']['BaseRank'],
-                ],
-            ];
+                ]),
+            ]);
         });
 
         return $rankings;
