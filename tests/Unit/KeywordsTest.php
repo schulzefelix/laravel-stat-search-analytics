@@ -8,6 +8,10 @@ use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit_Framework_TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
+use SchulzeFelix\Stat\Objects\StatKeyword;
+use SchulzeFelix\Stat\Objects\StatKeywordRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordStats;
+use SchulzeFelix\Stat\Objects\StatLocalSearchTrend;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
@@ -99,6 +103,7 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertEquals(1, $response->count());
+        $this->assertInstanceOf(StatKeyword::class, $response->first());
 
         $this->assertArrayHasKey('id', $response->first());
         $this->assertArrayHasKey('keyword', $response->first());
@@ -112,17 +117,9 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
 
         $this->assertArrayHasKey('regional_search_volume', $response->first()['keyword_stats']);
         $this->assertArrayHasKey('local_search_trends_by_month', $response->first()['keyword_stats']);
-        $this->assertArrayHasKey('sep', $response->first()['keyword_stats']['local_search_trends_by_month']);
-        $this->assertArrayHasKey('aug', $response->first()['keyword_stats']['local_search_trends_by_month']);
-        $this->assertArrayHasKey('jul', $response->first()['keyword_stats']['local_search_trends_by_month']);
-        $this->assertArrayHasKey('jun', $response->first()['keyword_stats']['local_search_trends_by_month']);
-        $this->assertArrayHasKey('may', $response->first()['keyword_stats']['local_search_trends_by_month']);
-        $this->assertArrayHasKey('apr', $response->first()['keyword_stats']['local_search_trends_by_month']);
-        $this->assertArrayHasKey('mar', $response->first()['keyword_stats']['local_search_trends_by_month']);
-        $this->assertArrayHasKey('feb', $response->first()['keyword_stats']['local_search_trends_by_month']);
-        $this->assertArrayHasKey('jan', $response->first()['keyword_stats']['local_search_trends_by_month']);
-        $this->assertArrayHasKey('dec', $response->first()['keyword_stats']['local_search_trends_by_month']);
-        $this->assertArrayHasKey('nov', $response->first()['keyword_stats']['local_search_trends_by_month']);
+        $this->assertInstanceOf(StatKeywordStats::class, $response->first()->keyword_stats);
+        $this->assertInstanceOf(Collection::class, $response->first()->keyword_stats->local_search_trends_by_month);
+
         $this->assertArrayHasKey('cpc', $response->first()['keyword_stats']);
 
         $this->assertArrayHasKey('keyword_ranking', $response->first());
@@ -147,9 +144,7 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Smartphone', $response->first()['keyword_device']);
         $this->assertInstanceOf(Collection::class, $response->first()['keyword_tags']);
         $this->assertEquals(2, $response->first()['keyword_tags']->count());
-        $this->assertInternalType('array', $response->first()['keyword_stats']);
-        $this->assertInternalType('array', $response->first()['keyword_stats']['local_search_trends_by_month']);
-        $this->assertInternalType('array', $response->first()['keyword_ranking']);
+        $this->assertInstanceOf(StatKeywordRanking::class, $response->first()['keyword_ranking']);
         $this->assertEquals(1, $response->first()['keyword_ranking']['google']['rank']);
 
         $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
@@ -209,6 +204,7 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->keywords()->create(13, 'US-en', ['shirt,shoes', 'dress', 'boots'], ['clothes', 'brand'], 'Boston', 'smartphone');
 
         $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(StatKeyword::class, $response->first());
         $this->assertArrayHasKey('id', $response->first());
         $this->assertArrayHasKey('keyword', $response->first());
         $this->assertArrayHasKey('keyword_market', $response->first());

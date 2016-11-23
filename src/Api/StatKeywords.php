@@ -4,6 +4,11 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatKeyword;
+use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordStats;
+use SchulzeFelix\Stat\Objects\StatLocalSearchTrend;
 
 class StatKeywords extends BaseStat
 {
@@ -120,14 +125,15 @@ class StatKeywords extends BaseStat
      * @return mixed
      */
     protected function transformCreatedKeyword($keyword) {
-        $modifiedKeyword['id'] = (int)$keyword['Id'];
-        $modifiedKeyword['keyword'] = $keyword['Keyword'];
-        $modifiedKeyword['keyword_market'] = $keyword['KeywordMarket'];
-        $modifiedKeyword['keyword_location'] = $keyword['KeywordLocation'];
-        $modifiedKeyword['keyword_device'] = $keyword['KeywordDevice'];
-        $modifiedKeyword['created_at'] = Carbon::parse($keyword['CreatedAt']);
 
-        return $modifiedKeyword;
+        return new StatKeyword([
+            'id' => $keyword['Id'],
+            'keyword' => $keyword['Keyword'],
+            'keyword_market' => $keyword['KeywordMarket'],
+            'keyword_location' => $keyword['KeywordLocation'],
+            'keyword_device' => $keyword['KeywordDevice'],
+            'created_at' => $keyword['CreatedAt'],
+        ]);
     }
 
 
@@ -136,57 +142,65 @@ class StatKeywords extends BaseStat
      * @return mixed
      */
     protected function transformListedKeyword($keyword) {
-        $modifiedKeyword['id'] = (int)$keyword['Id'];
-        $modifiedKeyword['keyword'] = $keyword['Keyword'];
-        $modifiedKeyword['keyword_market'] = $keyword['KeywordMarket'];
-        $modifiedKeyword['keyword_location'] = $keyword['KeywordLocation'];
-        $modifiedKeyword['keyword_device'] = $keyword['KeywordDevice'];
+        $modifiedKeyword = new StatKeyword();
+        $modifiedKeyword->id = $keyword['Id'];
+        $modifiedKeyword->keyword = $keyword['Keyword'];
+        $modifiedKeyword->keyword_market = $keyword['KeywordMarket'];
+        $modifiedKeyword->keyword_location = $keyword['KeywordLocation'];
+        $modifiedKeyword->keyword_device = $keyword['KeywordDevice'];
+
 
         if($keyword['KeywordTags'] == 'none') {
-            $modifiedKeyword['keyword_tags'] = collect();
+            $modifiedKeyword->keyword_tags = collect();
         } else {
-            $modifiedKeyword['keyword_tags'] = collect(explode(',', $keyword['KeywordTags']));
+            $modifiedKeyword->keyword_tags = collect(explode(',', $keyword['KeywordTags']));
         }
 
         if( is_null($keyword['KeywordStats']) ) {
-            $modifiedKeyword['keyword_stats'] = null;
+            $modifiedKeyword->keyword_stats = null;
         } else {
-            $modifiedKeyword['keyword_stats']['advertiser_competition'] = (float)$keyword['KeywordStats']['AdvertiserCompetition'];
-            $modifiedKeyword['keyword_stats']['global_search_volume'] = (int)$keyword['KeywordStats']['GlobalSearchVolume'];
-            $modifiedKeyword['keyword_stats']['regional_search_volume'] = (int)$keyword['KeywordStats']['RegionalSearchVolume'];
 
-            foreach ($keyword['KeywordStats']['LocalSearchTrendsByMonth'] as $month => $searchVolume) {
-                if($searchVolume == '-') {
-                    $searchVolume = '';
-                } else {
-                    $searchVolume = (int)$searchVolume;
-                }
-                $modifiedKeyword['keyword_stats']['local_search_trends_by_month'][strtolower($month)] = $searchVolume;
-            }
+            $localTrends = collect($keyword['KeywordStats']['LocalSearchTrendsByMonth'])->map(function ($searchVolume, $month){
+                return new StatLocalSearchTrend([
+                    'month' => strtolower($month),
+                    'search_volume' => ($searchVolume == '-') ? null : $searchVolume,
+                ]);
+            });
 
-            $modifiedKeyword['keyword_stats']['cpc'] = $keyword['KeywordStats']['CPC'];
+            $modifiedKeyword->keyword_stats = new StatKeywordStats([
+                'advertiser_competition' => $keyword['KeywordStats']['AdvertiserCompetition'],
+                'global_search_volume' => $keyword['KeywordStats']['GlobalSearchVolume'],
+                'regional_search_volume' => $keyword['KeywordStats']['RegionalSearchVolume'],
+                'cpc' => $keyword['KeywordStats']['CPC'],
+                'local_search_trends_by_month' => $localTrends->values(),
+            ]);
+
         }
 
         if( is_null($keyword['KeywordRanking']) ) {
-            $modifiedKeyword['keyword_ranking'] = null;
+            $modifiedKeyword->keyword_ranking = null;
         } else {
-            $modifiedKeyword['keyword_ranking']['date'] = Carbon::parse($keyword['KeywordRanking']['date']);
-            $modifiedKeyword['keyword_ranking']['google'] = [
-                'rank' => (int)$keyword['KeywordRanking']['Google']['Rank'],
-                'base_rank' => (int)$keyword['KeywordRanking']['Google']['BaseRank'],
-                'url' => $keyword['KeywordRanking']['Google']['Url'],
-            ];
-            $modifiedKeyword['keyword_ranking']['yahoo'] = [
-                'rank' => (int)$keyword['KeywordRanking']['Yahoo']['Rank'],
-                'url' => $keyword['KeywordRanking']['Yahoo']['Url'],
-            ];
-            $modifiedKeyword['keyword_ranking']['bing'] = [
-                'rank' => (int)$keyword['KeywordRanking']['Bing']['Rank'],
-                'url' => $keyword['KeywordRanking']['Bing']['Url'],
-            ];
+
+            $modifiedKeyword->keyword_ranking = new StatKeywordRanking([
+                'date' => $keyword['KeywordRanking']['date'],
+                'google' => new StatKeywordEngineRanking([
+                    'rank' => $keyword['KeywordRanking']['Google']['Rank'],
+                    'base_rank' => $keyword['KeywordRanking']['Google']['BaseRank'],
+                    'url' => $keyword['KeywordRanking']['Google']['Url'],
+                ]),
+                'yahoo' => new StatKeywordEngineRanking([
+                    'rank' => $keyword['KeywordRanking']['Yahoo']['Rank'],
+                    'url' => $keyword['KeywordRanking']['Yahoo']['Url'],
+                ]),
+                'bing' => new StatKeywordEngineRanking([
+                    'rank' => $keyword['KeywordRanking']['Bing']['Rank'],
+                    'url' => $keyword['KeywordRanking']['Bing']['Url'],
+                ]),
+            ]);
+
         }
 
-        $modifiedKeyword['created_at'] = Carbon::parse($keyword['CreatedAt']);
+        $modifiedKeyword->created_at = $keyword['CreatedAt'];
 
         return $modifiedKeyword;
     }

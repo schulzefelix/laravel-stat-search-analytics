@@ -42,6 +42,7 @@ class StatProjects extends BaseStat
         return new StatProject([
             'id' => $response['Result']['Id'],
             'name' => $response['Result']['Name'],
+            'total_sites' => 0,
             'created_at' => $response['Result']['CreatedAt'],
             'updated_at' => $response['Result']['UpdatedAt'],
         ]);
