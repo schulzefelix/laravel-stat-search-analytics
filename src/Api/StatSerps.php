@@ -4,6 +4,7 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatSerpItem;
 
 class StatSerps extends BaseStat
 {
@@ -20,12 +21,12 @@ class StatSerps extends BaseStat
 
         return collect($response['Result'])->transform(function ($ranking, $key) {
 
-            return [
+            return new StatSerpItem([
                 'result_type' => $ranking['ResultType'],
                 'rank' => $ranking['Rank'],
                 'base_rank' => $ranking['BaseRank'],
                 'url' => $ranking['Url'],
-            ];
+            ]);
 
         });
 

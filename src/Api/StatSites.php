@@ -54,11 +54,20 @@ class StatSites extends BaseStat
     {
         $response = $this->performQuery('sites/list', ['project_id' => $projectID]);
 
+        $sites = collect();
         if ($response['resultsreturned'] == 0) {
-            return collect();
+            return $sites;
         }
 
-        $sites = collect($response['Result'])->transform(function ($site, $key) use($projectID) {
+        if ($response['resultsreturned'] == 1) {
+            $sites->push($response['Result']);
+        }
+
+        if ($response['resultsreturned'] > 1) {
+            $sites = collect($response['Result']);
+        }
+
+        $sites->transform(function ($site, $key) use($projectID) {
             return new StatSite([
                 'id' => $site['Id'],
                 'project_id' => $projectID,

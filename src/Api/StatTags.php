@@ -4,7 +4,7 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use SchulzeFelix\Stat\Objects\Stattag;
+use SchulzeFelix\Stat\Objects\StatTag;
 
 class StatTags extends BaseStat
 {
@@ -29,7 +29,7 @@ class StatTags extends BaseStat
                 $item['Keywords'] = collect($item['Keywords']['Id']);
             }
 
-            return new Stattag([
+            return new StatTag([
                 'id' => $item['Id'],
                 'tag' => $item['Tag'],
                 'type' => $item['Type'],

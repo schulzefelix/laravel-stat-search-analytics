@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit_Framework_TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
+use SchulzeFelix\Stat\Objects\StatSerpItem;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
@@ -62,6 +63,7 @@ class SerpsTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->serps()->show(14, Carbon::createFromDate(2011, 3, 13), 'google');
 
         $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(StatSerpItem::class, $response->first());
         $this->assertEquals(2, $response->count());
 
         $this->assertArrayHasKey('result_type', $response->first());

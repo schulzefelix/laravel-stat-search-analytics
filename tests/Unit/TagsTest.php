@@ -10,7 +10,7 @@ use PHPUnit_Framework_TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
 use SchulzeFelix\Stat\Objects\StatRankDistribution;
-use SchulzeFelix\Stat\Objects\Stattag;
+use SchulzeFelix\Stat\Objects\StatTag;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
@@ -72,7 +72,7 @@ class TagsTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->tags()->list(13);
 
         $this->assertInstanceOf(Collection::class, $response);
-        $this->assertInstanceOf(Stattag::class, $response->first());
+        $this->assertInstanceOf(StatTag::class, $response->first());
         $this->assertEquals(2, $response->count());
         $this->assertEquals(4, count($response->first()->toArray()));
 

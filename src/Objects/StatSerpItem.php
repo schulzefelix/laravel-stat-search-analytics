@@ -2,10 +2,10 @@
 
 use SchulzeFelix\DataTransferObject\DataTransferObject;
 
-class StatTag extends DataTransferObject
+class StatSerpItem extends DataTransferObject
 {
     protected $casts = [
-        'id' => 'integer',
-        'keywords' => 'collection',
+        'rank' => 'integer',
+        'base_rank' => 'collection',
     ];
 }
