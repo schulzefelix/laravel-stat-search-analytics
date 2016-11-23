@@ -5,6 +5,7 @@ namespace SchulzeFelix\Stat\Api;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatSubAccount;
 
 class StatSubAccounts extends BaseStat
 {
@@ -30,12 +31,12 @@ class StatSubAccounts extends BaseStat
 
         $subaccounts->transform(function ($item, $key) {
 
-            return [
-                'id' => (int)$item['Id'],
+            return new StatSubAccount([
+                'id' => $item['Id'],
                 'login' => $item['Login'],
                 'api_key' => $item['ApiKey'],
-                'created_at' => Carbon::parse($item['CreatedAt']),
-            ];
+                'created_at' => $item['CreatedAt'],
+            ]);
         });
 
         return $subaccounts;

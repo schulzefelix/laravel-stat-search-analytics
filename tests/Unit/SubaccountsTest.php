@@ -7,7 +7,9 @@ use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit_Framework_TestCase;
+use SchulzeFelix\Stat\Api\StatSubAccounts;
 use SchulzeFelix\Stat\Exceptions\ApiException;
+use SchulzeFelix\Stat\Objects\StatSubAccount;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
@@ -62,6 +64,8 @@ class SubaccountsTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->subaccounts()->list();
 
         $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(StatSubAccount::class, $response->first());
+        $this->assertInstanceOf(Carbon::class, $response->first()->created_at);
         $this->assertEquals(2, $response->count());
 
         $this->assertArrayHasKey('id', $response->first());
