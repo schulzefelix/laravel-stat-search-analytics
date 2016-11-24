@@ -9,11 +9,8 @@ use SchulzeFelix\Stat\Objects\StatKeywordRanking;
 
 class StatRankings extends BaseStat
 {
-
-
     public function list($keywordID, Carbon $fromDate, Carbon $toDate) : Collection
     {
-
         $start = 0;
         $rankings = collect();
 
@@ -21,15 +18,15 @@ class StatRankings extends BaseStat
             $response = $this->performQuery('rankings/list', ['keyword_id' => $keywordID, 'from_date' => $fromDate->toDateString(), 'to_date' => $toDate->toDateString(), 'start' => 0]);
             $start += 30;
 
-            if($response['totalresults'] == 0) {
+            if ($response['totalresults'] == 0) {
                 break;
             }
 
-            if($response['totalresults'] == 1) {
+            if ($response['totalresults'] == 1) {
                 $rankings->push($response['Result']);
             }
 
-            if($response['totalresults'] > 1) {
+            if ($response['totalresults'] > 1) {
                 $rankings = $rankings->merge($response['Result']);
             }
 
@@ -37,12 +34,10 @@ class StatRankings extends BaseStat
             if (!isset($response['nextpage'])) {
                 break;
             }
-
         } while ($response['resultsreturned'] < $response['totalresults']);
 
 
         $rankings = $rankings->transform(function ($ranking, $key) {
-
             return new StatKeywordRanking([
                 'date' => $ranking['date'],
                 'google' => new StatKeywordEngineRanking([
@@ -65,8 +60,4 @@ class StatRankings extends BaseStat
 
         return $rankings;
     }
-
-
-
-
 }

@@ -101,9 +101,5 @@ class RankingsTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Carbon::class, $response->first()['date']);
         $this->assertEquals(55, $response->first()['google']['rank']);
         $this->assertEquals(50, $response->first()['google']['base_rank']);
-
     }
-
-
-
 }

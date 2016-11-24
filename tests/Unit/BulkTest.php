@@ -94,7 +94,6 @@ class BulkTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('ranks', $response->first()['job_type']);
         $this->assertEquals('NotStarted', $response->first()['status']);
-
     }
 
 
@@ -125,7 +124,6 @@ class BulkTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException(ApiException::class);
 
         $response = $this->stat->bulk()->ranks(Carbon::now());
-
     }
 
     /** @test */
@@ -476,5 +474,4 @@ class BulkTest extends PHPUnit_Framework_TestCase
 
 //        $this->assertJsonStringEqualsJsonFile('tests/Unit/json-responses/2177-transformed.json', $response->toJson());
     }
-
 }

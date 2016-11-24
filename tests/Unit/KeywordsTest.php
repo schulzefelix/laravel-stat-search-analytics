@@ -149,7 +149,6 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
         $this->assertInstanceOf(Carbon::class, $response->first()['keyword_ranking']['date']);
-
     }
 
     /** @test */
@@ -238,7 +237,6 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertEquals(3008, $response->first());
-
     }
 
     /** @test */
@@ -271,7 +269,5 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertEquals(3, $response->count());
         $this->assertEquals(3008, $response->first());
-
     }
-
 }

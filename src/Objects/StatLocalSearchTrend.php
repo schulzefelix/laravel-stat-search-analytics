@@ -12,6 +12,4 @@ class StatLocalSearchTrend extends DataTransferObject
     {
         return $this->attributes['search_volume'] = (int)$value;
     }
-
-
 }

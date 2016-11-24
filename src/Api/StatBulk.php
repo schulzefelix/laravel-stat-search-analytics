@@ -18,27 +18,25 @@ use SchulzeFelix\Stat\Objects\StatTag;
 
 class StatBulk extends BaseStat
 {
-
     public function list()
     {
         $response = $this->performQuery('bulk/list');
 
         $bulkJobs = collect();
 
-        if($response['resultsreturned'] == 0) {
+        if ($response['resultsreturned'] == 0) {
             return $bulkJobs;
         }
 
-        if($response['resultsreturned'] == 1) {
+        if ($response['resultsreturned'] == 1) {
             $bulkJobs->push($response['Result']);
         }
 
-        if($response['resultsreturned'] > 1) {
+        if ($response['resultsreturned'] > 1) {
             $bulkJobs = collect($response['Result']);
         }
 
         return $bulkJobs->transform(function ($job, $key) {
-
             return new StatBulkJob([
                 'id' => $job['Id'],
                 'job_type' => $job['JobType'],
@@ -49,7 +47,6 @@ class StatBulk extends BaseStat
                 'stream_url' => $job['StreamUrl'],
                 'created_at' => $job['CreatedAt'],
             ]);
-
         });
     }
 
@@ -64,7 +61,7 @@ class StatBulk extends BaseStat
      * @param bool $crawledKeywordsOnly This parameter causes the API to only include output for keywords that were crawled on the date parameter provided.
      * @return int
      */
-    public function ranks(Carbon $date, array $sites = null, $rankType = 'highest', $engines = null, bool $currentlyTrackedOnly = false , bool $crawledKeywordsOnly = false)
+    public function ranks(Carbon $date, array $sites = null, $rankType = 'highest', $engines = null, bool $currentlyTrackedOnly = false, bool $crawledKeywordsOnly = false)
     {
         $this->validateBulkDate($date);
 
@@ -73,10 +70,11 @@ class StatBulk extends BaseStat
         $arguments['currently_tracked_only'] = $currentlyTrackedOnly;
         $arguments['crawled_keywords_only'] = $crawledKeywordsOnly;
 
-        if( ! is_null($sites) && count($sites) > 0){
-            $arguments['site_id'] = implode(',', $sites);;
+        if (! is_null($sites) && count($sites) > 0) {
+            $arguments['site_id'] = implode(',', $sites);
+            ;
         }
-        if( ! is_null($engines) && count($engines) > 0){
+        if (! is_null($engines) && count($engines) > 0) {
             $arguments['engines'] = implode(',', $engines);
         }
         $response = $this->performQuery('bulk/ranks', $arguments);
@@ -95,8 +93,8 @@ class StatBulk extends BaseStat
         $jobStatus->date = $response['Result']['Date'];
 
         $jobStatus->sites = collect();
-        if(isset($response['Result']['SiteId'])){
-            $jobStatus->sites = collect( explode(',', $response['Result']['SiteId']))
+        if (isset($response['Result']['SiteId'])) {
+            $jobStatus->sites = collect(explode(',', $response['Result']['SiteId']))
                                 ->transform(function ($site, $key) {
                                     return (int)$site;
                                 });
@@ -109,7 +107,6 @@ class StatBulk extends BaseStat
         $jobStatus->created_at = $response['Result']['CreatedAt'];
 
         return $jobStatus;
-
     }
 
     public function delete($bulkJobID)
@@ -139,7 +136,7 @@ class StatBulk extends BaseStat
     {
         $bulkStatus = $this->status($bulkJobID);
 
-        if($bulkStatus['status'] != 'Completed') {
+        if ($bulkStatus['status'] != 'Completed') {
             throw ApiException::resultError('Bulk Job is not completed. Current status: ' . $bulkJobID['status'] . '.');
         }
 
@@ -179,13 +176,13 @@ class StatBulk extends BaseStat
         $transformedProject->total_sites = $project['TotalSites'];
         $transformedProject->created_at = $project['CreatedAt'];
 
-        if( $project['TotalSites'] == 0) {
+        if ($project['TotalSites'] == 0) {
             $transformedProject->sites = collect();
         }
-        if( $project['TotalSites'] == 1) {
+        if ($project['TotalSites'] == 1) {
             $transformedProject->sites = collect([$project['Site']]);
         }
-        if( $project['TotalSites'] > 1) {
+        if ($project['TotalSites'] > 1) {
             $transformedProject->sites = collect($project['Site']);
         }
         $transformedProject->sites->transform(function ($site, $key) {
@@ -204,18 +201,17 @@ class StatBulk extends BaseStat
         $transformedSite->total_keywords = $site['TotalKeywords'];
         $transformedSite->created_at = $site['CreatedAt'];
 
-        if(array_key_exists('Keyword', $site)){
-
+        if (array_key_exists('Keyword', $site)) {
             $transformedSite->keywords = collect($site['Keyword'])->transform(function ($keyword, $key) {
                 return $this->transformKeyword($keyword);
             });
         }
 
-        if(array_key_exists('RankDistribution', $site)){
+        if (array_key_exists('RankDistribution', $site)) {
             $transformedSite->rank_distribution = $this->transformRankDistribution($site['RankDistribution']);
         }
 
-        if(array_key_exists('Tag', $site)){
+        if (array_key_exists('Tag', $site)) {
             $transformedSite->tags = $this->getCollection($site['Tag'])->transform(function ($tag, $key) {
                 return $this->transformTag($tag);
             });
@@ -235,16 +231,16 @@ class StatBulk extends BaseStat
         $modifiedKeyword->keyword_device = $keyword['KeywordDevice'];
         $modifiedKeyword->keyword_categories = $keyword['KeywordCategories'];
 
-        if(is_null($keyword['KeywordTags'])) {
+        if (is_null($keyword['KeywordTags'])) {
             $modifiedKeyword->keyword_tags = collect();
         } else {
             $modifiedKeyword->keyword_tags = collect(explode(',', $keyword['KeywordTags']));
         }
 
-        if( is_null($keyword['KeywordStats']) ) {
+        if (is_null($keyword['KeywordStats'])) {
             $modifiedKeyword->keyword_stats = null;
         } else {
-            $localTrends = collect($keyword['KeywordStats']['LocalSearchTrendsByMonth'])->map(function ($searchVolume, $month){
+            $localTrends = collect($keyword['KeywordStats']['LocalSearchTrendsByMonth'])->map(function ($searchVolume, $month) {
                 return new StatLocalSearchTrend([
                     'month' => strtolower($month),
                     'search_volume' => ($searchVolume == '-') ? null : $searchVolume,
@@ -267,15 +263,15 @@ class StatBulk extends BaseStat
             'type' => $keyword['Ranking']['type']
         ]);
 
-        if(array_key_exists('Google', $keyword['Ranking'])){
+        if (array_key_exists('Google', $keyword['Ranking'])) {
             $modifiedKeyword->ranking->google = $this->analyzeRanking($keyword['Ranking']['Google'], $keyword['Ranking']['type']);
         }
 
-        if(array_key_exists('Yahoo', $keyword['Ranking'])){
+        if (array_key_exists('Yahoo', $keyword['Ranking'])) {
             $modifiedKeyword->ranking->yahoo = $this->analyzeRanking($keyword['Ranking']['Yahoo'], $keyword['Ranking']['type']);
         }
 
-        if(array_key_exists('Bing', $keyword['Ranking'])){
+        if (array_key_exists('Bing', $keyword['Ranking'])) {
             $modifiedKeyword->ranking->bing = $this->analyzeRanking($keyword['Ranking']['Bing'], $keyword['Ranking']['type']);
         }
 
@@ -284,29 +280,28 @@ class StatBulk extends BaseStat
 
     private function analyzeRanking($rankingForEngine, $rankingType)
     {
-        if($rankingType == 'highest') {
+        if ($rankingType == 'highest') {
             return $this->transformRanking($rankingForEngine);
         }
 
-        if(is_null($rankingForEngine['Result'])){
+        if (is_null($rankingForEngine['Result'])) {
             return null;
         }
 
         $rankings = $this->getCollection($rankingForEngine['Result'], 'Rank');
 
-        $rankings->transform(function($ranking, $key){
+        $rankings->transform(function ($ranking, $key) {
             return $this->transformRanking($ranking);
         });
 
         return $rankings;
-
     }
 
     private function transformRanking($ranking)
     {
         $transformedRanking = new StatKeywordEngineRanking();
         $transformedRanking->rank = $ranking['Rank'];
-        if(array_key_exists('BaseRank', $ranking)){
+        if (array_key_exists('BaseRank', $ranking)) {
             $transformedRanking->base_rank = $ranking['BaseRank'];
         }
         $transformedRanking->url = $ranking['Url'];
@@ -320,7 +315,7 @@ class StatBulk extends BaseStat
         $modifiedTag->id = $tag['Id'];
         $modifiedTag->tag = $tag['Tag'];
 
-        if(isset($tag['RankDistribution'])){
+        if (isset($tag['RankDistribution'])) {
             $modifiedTag->rank_distribution = $this->transformRankDistribution($tag['RankDistribution']);
         } else {
             $modifiedTag->rank_distribution = null;
@@ -328,5 +323,4 @@ class StatBulk extends BaseStat
 
         return $modifiedTag;
     }
-
 }

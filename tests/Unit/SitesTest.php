@@ -106,7 +106,6 @@ class SitesTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(63, $response->first()['total_keywords']);
         $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
         $this->assertInstanceOf(Carbon::class, $response->first()['updated_at']);
-
     }
 
     /** @test */
@@ -219,7 +218,6 @@ class SitesTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(true, $response['drop_www_prefix']);
         $this->assertEquals(true, $response['drop_directories']);
         $this->assertInstanceOf(Carbon::class, $response['created_at']);
-
     }
 
     /** @test */
@@ -483,7 +481,5 @@ class SitesTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException(ApiException::class);
 
         $response = $this->stat->sites()->rankingDistributions(13, Carbon::createFromDate(2016, 9, 1), Carbon::createFromDate(2016, 10, 5));
-
     }
-
 }

@@ -19,18 +19,17 @@ class StatSubAccounts extends BaseStat
 
         $subaccounts = collect();
 
-        if( ! isset($response['User']) ){
+        if (! isset($response['User'])) {
             return $subaccounts;
         }
 
-        if(isset($response['User']['Id'])) {
+        if (isset($response['User']['Id'])) {
             $subaccounts->push($response['User']);
         } else {
             $subaccounts = collect($response['User']);
         }
 
         $subaccounts->transform(function ($item, $key) {
-
             return new StatSubAccount([
                 'id' => $item['Id'],
                 'login' => $item['Login'],
@@ -41,5 +40,4 @@ class StatSubAccounts extends BaseStat
 
         return $subaccounts;
     }
-
 }

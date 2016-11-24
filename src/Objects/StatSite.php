@@ -22,5 +22,4 @@ class StatSite extends DataTransferObject
     {
         return $this->attributes['drop_directories'] = (bool)$value;
     }
-
 }

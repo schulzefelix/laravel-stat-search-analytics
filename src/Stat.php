@@ -66,27 +66,20 @@ class Stat
     public function subaccounts()
     {
         return new StatSubAccounts($this->statClient);
-
     }
 
     public function blockedUntil()
     {
-        try
-        {
+        try {
             $this->statClient->performQuery('projects/list', []);
-        }
-        catch(ClientException $e)
-        {
+        } catch (ClientException $e) {
             $now = Carbon::now();
-            try
-            {
-                if($e->getCode() == 403){
+            try {
+                if ($e->getCode() == 403) {
                     preg_match("/(\d{1,2}) hours and (\d{1,2}) minutes/", $e->getResponse()->getBody()->getContents(), $matches);
                     return $now->addHours($matches[1])->addMinutes($matches[2]);
                 }
-            }
-            catch(\Exception $e)
-            {
+            } catch (\Exception $e) {
                 //
             }
         }

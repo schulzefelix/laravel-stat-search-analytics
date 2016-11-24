@@ -171,5 +171,4 @@ class ProjectsTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('int', $response);
         $this->assertEquals(615, $response);
     }
-
 }

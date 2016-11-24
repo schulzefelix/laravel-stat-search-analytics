@@ -11,7 +11,4 @@ class StatKeyword extends DataTransferObject
         'drop_www_prefix' => 'boolean',
         'drop_directories' => 'boolean',
     ];
-
-
-
 }
