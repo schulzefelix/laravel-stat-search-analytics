@@ -57,7 +57,7 @@ class StatTags extends BaseStat
             $rankDistribution = collect([$response['RankDistribution']]);
         }
 
-        $rankDistribution->transform(function ($distribution, $key) {
+        $rankDistribution->transform(function($distribution, $key) {
             return $this->transformRankDistribution($distribution);
         });
 

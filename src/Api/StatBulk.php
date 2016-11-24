@@ -3,8 +3,6 @@
 namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Objects\StatBulkJob;
 use SchulzeFelix\Stat\Objects\StatKeyword;
@@ -113,7 +111,7 @@ class StatBulk extends BaseStat
     {
         $response = $this->performQuery('bulk/delete', ['id' => $bulkJobID]);
 
-        return (int) $response['Result']['Id'];
+        return (int)$response['Result']['Id'];
     }
 
     public function siteRankingDistributions($date)
@@ -121,7 +119,7 @@ class StatBulk extends BaseStat
         $this->validateBulkDate($date);
 
         $response = $this->performQuery('bulk/site_ranking_distributions', ['date' => $date->toDateString()]);
-        return (int) $response['Result']['Id'];
+        return (int)$response['Result']['Id'];
     }
 
     public function tagRankingDistributions($date)
@@ -161,7 +159,7 @@ class StatBulk extends BaseStat
     {
         $projects = $this->getCollection($bulkStream['Project']);
 
-        $projects->transform(function ($project, $key) {
+        $projects->transform(function($project, $key) {
             return $this->transformProject($project);
         });
 
