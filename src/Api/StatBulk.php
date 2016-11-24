@@ -159,7 +159,7 @@ class StatBulk extends BaseStat
     {
         $projects = $this->getCollection($bulkStream['Project']);
 
-        $projects->transform(function($project, $key) {
+        $projects->transform(function ($project, $key) {
             return $this->transformProject($project);
         });
 
