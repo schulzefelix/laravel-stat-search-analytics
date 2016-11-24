@@ -73,7 +73,4 @@ class SubaccountsTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('api_key', $response->first());
         $this->assertArrayHasKey('created_at', $response->first());
     }
-
-
-
 }

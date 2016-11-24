@@ -67,7 +67,7 @@ class StatSites extends BaseStat
             $sites = collect($response['Result']);
         }
 
-        $sites->transform(function ($site, $key) use($projectID) {
+        $sites->transform(function ($site, $key) use ($projectID) {
             return new StatSite([
                 'id' => $site['Id'],
                 'project_id' => $projectID,

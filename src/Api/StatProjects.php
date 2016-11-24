@@ -63,7 +63,6 @@ class StatProjects extends BaseStat
             'created_at' => $response['Result']['CreatedAt'],
             'updated_at' => $response['Result']['UpdatedAt'],
         ]);
-
     }
 
     /**

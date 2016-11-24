@@ -12,7 +12,4 @@ class StatKeywordStats extends DataTransferObject
         'local_search_trends_by_month' => 'collection',
         'cpc' => 'float',
     ];
-
-
-
 }

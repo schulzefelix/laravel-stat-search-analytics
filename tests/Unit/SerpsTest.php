@@ -71,7 +71,4 @@ class SerpsTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('base_rank', $response->first());
         $this->assertArrayHasKey('url', $response->first());
     }
-
-
-
 }

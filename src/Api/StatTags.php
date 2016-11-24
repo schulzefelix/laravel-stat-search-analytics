@@ -22,8 +22,7 @@ class StatTags extends BaseStat
         }
 
         $tags = collect($response['Result'])->transform(function ($item, $key) {
-
-            if($item['Keywords'] == 'none') {
+            if ($item['Keywords'] == 'none') {
                 $item['Keywords'] = collect();
             } else {
                 $item['Keywords'] = collect($item['Keywords']['Id']);
@@ -64,6 +63,4 @@ class StatTags extends BaseStat
 
         return $rankDistribution;
     }
-
-
 }

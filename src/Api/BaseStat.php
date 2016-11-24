@@ -33,12 +33,9 @@ class BaseStat
      */
     public function performQuery($method, $parameters = [])
     {
-        try
-        {
+        try {
             $response = $this->statClient->performQuery($method, $parameters);
-        }
-        catch(ClientException $e)
-        {
+        } catch (ClientException $e) {
             $xml = simplexml_load_string($e->getResponse()->getBody()->getContents());
             throw ApiException::requestException($xml->__toString());
         }
@@ -58,8 +55,7 @@ class BaseStat
      */
     protected function checkMaximumDateRange(Carbon $fromDate, Carbon $toDate, $maxDays = 31)
     {
-
-        if($fromDate->diffInDays($toDate) > $maxDays) {
+        if ($fromDate->diffInDays($toDate) > $maxDays) {
             throw ApiException::resultError('The maximum date range between from_date and to_date is '.$maxDays.' days.');
         }
     }
@@ -71,7 +67,7 @@ class BaseStat
      */
     protected function getCollection($element, $identifier = 'Id')
     {
-        if(isset($element[$identifier])){
+        if (isset($element[$identifier])) {
             $collection = collect([$element]);
         } else {
             $collection = collect($element);
@@ -89,7 +85,7 @@ class BaseStat
         $rankDistribution = new StatRankDistribution();
         $rankDistribution->date = $distribution['date'];
 
-        if(array_key_exists('Google', $distribution)){
+        if (array_key_exists('Google', $distribution)) {
             $rankDistribution->google = new StatEngineRankDistribution([
                 'one' => $distribution['Google']['One'],
                 'two' => $distribution['Google']['Two'],
@@ -106,7 +102,7 @@ class BaseStat
             ]);
         }
 
-        if(array_key_exists('GoogleBaseRank', $distribution)){
+        if (array_key_exists('GoogleBaseRank', $distribution)) {
             $rankDistribution->google_base_rank = new StatEngineRankDistribution([
                 'one' => $distribution['GoogleBaseRank']['One'],
                 'two' => $distribution['GoogleBaseRank']['Two'],
@@ -123,7 +119,7 @@ class BaseStat
             ]);
         }
 
-        if(array_key_exists('Yahoo', $distribution)){
+        if (array_key_exists('Yahoo', $distribution)) {
             $rankDistribution->yahoo = new StatEngineRankDistribution([
                 'one' => $distribution['Yahoo']['One'],
                 'two' => $distribution['Yahoo']['Two'],
@@ -140,7 +136,7 @@ class BaseStat
             ]);
         }
 
-        if(array_key_exists('Bing', $distribution)){
+        if (array_key_exists('Bing', $distribution)) {
             $rankDistribution->bing = new StatEngineRankDistribution([
                 'one' => $distribution['Bing']['One'],
                 'two' => $distribution['Bing']['Two'],
