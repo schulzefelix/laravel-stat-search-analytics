@@ -2,8 +2,6 @@
 
 namespace SchulzeFelix\Stat\Api;
 
-use Carbon\Carbon;
-use Carbon\CarbonInterval;
 use Illuminate\Support\Collection;
 use SchulzeFelix\Stat\Objects\StatSubAccount;
 

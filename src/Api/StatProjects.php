@@ -2,9 +2,7 @@
 
 namespace SchulzeFelix\Stat\Api;
 
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use SchulzeFelix\Stat\Objects\StatProject;
 use SchulzeFelix\Stat\Stat;
 
@@ -18,7 +16,7 @@ class StatProjects extends BaseStat
     {
         $response = $this->performQuery('projects/list');
 
-        $projects = collect($response['Result'])->map(function ($project, $key) {
+        $projects = collect($response['Result'])->map(function($project, $key) {
             return new StatProject([
                 'id' => $project['Id'],
                 'name' => $project['Name'],

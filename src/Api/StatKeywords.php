@@ -2,7 +2,6 @@
 
 namespace SchulzeFelix\Stat\Api;
 
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use SchulzeFelix\Stat\Objects\StatKeyword;
 use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
@@ -120,7 +119,7 @@ class StatKeywords extends BaseStat
 
     /**
      * @param $keyword
-     * @return mixed
+     * @return StatKeyword
      */
     protected function transformCreatedKeyword($keyword)
     {
@@ -137,7 +136,7 @@ class StatKeywords extends BaseStat
 
     /**
      * @param $keyword
-     * @return mixed
+     * @return StatKeyword
      */
     protected function transformListedKeyword($keyword)
     {
