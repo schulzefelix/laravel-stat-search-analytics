@@ -16,7 +16,7 @@ class StatProjects extends BaseStat
     {
         $response = $this->performQuery('projects/list');
 
-        $projects = collect($response['Result'])->map(function($project, $key) {
+        $projects = collect($response['Result'])->map(function ($project, $key) {
             return new StatProject([
                 'id' => $project['Id'],
                 'name' => $project['Name'],

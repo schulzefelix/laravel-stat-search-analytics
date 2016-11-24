@@ -28,7 +28,7 @@ class StatSites extends BaseStat
         } while ($response['resultsreturned'] < $response['totalresults']);
 
 
-        $sites->transform(function($site, $key) {
+        $sites->transform(function ($site, $key) {
             return new StatSite([
                 'id' => $site['Id'],
                 'project_id' => $site['ProjectId'],
@@ -103,7 +103,7 @@ class StatSites extends BaseStat
             $rankDistribution = collect([$response['RankDistribution']]);
         }
 
-        $rankDistribution->transform(function($distribution, $key) {
+        $rankDistribution->transform(function ($distribution, $key) {
             return $this->transformRankDistribution($distribution);
         });
 
