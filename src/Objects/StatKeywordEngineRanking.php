@@ -4,7 +4,8 @@ use SchulzeFelix\DataTransferObject\DataTransferObject;
 
 class StatKeywordEngineRanking extends DataTransferObject
 {
-    protected $dates = [
-        'rank' => 'integer'
+    protected $cast = [
+        'rank' => 'integer',
+        'base_rank' => 'integer',
     ];
 }

@@ -6,6 +6,14 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use SchulzeFelix\Stat\Exceptions\ApiException;
+use SchulzeFelix\Stat\Objects\StatBulkJob;
+use SchulzeFelix\Stat\Objects\StatKeyword;
+use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordStats;
+use SchulzeFelix\Stat\Objects\StatLocalSearchTrend;
+use SchulzeFelix\Stat\Objects\StatProject;
+use SchulzeFelix\Stat\Objects\StatSite;
 
 class StatBulk extends BaseStat
 {
@@ -30,16 +38,16 @@ class StatBulk extends BaseStat
 
         return $bulkJobs->transform(function ($job, $key) {
 
-            return [
-                'id' => (int)$job['Id'],
+            return new StatBulkJob([
+                'id' => $job['Id'],
                 'job_type' => $job['JobType'],
                 'format' => $job['Format'],
-                'date' => Carbon::parse($job['Date']),
+                'date' => $job['Date'],
                 'status' => $job['Status'],
                 'url' => $job['Url'],
                 'stream_url' => $job['StreamUrl'],
-                'created_at' => Carbon::parse($job['CreatedAt']),
-            ];
+                'created_at' => $job['CreatedAt'],
+            ]);
 
         });
     }
@@ -79,25 +87,25 @@ class StatBulk extends BaseStat
     {
         $response = $this->performQuery('bulk/status', ['id' => $bulkJobID]);
 
-        $jobStatus = [];
-        $jobStatus['id'] = (int)$response['Result']['Id'];
-        $jobStatus['job_type'] = $response['Result']['JobType'];
-        $jobStatus['format'] = $response['Result']['Format'];
-        $jobStatus['date'] = Carbon::parse($response['Result']['Date']);
+        $jobStatus = new StatBulkJob();
+        $jobStatus->id = $response['Result']['Id'];
+        $jobStatus->job_type = $response['Result']['JobType'];
+        $jobStatus->format = $response['Result']['Format'];
+        $jobStatus->date = $response['Result']['Date'];
 
-        $jobStatus['sites'] = collect();
+        $jobStatus->sites = collect();
         if(isset($response['Result']['SiteId'])){
-            $jobStatus['sites'] = collect( explode(',', $response['Result']['SiteId']))
+            $jobStatus->sites = collect( explode(',', $response['Result']['SiteId']))
                                 ->transform(function ($site, $key) {
                                     return (int)$site;
                                 });
         }
 
         //Current Job Status (NotStarted,InProgress,Completed,Deleted,Failed)
-        $jobStatus['status'] = $response['Result']['Status'];
-        $jobStatus['url'] = $response['Result']['Url'] ?? null;
-        $jobStatus['stream_url'] = $response['Result']['StreamUrl'] ?? null;
-        $jobStatus['created_at'] = Carbon::parse($response['Result']['CreatedAt']);
+        $jobStatus->status = $response['Result']['Status'];
+        $jobStatus->url = $response['Result']['Url'] ?? null;
+        $jobStatus->stream_url = $response['Result']['StreamUrl'] ?? null;
+        $jobStatus->created_at = $response['Result']['CreatedAt'];
 
         return $jobStatus;
 
@@ -172,21 +180,22 @@ class StatBulk extends BaseStat
 
     private function transformProject($project)
     {
-        $transformedProject['id'] = (int)$project['Id'];
-        $transformedProject['name'] = $project['Name'];
-        $transformedProject['total_sites'] = (int)$project['TotalSites'];
-        $transformedProject['created_at'] = Carbon::parse($project['CreatedAt']);
+        $transformedProject = new StatProject();
+        $transformedProject->id = $project['Id'];
+        $transformedProject->name = $project['Name'];
+        $transformedProject->total_sites = $project['TotalSites'];
+        $transformedProject->created_at = $project['CreatedAt'];
 
-        //Todo Test!
-        if( $project['TotalSites'] == 0) {}
+        if( $project['TotalSites'] == 0) {
+            $transformedProject->sites = collect();
+        }
         if( $project['TotalSites'] == 1) {
-            $transformedProject['sites'] = collect([$project['Site']]);
+            $transformedProject->sites = collect([$project['Site']]);
         }
         if( $project['TotalSites'] > 1) {
-            $transformedProject['sites'] = collect($project['Site']);
+            $transformedProject->sites = collect($project['Site']);
         }
-
-        $transformedProject['sites']->transform(function ($site, $key) {
+        $transformedProject->sites->transform(function ($site, $key) {
             return $this->transformSite($site);
         });
 
@@ -196,71 +205,85 @@ class StatBulk extends BaseStat
 
     private function transformSite($site)
     {
-        $transformedSite['id'] = (int)$site['Id'];
-        $transformedSite['url'] = $site['Url'];
-        $transformedSite['total_keywords'] = (int)$site['TotalKeywords'];
-        $transformedSite['created_at'] = Carbon::parse($site['CreatedAt']);
+        $transformedSite = new StatSite();
+        $transformedSite->id = $site['Id'];
+        $transformedSite->url = $site['Url'];
+        $transformedSite->total_keywords = $site['TotalKeywords'];
+        $transformedSite->created_at = $site['CreatedAt'];
 
-        $transformedSite['keywords'] = collect($site['Keyword'])->transform(function ($keyword, $key) {
-            return $this->transformKeyword($keyword);
-        });
+        if(array_key_exists('Keyword', $site)){
+            $transformedSite->keywords = collect($site['Keyword'])->transform(function ($keyword, $key) {
+                return $this->transformKeyword($keyword);
+            });
+        }
+
+        if(array_key_exists('RankDistribution', $site)){
+            $transformedSite->rank_distribution = $this->transformRankDistribution($site['RankDistribution']);
+        }
+
+        if(array_key_exists('Tag', $site)){
+//            $transformedSite->rank_distribution = collect($site['Keyword'])->transform(function ($rankDistribution, $key) {
+//                return $this->transformRankDistribution($rankDistribution);
+//            });
+        }
 
 
         return $transformedSite;
-
-
     }
 
     private function transformKeyword($keyword)
     {
-        $modifiedKeyword['id'] = (int)$keyword['Id'];
-        $modifiedKeyword['keyword'] = $keyword['Keyword'];
-        $modifiedKeyword['keyword_market'] = $keyword['KeywordMarket'];
-        $modifiedKeyword['keyword_location'] = $keyword['KeywordLocation'];
-        $modifiedKeyword['keyword_device'] = $keyword['KeywordDevice'];
-        $modifiedKeyword['keyword_categories'] = $keyword['KeywordCategories'];
+        $modifiedKeyword = new StatKeyword();
+        $modifiedKeyword->id = $keyword['Id'];
+        $modifiedKeyword->keyword = $keyword['Keyword'];
+        $modifiedKeyword->keyword_market = $keyword['KeywordMarket'];
+        $modifiedKeyword->keyword_location = $keyword['KeywordLocation'];
+        $modifiedKeyword->keyword_device = $keyword['KeywordDevice'];
+        $modifiedKeyword->keyword_categories = $keyword['KeywordCategories'];
 
-        if($keyword['KeywordTags'] == null) {
-            $modifiedKeyword['keyword_tags'] = collect();
+        if(is_null($keyword['KeywordTags'])) {
+            $modifiedKeyword->keyword_tags = collect();
         } else {
-            $modifiedKeyword['keyword_tags'] = collect(explode(',', $keyword['KeywordTags']));
+            $modifiedKeyword->keyword_tags = collect(explode(',', $keyword['KeywordTags']));
         }
 
         if( is_null($keyword['KeywordStats']) ) {
-            $modifiedKeyword['keyword_stats'] = null;
+            $modifiedKeyword->keyword_stats = null;
         } else {
-            $modifiedKeyword['keyword_stats']['advertiser_competition'] = (float)$keyword['KeywordStats']['AdvertiserCompetition'];
-            $modifiedKeyword['keyword_stats']['global_search_volume'] = (int)$keyword['KeywordStats']['GlobalSearchVolume'];
-            $modifiedKeyword['keyword_stats']['targeted_search_volume'] = (int)$keyword['KeywordStats']['TargetedSearchVolume'];
+            $localTrends = collect($keyword['KeywordStats']['LocalSearchTrendsByMonth'])->map(function ($searchVolume, $month){
+                return new StatLocalSearchTrend([
+                    'month' => strtolower($month),
+                    'search_volume' => ($searchVolume == '-') ? null : $searchVolume,
+                ]);
+            });
 
-            foreach ($keyword['KeywordStats']['LocalSearchTrendsByMonth'] as $month => $searchVolume) {
-                if($searchVolume == '-') {
-                    $searchVolume = '';
-                } else {
-                    $searchVolume = (int)$searchVolume;
-                }
-                $modifiedKeyword['keyword_stats']['local_search_trends_by_month'][strtolower($month)] = $searchVolume;
-            }
-
-            $modifiedKeyword['keyword_stats']['cpc'] = $keyword['KeywordStats']['CPC'];
+            $modifiedKeyword->keyword_stats = new StatKeywordStats([
+                'advertiser_competition' => $keyword['KeywordStats']['AdvertiserCompetition'],
+                'global_search_volume' => $keyword['KeywordStats']['GlobalSearchVolume'],
+                'targeted_search_volume' => $keyword['KeywordStats']['TargetedSearchVolume'],
+                'cpc' => $keyword['KeywordStats']['CPC'],
+                'local_search_trends_by_month' => $localTrends->values(),
+            ]);
         }
 
-        $modifiedKeyword['created_at'] = Carbon::parse($keyword['CreatedAt']);
-        $modifiedKeyword['ranking']['date'] = Carbon::parse($keyword['Ranking']['date']);
-        $modifiedKeyword['ranking']['type'] = $keyword['Ranking']['type'];
+        $modifiedKeyword->created_at = $keyword['CreatedAt'];
 
-        if(isset($keyword['Ranking']['Google'])){
-            $modifiedKeyword['ranking']['google'] = $this->analyzeRanking($keyword['Ranking']['Google'], $keyword['Ranking']['type']);
+        $modifiedKeyword->ranking = new StatKeywordRanking([
+            'date' => $keyword['Ranking']['date'],
+            'type' => $keyword['Ranking']['type']
+        ]);
+
+        if(array_key_exists('Google', $keyword['Ranking'])){
+            $modifiedKeyword->ranking->google = $this->analyzeRanking($keyword['Ranking']['Google'], $keyword['Ranking']['type']);
         }
 
-        if(isset($keyword['Ranking']['Yahoo'])){
-            $modifiedKeyword['ranking']['yahoo'] = $this->analyzeRanking($keyword['Ranking']['Yahoo'], $keyword['Ranking']['type']);
+        if(array_key_exists('Yahoo', $keyword['Ranking'])){
+            $modifiedKeyword->ranking->yahoo = $this->analyzeRanking($keyword['Ranking']['Yahoo'], $keyword['Ranking']['type']);
         }
 
-        if(isset($keyword['Ranking']['Bing'])){
-            $modifiedKeyword['ranking']['bing'] = $this->analyzeRanking($keyword['Ranking']['Bing'], $keyword['Ranking']['type']);
+        if(array_key_exists('Bing', $keyword['Ranking'])){
+            $modifiedKeyword->ranking->bing = $this->analyzeRanking($keyword['Ranking']['Bing'], $keyword['Ranking']['type']);
         }
-
 
         return $modifiedKeyword;
     }
@@ -271,16 +294,20 @@ class StatBulk extends BaseStat
             return $this->transformRanking($rankingForEngine);
         }
 
-        $rankings = collect();
+        if(is_null($rankingForEngine['Result'])){
+            return null;
+        }
 
-        if(isset($rankingForEngine['Result']['Rank'])){
+        $rankings = collect();
+        if(array_key_exists('Rank', $rankingForEngine['Result'])){
             $rankings->push($rankingForEngine['Result']);
         } else {
             $rankings = collect($rankingForEngine['Result']);
         }
 
+
         $rankings->transform(function($ranking, $key){
-            $this->transformRanking($ranking);
+            return $this->transformRanking($ranking);
         });
 
         return $rankings;
@@ -289,11 +316,12 @@ class StatBulk extends BaseStat
 
     private function transformRanking($ranking)
     {
-        $transformedRanking['rank'] = $ranking['Rank'];
+        $transformedRanking = new StatKeywordEngineRanking();
+        $transformedRanking->rank = $ranking['Rank'];
         if(array_key_exists('BaseRank', $ranking)){
-            $transformedRanking['base_rank'] = $ranking['BaseRank'];
+            $transformedRanking->base_rank = $ranking['BaseRank'];
         }
-        $transformedRanking['url'] = $ranking['Url'];
+        $transformedRanking->url = $ranking['Url'];
 
         return $transformedRanking;
     }

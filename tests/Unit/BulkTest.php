@@ -8,6 +8,9 @@ use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit_Framework_TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
+use SchulzeFelix\Stat\Objects\StatBulkJob;
+use SchulzeFelix\Stat\Objects\StatProject;
+use SchulzeFelix\Stat\Objects\StatRankDistribution;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
@@ -72,16 +75,17 @@ class BulkTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->bulk()->list();
 
         $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(StatBulkJob::class, $response->first());
         $this->assertEquals(2, $response->count());
 
-        $this->assertArrayHasKey('id', $response->first());
-        $this->assertArrayHasKey('job_type', $response->first());
-        $this->assertArrayHasKey('format', $response->first());
-        $this->assertArrayHasKey('date', $response->first());
-        $this->assertArrayHasKey('status', $response->first());
-        $this->assertArrayHasKey('url', $response->first());
-        $this->assertArrayHasKey('stream_url', $response->first());
-        $this->assertArrayHasKey('created_at', $response->first());
+        $this->assertArrayHasKey('id', $response->first()->toArray());
+        $this->assertArrayHasKey('job_type', $response->first()->toArray());
+        $this->assertArrayHasKey('format', $response->first()->toArray());
+        $this->assertArrayHasKey('date', $response->first()->toArray());
+        $this->assertArrayHasKey('status', $response->first()->toArray());
+        $this->assertArrayHasKey('url', $response->first()->toArray());
+        $this->assertArrayHasKey('stream_url', $response->first()->toArray());
+        $this->assertArrayHasKey('created_at', $response->first()->toArray());
 
         $this->assertInstanceOf(Carbon::class, $response->first()['date']);
         $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
@@ -156,18 +160,19 @@ class BulkTest extends PHPUnit_Framework_TestCase
             ]]);
 
         $response = $this->stat->bulk()->status(1);
-        $this->assertInternalType('array', $response);
-        $this->assertEquals(9, count($response));
 
-        $this->assertArrayHasKey('id', $response);
-        $this->assertArrayHasKey('job_type', $response);
-        $this->assertArrayHasKey('format', $response);
-        $this->assertArrayHasKey('date', $response);
-        $this->assertArrayHasKey('sites', $response);
-        $this->assertArrayHasKey('url', $response);
-        $this->assertArrayHasKey('stream_url', $response);
-        $this->assertArrayHasKey('created_at', $response);
-        $this->assertInstanceOf(Collection::class, $response['sites']);
+        $this->assertInstanceOf(StatBulkJob::class, $response);
+        $this->assertEquals(9, count($response->toArray()));
+
+        $this->assertArrayHasKey('id', $response->toArray());
+        $this->assertArrayHasKey('job_type', $response->toArray());
+        $this->assertArrayHasKey('format', $response->toArray());
+        $this->assertArrayHasKey('date', $response->toArray());
+        $this->assertArrayHasKey('sites', $response->toArray());
+        $this->assertArrayHasKey('url', $response->toArray());
+        $this->assertArrayHasKey('stream_url', $response->toArray());
+        $this->assertArrayHasKey('created_at', $response->toArray());
+        $this->assertInstanceOf(Collection::class, $response->sites);
 
         $this->assertEquals(1, $response['id']);
         $this->assertEquals('ranks', $response['job_type']);
@@ -262,7 +267,7 @@ class BulkTest extends PHPUnit_Framework_TestCase
 
 
     /** @test */
-    public function it_can_retrieve_a_bulk_export_for_a_single_project_with_single_site_type_highest()
+    public function it_can_retrieve_a_ranks_bulk_export_for_a_single_project_with_single_site_type_highest()
     {
         $expectedArguments = [
             'bulk/status', ['id' => 1787]
@@ -299,14 +304,15 @@ class BulkTest extends PHPUnit_Framework_TestCase
         $response = $this->stat->bulk()->get(1787);
 
         $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(StatProject::class, $response->first());
         $this->assertEquals(1, $response->count());
 
-        $this->assertEquals(1, $response->first()['total_sites']);
-        $this->assertEquals('Development', $response->first()['name']);
-        $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
-        $this->assertInstanceOf(Collection::class, $response->first()['sites']);
+        $this->assertEquals(1, $response->first()->total_sites);
+        $this->assertEquals('Development', $response->first()->name);
+        $this->assertInstanceOf(Carbon::class, $response->first()->created_at);
+        $this->assertInstanceOf(Collection::class, $response->first()->sites);
 
-        $this->assertEquals(5, $response->first()['sites']->first()['total_keywords']);
+        $this->assertEquals(5, $response->first()->sites->first()->total_keywords);
         $this->assertInstanceOf(Carbon::class, $response->first()['sites']->first()['created_at']);
         $this->assertInstanceOf(Collection::class, $response->first()['sites']->first()['keywords']);
 
@@ -314,7 +320,7 @@ class BulkTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_can_retrieve_a_bulk_export_for_a_single_project_with_single_site_type_all()
+    public function it_can_retrieve_a_rank_bulk_export_for_a_single_project_with_single_site_type_all()
     {
         $expectedArguments = [
             'bulk/status', ['id' => 1790]
@@ -356,12 +362,65 @@ class BulkTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Development', $response->first()['name']);
         $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
         $this->assertInstanceOf(Collection::class, $response->first()['sites']);
+        $this->assertInstanceOf(Collection::class, $response->first()->sites->first()->keywords->first()->keyword_tags);
 
         $this->assertEquals(5, $response->first()['sites']->first()['total_keywords']);
         $this->assertInstanceOf(Carbon::class, $response->first()['sites']->first()['created_at']);
         $this->assertInstanceOf(Collection::class, $response->first()['sites']->first()['keywords']);
 
+        $this->assertNull($response->first()->sites->first()->keywords->first()->ranking->bing);
+
+
         $this->assertJsonStringEqualsJsonFile('tests/Unit/json-responses/1790-transformed.json', $response->toJson());
+    }
+
+    /** @test */
+    public function it_can_retrieve_a_site_rank_distributions_bulk_export()
+    {
+        $expectedArguments = [
+            'bulk/status', ['id' => 2175]
+        ];
+
+        $this->statClient
+            ->shouldReceive('performQuery')->withArgs($expectedArguments)
+            ->once()
+            ->andReturn(['Response' => [
+                'responsecode' => "200",
+                'Result' => [
+                    'Id' => '2175',
+                    'JobType' => 'site_ranking_distributions',
+                    'Format' => 'json',
+                    'Date' => '2016-11-23',
+                    'Status' => 'Completed',
+                    'Url' => 'https://try.getstat.com/bulk_reports/download_report/2175?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
+                    'StreamUrl' => 'https://try.getstat.com/bulk_reports/stream_report/2175?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
+                    'CreatedAt' => '2016-11-24',
+                ]
+            ]]);
+
+        $expectedArguments = [
+            'https://try.getstat.com/bulk_reports/stream_report/2175?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18'
+        ];
+        $expectedResponse = json_decode(file_get_contents('tests/Unit/json-responses/2175.json'), true);
+        $this->statClient
+            ->shouldReceive('downloadBulkJobStream')->withArgs($expectedArguments)
+            ->once()
+            ->andReturn($expectedResponse);
+
+
+        $response = $this->stat->bulk()->get(2175);
+
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertEquals(3, $response->count());
+
+        $this->assertEquals(1, $response->first()->total_sites);
+        $this->assertEquals('Development', $response->first()->name);
+        $this->assertInstanceOf(Carbon::class, $response->first()->created_at);
+        $this->assertInstanceOf(Collection::class, $response->first()->sites);
+        $this->assertInstanceOf(StatRankDistribution::class, $response->first()->sites->first()->rank_distribution);
+        $this->assertInstanceOf(Carbon::class, $response->first()->sites->first()->rank_distribution->date);
+
+        $this->assertJsonStringEqualsJsonFile('tests/Unit/json-responses/2175-transformed.json', $response->toJson());
     }
 
 }
