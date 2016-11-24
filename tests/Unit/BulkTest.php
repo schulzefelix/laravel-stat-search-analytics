@@ -9,8 +9,10 @@ use Mockery;
 use PHPUnit_Framework_TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Objects\StatBulkJob;
+use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
 use SchulzeFelix\Stat\Objects\StatProject;
 use SchulzeFelix\Stat\Objects\StatRankDistribution;
+use SchulzeFelix\Stat\Objects\StatTag;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
@@ -421,6 +423,58 @@ class BulkTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Carbon::class, $response->first()->sites->first()->rank_distribution->date);
 
         $this->assertJsonStringEqualsJsonFile('tests/Unit/json-responses/2175-transformed.json', $response->toJson());
+    }
+
+    /** @test */
+    public function it_can_retrieve_a_tag_rank_distributions_bulk_export()
+    {
+        $expectedArguments = [
+            'bulk/status', ['id' => 2177]
+        ];
+
+        $this->statClient
+            ->shouldReceive('performQuery')->withArgs($expectedArguments)
+            ->once()
+            ->andReturn(['Response' => [
+                'responsecode' => "200",
+                'Result' => [
+                    'Id' => '2177',
+                    'JobType' => 'tag_ranking_distributions',
+                    'Format' => 'json',
+                    'Date' => '2016-11-23',
+                    'Status' => 'Completed',
+                    'Url' => 'https://try.getstat.com/bulk_reports/download_report/2177?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
+                    'StreamUrl' => 'https://try.getstat.com/bulk_reports/stream_report/2177?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
+                    'CreatedAt' => '2016-11-24',
+                ]
+            ]]);
+
+        $expectedArguments = [
+            'https://try.getstat.com/bulk_reports/stream_report/2177?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18'
+        ];
+        $expectedResponse = json_decode(file_get_contents('tests/Unit/json-responses/2177.json'), true);
+        $this->statClient
+            ->shouldReceive('downloadBulkJobStream')->withArgs($expectedArguments)
+            ->once()
+            ->andReturn($expectedResponse);
+
+
+        $response = $this->stat->bulk()->get(2177);
+
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertEquals(3, $response->count());
+
+        $this->assertEquals(1, $response->first()->total_sites);
+        $this->assertEquals('Development', $response->first()->name);
+        $this->assertInstanceOf(Carbon::class, $response->first()->created_at);
+        $this->assertInstanceOf(Collection::class, $response->first()->sites);
+        $this->assertInstanceOf(Collection::class, $response->first()->sites->first()->tags);
+        $this->assertInstanceOf(StatTag::class, $response->first()->sites->first()->tags->first());
+        $this->assertInstanceOf(StatRankDistribution::class, $response->first()->sites->first()->tags->first()->rank_distribution);
+        $this->assertInstanceOf(StatEngineRankDistribution::class, $response->first()->sites->first()->tags->first()->rank_distribution->google);
+        $this->assertInstanceOf(Carbon::class, $response->first()->sites->first()->tags->first()->rank_distribution->date);
+
+//        $this->assertJsonStringEqualsJsonFile('tests/Unit/json-responses/2177-transformed.json', $response->toJson());
     }
 
 }

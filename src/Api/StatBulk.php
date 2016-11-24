@@ -14,6 +14,7 @@ use SchulzeFelix\Stat\Objects\StatKeywordStats;
 use SchulzeFelix\Stat\Objects\StatLocalSearchTrend;
 use SchulzeFelix\Stat\Objects\StatProject;
 use SchulzeFelix\Stat\Objects\StatSite;
+use SchulzeFelix\Stat\Objects\StatTag;
 
 class StatBulk extends BaseStat
 {
@@ -145,8 +146,6 @@ class StatBulk extends BaseStat
         $bulkStream = $this->statClient->downloadBulkJobStream($bulkStatus['stream_url']);
 
         return $this->parseBulkJob($bulkStream['Response']);
-//        $expectedResponse = json_decode(file_get_contents( public_path() . '/1918.json'), true);
-//        return $this->parseBulkJob($expectedResponse['Response']);
     }
 
     /**
@@ -163,13 +162,7 @@ class StatBulk extends BaseStat
 
     private function parseBulkJob($bulkStream)
     {
-        $projects = collect();
-
-        if(isset($bulkStream['Project']['Id'])){
-            $projects->push($bulkStream['Project']);
-        } else {
-            $projects = collect($bulkStream['Project']);
-        }
+        $projects = $this->getCollection($bulkStream['Project']);
 
         $projects->transform(function ($project, $key) {
             return $this->transformProject($project);
@@ -212,6 +205,7 @@ class StatBulk extends BaseStat
         $transformedSite->created_at = $site['CreatedAt'];
 
         if(array_key_exists('Keyword', $site)){
+
             $transformedSite->keywords = collect($site['Keyword'])->transform(function ($keyword, $key) {
                 return $this->transformKeyword($keyword);
             });
@@ -222,9 +216,9 @@ class StatBulk extends BaseStat
         }
 
         if(array_key_exists('Tag', $site)){
-//            $transformedSite->rank_distribution = collect($site['Keyword'])->transform(function ($rankDistribution, $key) {
-//                return $this->transformRankDistribution($rankDistribution);
-//            });
+            $transformedSite->tags = $this->getCollection($site['Tag'])->transform(function ($tag, $key) {
+                return $this->transformTag($tag);
+            });
         }
 
 
@@ -298,13 +292,7 @@ class StatBulk extends BaseStat
             return null;
         }
 
-        $rankings = collect();
-        if(array_key_exists('Rank', $rankingForEngine['Result'])){
-            $rankings->push($rankingForEngine['Result']);
-        } else {
-            $rankings = collect($rankingForEngine['Result']);
-        }
-
+        $rankings = $this->getCollection($rankingForEngine['Result'], 'Rank');
 
         $rankings->transform(function($ranking, $key){
             return $this->transformRanking($ranking);
@@ -324,6 +312,21 @@ class StatBulk extends BaseStat
         $transformedRanking->url = $ranking['Url'];
 
         return $transformedRanking;
+    }
+
+    private function transformTag($tag)
+    {
+        $modifiedTag = new StatTag();
+        $modifiedTag->id = $tag['Id'];
+        $modifiedTag->tag = $tag['Tag'];
+
+        if(isset($tag['RankDistribution'])){
+            $modifiedTag->rank_distribution = $this->transformRankDistribution($tag['RankDistribution']);
+        } else {
+            $modifiedTag->rank_distribution = null;
+        }
+
+        return $modifiedTag;
     }
 
 }

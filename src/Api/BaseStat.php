@@ -25,6 +25,12 @@ class BaseStat
     }
 
 
+    /**
+     * @param $method
+     * @param array $parameters
+     * @return mixed
+     * @throws ApiException
+     */
     public function performQuery($method, $parameters = [])
     {
         try
@@ -44,6 +50,12 @@ class BaseStat
         throw ApiException::resultError($response['Result']);
     }
 
+    /**
+     * @param Carbon $fromDate
+     * @param Carbon $toDate
+     * @param int $maxDays
+     * @throws ApiException
+     */
     protected function checkMaximumDateRange(Carbon $fromDate, Carbon $toDate, $maxDays = 31)
     {
 
@@ -52,6 +64,26 @@ class BaseStat
         }
     }
 
+    /**
+     * @param $element
+     * @param string $identifier
+     * @return \Illuminate\Support\Collection
+     */
+    protected function getCollection($element, $identifier = 'Id')
+    {
+        if(isset($element[$identifier])){
+            $collection = collect([$element]);
+        } else {
+            $collection = collect($element);
+        }
+
+        return $collection;
+    }
+
+    /**
+     * @param $distribution
+     * @return StatRankDistribution
+     */
     protected function transformRankDistribution($distribution)
     {
         $rankDistribution = new StatRankDistribution();
