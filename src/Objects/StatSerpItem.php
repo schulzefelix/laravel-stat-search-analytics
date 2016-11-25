@@ -6,6 +6,6 @@ class StatSerpItem extends DataTransferObject
 {
     protected $casts = [
         'rank' => 'integer',
-        'base_rank' => 'collection',
+        'base_rank' => 'integer',
     ];
 }
