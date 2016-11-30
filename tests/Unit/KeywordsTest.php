@@ -217,7 +217,6 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_will_urlencode_keywords_before_sending()
     {
-
     }
 
 
