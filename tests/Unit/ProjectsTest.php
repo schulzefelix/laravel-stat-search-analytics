@@ -3,11 +3,9 @@
 namespace SchulzeFelix\Stat\Tests\Unit;
 
 use Carbon\Carbon;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit_Framework_TestCase;
-use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Objects\StatProject;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
@@ -86,7 +84,7 @@ class ProjectsTest extends PHPUnit_Framework_TestCase
     public function it_can_create_a_new_project()
     {
         $expectedArguments = [
-            'projects/create', ['name' => 'Cheese Cake']
+            'projects/create', ['name' => 'Cheese%20Cake']
         ];
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
@@ -120,7 +118,7 @@ class ProjectsTest extends PHPUnit_Framework_TestCase
     public function it_can_update_an_existing_project()
     {
         $expectedArguments = [
-            'projects/update', ['id' => 615, 'name' => 'Cheese Cake Factory']
+            'projects/update', ['id' => 615, 'name' => 'Cheese%20Cake%20Factory']
         ];
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)

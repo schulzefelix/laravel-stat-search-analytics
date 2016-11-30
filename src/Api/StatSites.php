@@ -28,7 +28,7 @@ class StatSites extends BaseStat
         } while ($response['resultsreturned'] < $response['totalresults']);
 
 
-        $sites->transform(function ($site, $key) {
+        $sites->transform(function ($site) {
             return new StatSite([
                 'id' => $site['Id'],
                 'project_id' => $site['ProjectId'],
@@ -67,7 +67,7 @@ class StatSites extends BaseStat
             $sites = collect($response['Result']);
         }
 
-        $sites->transform(function ($site, $key) use ($projectID) {
+        $sites->transform(function ($site) use ($projectID) {
             return new StatSite([
                 'id' => $site['Id'],
                 'project_id' => $projectID,
@@ -103,7 +103,7 @@ class StatSites extends BaseStat
             $rankDistribution = collect([$response['RankDistribution']]);
         }
 
-        $rankDistribution->transform(function ($distribution, $key) {
+        $rankDistribution->transform(function ($distribution) {
             return $this->transformRankDistribution($distribution);
         });
 
@@ -119,7 +119,7 @@ class StatSites extends BaseStat
      */
     public function create($projectID, $url, $dropWWWprefix = true, $dropDirectories = true)
     {
-        $response = $this->performQuery('sites/create', ['project_id' => $projectID, 'url' => $url, 'drop_www_prefix' => $dropWWWprefix, 'drop_directories' => $dropDirectories]);
+        $response = $this->performQuery('sites/create', ['project_id' => $projectID, 'url' => rawurlencode($url), 'drop_www_prefix' => ($dropWWWprefix) ?: 0, 'drop_directories' => ($dropDirectories) ?: 0]);
 
         return new StatSite([
             'id' => $response['Result']['Id'],
@@ -134,12 +134,32 @@ class StatSites extends BaseStat
 
     /**
      * @param $siteID
-     * @param array $attributes
+     * @param string|null $title
+     * @param string|null $url
+     * @param bool|null $dropWWWprefix
+     * @param bool|null $dropDirectories
      * @return StatSite
      */
-    public function update($siteID, array $attributes = [])
+    public function update($siteID, $title = null, $url = null, $dropWWWprefix = null, $dropDirectories = null)
     {
-        $arguments = ['id' => $siteID] + $attributes;
+        $arguments = [];
+        $arguments['id'] = $siteID;
+
+        if(!is_null($title)){
+            $arguments['title'] = rawurlencode($title);
+        }
+
+        if(!is_null($url)){
+            $arguments['url'] = rawurlencode($url);
+        }
+
+        if(!is_null($dropWWWprefix)){
+            $arguments['drop_www_prefix'] = ($dropWWWprefix) ?: 0;
+        }
+
+        if(!is_null($dropDirectories)){
+            $arguments['drop_directories'] = ($dropDirectories) ?: 0;
+        }
 
         $response = $this->performQuery('sites/update', $arguments);
 
@@ -151,7 +171,7 @@ class StatSites extends BaseStat
             'drop_www_prefix' => $response['Result']['DropWWWPrefix'],
             'drop_directories' => $response['Result']['DropDirectories'],
             'created_at' => $response['Result']['CreatedAt'],
-            'updated_at' => $response['Result']['UpdatedAt'],
+            'updated_at' => (isset($response['Result']['UpdatedAt'])) ? $response['Result']['UpdatedAt'] : $response['Result']['CreatedAt'],
         ]);
     }
 

@@ -4,7 +4,6 @@ namespace SchulzeFelix\Stat\Api;
 
 use Illuminate\Support\Collection;
 use SchulzeFelix\Stat\Objects\StatProject;
-use SchulzeFelix\Stat\Stat;
 
 class StatProjects extends BaseStat
 {
@@ -16,7 +15,7 @@ class StatProjects extends BaseStat
     {
         $response = $this->performQuery('projects/list');
 
-        $projects = collect($response['Result'])->map(function ($project, $key) {
+        $projects = collect($response['Result'])->map(function ($project) {
             return new StatProject([
                 'id' => $project['Id'],
                 'name' => $project['Name'],
@@ -35,6 +34,8 @@ class StatProjects extends BaseStat
      */
     public function create($name)
     {
+        $name = rawurlencode($name);
+
         $response = $this->performQuery('projects/create', ['name' => $name]);
 
         return new StatProject([
@@ -53,6 +54,8 @@ class StatProjects extends BaseStat
      */
     public function update($id, $name)
     {
+        $name = rawurlencode($name);
+
         $response = $this->performQuery('projects/update', ['id' => $id, 'name' => $name]);
 
         return new StatProject([

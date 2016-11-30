@@ -3,7 +3,6 @@
 namespace SchulzeFelix\Stat\Tests\Unit;
 
 use Carbon\Carbon;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit_Framework_TestCase;
@@ -180,7 +179,7 @@ class SitesTest extends PHPUnit_Framework_TestCase
     public function it_can_create_new_sites_for_a_project()
     {
         $expectedArguments = [
-            'sites/create', ['project_id' => 13, 'url' => 'http://google.com', 'drop_www_prefix' => true, 'drop_directories' => true]
+            'sites/create', ['project_id' => 13, 'url' => 'http%3A%2F%2Fgoogle.com', 'drop_www_prefix' => true, 'drop_directories' => true]
         ];
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
@@ -224,7 +223,7 @@ class SitesTest extends PHPUnit_Framework_TestCase
     public function it_can_update_a_site()
     {
         $expectedArguments = [
-            'sites/update', ['id' => 13, 'url' => 'http://google.com', 'title' => 'my site', 'drop_www_prefix' => true, 'drop_directories' => true]
+            'sites/update', ['id' => 13, 'url' => 'http%3A%2F%2Fgoogle.com', 'title' => 'my%20site', 'drop_www_prefix' => true, 'drop_directories' => true]
         ];
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
@@ -243,12 +242,7 @@ class SitesTest extends PHPUnit_Framework_TestCase
                 ]
             ]]);
 
-        $response = $this->stat->sites()->update(13, [
-            'url' => 'http://google.com',
-            'title' => 'my site',
-            'drop_www_prefix' => true,
-            'drop_directories' => true,
-        ]);
+        $response = $this->stat->sites()->update(13, 'my site', 'http://google.com', true, true);
 
         $this->assertInstanceOf(StatSite::class, $response);
         $this->assertEquals(8, count($response->toArray()));
@@ -480,6 +474,6 @@ class SitesTest extends PHPUnit_Framework_TestCase
 
         $this->setExpectedException(ApiException::class);
 
-        $response = $this->stat->sites()->rankingDistributions(13, Carbon::createFromDate(2016, 9, 1), Carbon::createFromDate(2016, 10, 5));
+        $this->stat->sites()->rankingDistributions(13, Carbon::createFromDate(2016, 9, 1), Carbon::createFromDate(2016, 10, 5));
     }
 }

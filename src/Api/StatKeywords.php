@@ -40,7 +40,7 @@ class StatKeywords extends BaseStat
         } while ($response['resultsreturned'] < $response['totalresults']);
 
 
-        $keywords = $keywords->transform(function ($keyword, $key) {
+        $keywords = $keywords->transform(function ($keyword) {
             return $this->transformListedKeyword($keyword);
         });
 
@@ -62,11 +62,21 @@ class StatKeywords extends BaseStat
         $arguments['market'] = $market;
         $arguments['device'] = $device;
         $arguments['type'] = 'regular';
-        $arguments['keyword'] = implode(',', array_map(function ($el) {
-            return str_replace(',', '\,', $el);
-        }, $keywords));
+
+        $keywords = array_map(function ($keyword) {
+            $keyword = str_replace(',', '\,', $keyword);
+            $keyword = rawurlencode($keyword);
+            return $keyword;
+        }, $keywords);
+        $arguments['keyword'] = implode(',', $keywords);
 
         if (! is_null($tags) && count($tags) > 0) {
+            $tags = array_map(function ($tag) {
+                $tag = str_replace(',', '-', $tag);
+                $tag = rawurlencode($tag);
+                return $tag;
+            }, $tags);
+
             $arguments['tag'] = implode(',', $tags);
         }
 
@@ -87,7 +97,7 @@ class StatKeywords extends BaseStat
             $keywords = collect($response['Result']);
         }
 
-        return $keywords->transform(function ($keyword, $key) {
+        return $keywords->transform(function ($keyword) {
             return $this->transformCreatedKeyword($keyword);
         });
     }
@@ -111,7 +121,7 @@ class StatKeywords extends BaseStat
         }
 
 
-        return collect($response['Result'])->transform(function ($keywordID, $key) {
+        return collect($response['Result'])->transform(function ($keywordID) {
             return $keywordID['Id'];
         });
     }

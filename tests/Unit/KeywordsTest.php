@@ -3,15 +3,12 @@
 namespace SchulzeFelix\Stat\Tests\Unit;
 
 use Carbon\Carbon;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit_Framework_TestCase;
-use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Objects\StatKeyword;
 use SchulzeFelix\Stat\Objects\StatKeywordRanking;
 use SchulzeFelix\Stat\Objects\StatKeywordStats;
-use SchulzeFelix\Stat\Objects\StatLocalSearchTrend;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
@@ -160,7 +157,7 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
                 'market' => 'US-en',
                 'device' => 'smartphone',
                 'type' => 'regular',
-                'keyword' => 'shirt\,shoes,dress,boots',
+                'keyword' => 'shirt%5C%2Cshoes,dress,boots',
                 'tag' => 'clothes,brand',
                 'location' => 'Boston'
             ]
@@ -216,6 +213,13 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('US-en', $response->first()['keyword_market']);
         $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
     }
+
+    /** @test */
+    public function it_will_urlencode_keywords_before_sending()
+    {
+
+    }
+
 
     /** @test */
     public function it_can_delete_a_single_keyword()

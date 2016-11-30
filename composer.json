@@ -6,7 +6,8 @@
         "schulzefelix",
         "stat-search-analytics",
         "laravel",
-        "keyword rankings"
+        "keyword rankings",
+        "keyword tracking"
     ],
     "homepage": "https://github.com/schulzefelix/laravel-stat-search-analytics",
     "license": "MIT",
@@ -23,7 +24,7 @@
         "illuminate/support": "~5.1",
         "guzzlehttp/guzzle": "^6.2",
         "nesbot/carbon": "^1.21",
-        "schulzefelix/laravel-data-transfer-object": "dev-master"
+        "schulzefelix/laravel-data-transfer-object": "^1.0.0"
     },
     "require-dev": {
         "phpunit/phpunit" : "~4.0",
