@@ -145,19 +145,19 @@ class StatSites extends BaseStat
         $arguments = [];
         $arguments['id'] = $siteID;
 
-        if(!is_null($title)){
+        if (!is_null($title)) {
             $arguments['title'] = rawurlencode($title);
         }
 
-        if(!is_null($url)){
+        if (!is_null($url)) {
             $arguments['url'] = rawurlencode($url);
         }
 
-        if(!is_null($dropWWWprefix)){
+        if (!is_null($dropWWWprefix)) {
             $arguments['drop_www_prefix'] = ($dropWWWprefix) ?: 0;
         }
 
-        if(!is_null($dropDirectories)){
+        if (!is_null($dropDirectories)) {
             $arguments['drop_directories'] = ($dropDirectories) ?: 0;
         }
 
