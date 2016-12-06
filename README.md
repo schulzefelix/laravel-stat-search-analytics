@@ -46,8 +46,72 @@ php artisan vendor:publish --provider="SchulzeFelix\Stat\StatServiceProvider"
 
 ## Usage
 
+- [Introduction](#introduction)
+- [Projects Methods](#projects-methods)
+    - [List All Projects](#projects-list)
+    - [Create A Projects](#projects-create)
+    - [Update A Projects](#projects-update)
+    - [Delete A Projects](#projects-delete)
+
+
+<a name="introduction"></a>
+## Introduction
+
+The responses of this packages are combinations of Laravel Collections, objects for each kind of data object and [Carbon](https://github.com/briannesbitt/Carbon) instances for date fields.
+
+<a name="projects-methods"></a>
+## Projects Methods
+
+<a name="projects-list"></a>
+### List All Projects
+The list methods returns a collection of all projects.
 ``` php
-$newProject = Stat::projects()->create('Cheese Cake Factory');
+$projects = Stat::projects()->list();
+```
+
+<a name="projects-create"></a>
+### Create A Project
+To create a project just pass the name of the project. The response will we a StatProject instance.
+``` php
+$project = Stat::projects()->create('Cheese Cake Factory');
+
+$project->toArray();
+
+/*
+[
+    'id' => 615,
+    'name' => 'Cheese Cake Factory',
+    'total_sites' => 0,
+    'created_at' => 2016-11-01,
+    'updated_at' => 2016-11-01,
+]
+*/
+```
+
+<a name="projects-update"></a>
+### Update A Project
+To update the name of a project just pass the project ID and the new name. The response will we a StatProject instance.
+``` php
+$project = Stat::projects()->update(615, 'Cheese Cake Bakery');
+
+$project->toArray();
+
+/*
+[
+    'id' => 615,
+    'name' => 'Cheese Cake Bakery',
+    'total_sites' => 5,
+    'created_at' => 2016-11-01,
+    'updated_at' => 2016-11-03,
+]
+*/
+```
+
+<a name="projects-delete"></a>
+### Delete A Project
+To delete a project just pass the project ID. The response the project ID.
+``` php
+$project = Stat::projects()->delete(615);
 ```
 
 ## Change log

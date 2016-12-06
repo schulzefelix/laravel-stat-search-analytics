@@ -215,12 +215,6 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_will_urlencode_keywords_before_sending()
-    {
-    }
-
-
-    /** @test */
     public function it_can_delete_a_single_keyword()
     {
         $expectedArguments = ['keywords/delete', ['id' => 3008]];
