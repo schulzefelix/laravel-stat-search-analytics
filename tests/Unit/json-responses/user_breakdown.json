@@ -1,0 +1,44 @@
+{
+  "Response": {
+    "responsecode": "200",
+    "request_date": "2016-12-25",
+    "year": "2016",
+    "month": "12",
+    "Summary": {
+      "StartDate": "2016-12-01",
+      "EndDate": "2016-12-31",
+      "TrackedKeywords": "3222",
+      "TrackedKeywordsTotal": "144.44",
+      "OptionalServiceTotal": "0.20",
+      "Total": "144.46"
+    },
+    "Users": {
+      "User": [
+        {
+          "Id": "1",
+          "Name": "cheese_cake_company",
+          "Count": "0",
+          "PercentageOfBill": "0.0",
+          "Deleted": "false",
+          "Total": "0.00"
+        },
+        {
+          "Id": "2",
+          "Name": "cheesy_manager_one",
+          "Count": "146.90",
+          "PercentageOfBill": "4.55936",
+          "Deleted": "false",
+          "Total": "6.59"
+        },
+        {
+          "Id": "3",
+          "Name": "cheesy_manager_two",
+          "Count": "3075.1",
+          "PercentageOfBill": "95.44064",
+          "Deleted": "false",
+          "Total": "137.87"
+        }
+      ]
+    }
+  }
+}

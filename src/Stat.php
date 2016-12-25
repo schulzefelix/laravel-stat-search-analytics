@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use GuzzleHttp\Exception\ClientException;
+use SchulzeFelix\Stat\Api\StatBilling;
 use SchulzeFelix\Stat\Api\StatBulk;
 use SchulzeFelix\Stat\Api\StatKeywords;
 use SchulzeFelix\Stat\Api\StatProjects;
@@ -66,6 +67,11 @@ class Stat
     public function subaccounts()
     {
         return new StatSubAccounts($this->statClient);
+    }
+
+    public function billing()
+    {
+        return new StatBilling($this->statClient);
     }
 
     public function blockedUntil()

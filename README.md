@@ -8,6 +8,8 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
 
+For information about STAT Search Analytics see [https://getstat.com/](https://getstat.com/)
+
 ## Install
 
 This package can be installed through Composer.

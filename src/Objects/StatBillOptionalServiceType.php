@@ -2,13 +2,11 @@
 
 use SchulzeFelix\DataTransferObject\DataTransferObject;
 
-class StatSubAccount extends DataTransferObject
+class StatBillOptionalServiceType extends DataTransferObject
 {
     protected $casts = [
-        'id' => 'integer',
         'count' => 'integer',
-        'percentage_of_bill' => 'float',
+        'price' => 'float',
         'total' => 'float',
-        'deleted' => 'boolean',
     ];
 }

@@ -1,0 +1,70 @@
+{
+  "Response": {
+    "responsecode": "200",
+    "request_date": "2016-12-25",
+    "year": "2016",
+    "month": "12",
+    "Summary": {
+      "StartDate": "2016-12-01",
+      "EndDate": "2016-12-31",
+      "MinCommittedCharge": "500.00",
+      "TrackedKeywords": "3222",
+      "TrackedKeywordsTotal": "144.44",
+      "OptionalServiceTotal": "0.19",
+      "Total": "144.63"
+    },
+    "Services": {
+      "Keywords": {
+        "UnderCommit": {
+          "Count": "1000",
+          "Price": "0.10",
+          "Total": "100.00"
+        },
+        "OverCommit": {
+          "Count": "0",
+          "Price": "0.10",
+          "Total": "0.00"
+        },
+        "NonUnique": {
+          "Count": "2222",
+          "Price": "0.02",
+          "Total": "44.44"
+        }
+      },
+      "OptionalServices": {
+        "OptionalService": [
+          {
+            "type": "Bulk XML SERP API",
+            "Count": "0",
+            "Price": "0.00",
+            "Total": "0.00"
+          },
+          {
+            "type": "Bulk XML Adwords API",
+            "Count": "0",
+            "Price": "0.00",
+            "Total": "0.00"
+          },
+          {
+            "type": "Bulk Google HTML SERP API",
+            "Count": "1.8",
+            "Price": "0.05",
+            "Total": "0.09"
+          },
+          {
+            "type": "Bulk JSON SERP API",
+            "Count": "1.8",
+            "Price": "0.03",
+            "Total": "0.05"
+          },
+          {
+            "type": "Bulk JSON Adwords API",
+            "Count": "1.8",
+            "Price": "0.03",
+            "Total": "0.05"
+          }
+        ]
+      }
+    }
+  }
+}

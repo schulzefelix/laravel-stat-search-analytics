@@ -1,0 +1,98 @@
+{
+  "Response": {
+    "responsecode": "200",
+    "request_date": "2016-12-25",
+    "year": "2016",
+    "month": "12",
+    "Summary": {
+      "StartDate": "2016-12-01",
+      "EndDate": "2016-12-31",
+      "TrackedKeywords": "3222",
+      "TrackedKeywordsTotal": "144.44",
+      "OptionalServiceTotal": "0.20",
+      "Total": "144.46"
+    },
+    "Sites": {
+      "Site": [
+        {
+          "Id": "123",
+          "Title": "www.example.nl/",
+          "URL": "www.example.nl/",
+          "ProjectId": "12",
+          "ProjectName": "Cheese Cake",
+          "FolderId": "22",
+          "FolderName": "api",
+          "Deleted": "false",
+          "Services": {
+            "Keywords": {
+              "Count": "0",
+              "PercentageOfBill": "0.0",
+              "Total": "0.00"
+            },
+            "OptionalServices": null,
+            "Total": "0.00"
+          }
+        },
+        {
+          "Id": "321",
+          "Title": "example.com/de/",
+          "URL": "example.com/de/",
+          "ProjectId": "13",
+          "ProjectName": "Cherry Cake Factory",
+          "FolderId": "54",
+          "FolderName": "api",
+          "Deleted": "false",
+          "Services": {
+            "Keywords": {
+              "Count": "7",
+              "PercentageOfBill": "10.5631",
+              "Total": "0.31"
+            },
+            "OptionalServices": {
+              "OptionalService": [
+                {
+                  "type": "Bulk Google HTML SERP API",
+                  "Count": "1.8",
+                  "Price": "0.05",
+                  "Total": "0.09"
+                },
+                {
+                  "type": "Bulk JSON SERP API",
+                  "Count": "1.8",
+                  "Price": "0.03",
+                  "Total": "0.05"
+                },
+                {
+                  "type": "Bulk JSON Adwords API",
+                  "Count": "1.8",
+                  "Price": "0.03",
+                  "Total": "0.05"
+                }
+              ]
+            },
+            "Total": "0.50"
+          }
+        },
+        {
+          "Id": "221",
+          "Title": "www.example.de/",
+          "URL": "www.example.de/",
+          "ProjectId": "12",
+          "ProjectName": "Blueberry Cake",
+          "FolderId": "22",
+          "FolderName": "api",
+          "Deleted": "false",
+          "Services": {
+            "Keywords": {
+              "Count": "22.71",
+              "PercentageOfBill": "30.0123",
+              "Total": "5.23"
+            },
+            "OptionalServices": null,
+            "Total": "5.23"
+          }
+        }
+      ]
+    }
+  }
+}

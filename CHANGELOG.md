@@ -2,21 +2,11 @@
 
 All Notable changes to `laravel-stat-search-analytics` will be documented in this file.
 
-Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
+## 1.1.0
+- Add Billing Methods
 
-## NEXT - YYYY-MM-DD
+## 1.0.0
+- Stable first release
+## 0.0.1
+- Experimental alpha release
 
-### Added
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Fixed
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
