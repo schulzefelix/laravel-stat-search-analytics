@@ -56,8 +56,6 @@ class BulkTest extends PHPUnit_Framework_TestCase
                         'Format' => 'xml',
                         'Date' => '2011-02-05',
                         'Status' => 'NotStarted',
-                        'Url' => null,
-                        'StreamUrl' => null,
                         'CreatedAt' => '2011-02-06',
                     ],
                     [
