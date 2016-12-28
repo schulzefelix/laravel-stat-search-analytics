@@ -4,19 +4,9 @@ All Notable changes to `laravel-stat-search-analytics` will be documented in thi
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## NEXT - YYYY-MM-DD
-
-### Added
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Fixed
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
+## 1.0.1
+- Fixed Bug in bulk()->list() method. (Not existing keys if the job is not completed)
+## 1.0.0
+- Stable first release
+## 0.0.1
+- Experimental alpha release
