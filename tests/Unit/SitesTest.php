@@ -9,6 +9,8 @@ use PHPUnit_Framework_TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
 use SchulzeFelix\Stat\Objects\StatRankDistribution;
+use SchulzeFelix\Stat\Objects\StatShareOfVoice;
+use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
 use SchulzeFelix\Stat\Objects\StatSite;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
@@ -475,5 +477,68 @@ class SitesTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException(ApiException::class);
 
         $this->stat->sites()->rankingDistributions(13, Carbon::createFromDate(2016, 9, 1), Carbon::createFromDate(2016, 10, 5));
+    }
+    
+    /** @test */
+    public function it_can_get_the_sov_for_a_site()
+    {
+        $expectedArguments = [
+            'sites/sov', ['id' => 13, 'from_date' => '2016-10-01' , 'to_date' => '2016-10-02', 'start' => 0, 'results' => 5000]
+        ];
+
+        $this->statClient
+            ->shouldReceive('performQuery')->withArgs($expectedArguments)
+            ->once()
+            ->andReturn(['Response' => [
+                'responsecode' => "200",
+                'resultsreturned' => "2",
+                'totalresults' => "2",
+                'ShareOfVoice' => [
+                    [
+                        'date' => '2016-10-01',
+                        'Site' => [
+                            [
+                                'Domain' => "www.example.de",
+                                'Share' => "13.45",
+                                'Pinned' => "false",
+                            ],
+                            [
+                                'Domain' => "www.example.com",
+                                'Share' => "8.45",
+                                'Pinned' => "false",
+                            ],
+                        ]
+                    ],
+                    [
+                        'date' => '2016-10-02',
+                        'Site' => [
+                            [
+                                'Domain' => "www.example.de",
+                                'Share' => "13.55",
+                                'Pinned' => "false",
+                            ],
+                            [
+                                'Domain' => "www.example.com",
+                                'Share' => "4.15",
+                                'Pinned' => "false",
+                            ],
+                        ]
+                    ],
+
+                ]
+            ]]);
+
+        $response = $this->stat->sites()->sov(13, Carbon::createFromDate(2016, 10, 1), Carbon::createFromDate(2016, 10, 2));
+
+
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(StatShareOfVoice::class, $response->first());
+        $this->assertEquals(2, $response->count());
+        $this->assertInstanceOf(Collection::class, $response->first()->sites);
+        $this->assertInstanceOf(StatShareOfVoiceSite::class, $response->first()->sites->first());
+        $this->assertInstanceOf(Carbon::class, $response->first()->date);
+        $this->assertEquals('2016-10-01', $response->first()->date->toDateString());
+        $this->assertEquals('www.example.de', $response->first()->sites->first()->domain);
+
     }
 }

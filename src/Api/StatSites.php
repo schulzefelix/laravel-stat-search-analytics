@@ -4,6 +4,8 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatShareOfVoice;
+use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
 use SchulzeFelix\Stat\Objects\StatSite;
 
 class StatSites extends BaseStat
@@ -185,4 +187,40 @@ class StatSites extends BaseStat
 
         return (int)$response['Result']['Id'];
     }
+
+    public function sov($siteID, Carbon $fromDate, Carbon $toDate) : Collection
+    {
+        $start = 0;
+        $sovSites = collect();
+
+        do {
+            $response = $this->performQuery('sites/sov', ['id' => $siteID, 'from_date' => $fromDate->toDateString(), 'to_date' => $toDate->toDateString(), 'start' => $start, 'results' => 5000]);
+            $start += 5000;
+            $sovSites = $sovSites->merge($response['ShareOfVoice']);
+
+            if (!isset($response['nextpage'])) {
+                break;
+            }
+        } while ($response['resultsreturned'] < $response['totalresults']);
+
+
+        $sovSites->transform(function ($sov) {
+
+            $shareOfVoice = new StatShareOfVoice([
+                'date' => $sov['date'],
+                'sites' => collect($sov['Site'])->transform(function ($site) {
+                    return new StatShareOfVoiceSite([
+                        'domain' => $site['Domain'],
+                        'share' => (float) $site['Share'],
+                        'pinned' => filter_var(array_get($site, 'Pinned'), FILTER_VALIDATE_BOOLEAN),
+                    ]);
+                }),
+            ]);
+
+            return $shareOfVoice;
+        });
+
+        return $sovSites;
+    }
+
 }
