@@ -40,9 +40,10 @@ class StatBulk extends BaseStat
                 'job_type' => $job['JobType'],
                 'format' => $job['Format'],
                 'date' => $job['Date'],
+                'site_ids' => array_get($job, 'SiteId', null),
                 'status' => $job['Status'],
-                'url' => $job['Url'],
-                'stream_url' => $job['StreamUrl'],
+                'url' => array_get($job, 'Url', null),
+                'stream_url' => array_get($job, 'StreamUrl', null),
                 'created_at' => $job['CreatedAt'],
             ]);
         });
