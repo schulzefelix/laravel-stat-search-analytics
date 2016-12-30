@@ -9,6 +9,7 @@ use Mockery;
 use PHPUnit_Framework_TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
+use SchulzeFelix\Stat\Objects\StatFrequentDomain;
 use SchulzeFelix\Stat\Objects\StatRankDistribution;
 use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
@@ -378,6 +379,90 @@ class TagsTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Carbon::class, $response->first()->date);
         $this->assertEquals('2016-10-01', $response->first()->date->toDateString());
         $this->assertEquals('www.example.de', $response->first()->sites->first()->domain);
+
+    }
+
+    /** @test */
+    public function it_can_get_the_most_frequent_domains_for_google_from_a_tag()
+    {
+        $expectedArguments = [
+            'tags/most_frequent_domains', ['id' => 13, 'engine' => 'google']
+        ];
+
+        $this->statClient
+            ->shouldReceive('performQuery')->withArgs($expectedArguments)
+            ->once()
+            ->andReturn(['Response' => [
+                'responsecode' => "200",
+                'Site' => [
+                    [
+                        'Domain' => 'xxx.com',
+                        'TopTenResults' => '800',
+                        'ResultsAnalyzed' => '16800',
+                        'Coverage' => '4.76',
+                        'AnalyzedOn' => '2016-12-25',
+                    ],
+                    [
+                        'Domain' => 'yyy.com',
+                        'TopTenResults' => '686',
+                        'ResultsAnalyzed' => '16800',
+                        'Coverage' => '4.08',
+                        'AnalyzedOn' => '2016-12-25',
+                    ],
+                ]
+            ]]);
+
+        $response = $this->stat->tags()->mostFrequentDomains(13);
+
+
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(StatFrequentDomain::class, $response->first());
+        $this->assertEquals(2, $response->count());
+        $this->assertEquals('2016-12-25', $response->first()->analyzed_on->toDateString());
+        $this->assertEquals('xxx.com', $response->first()->domain);
+        $this->assertEquals(800, $response->first()->top_ten_results);
+
+    }
+
+    /** @test */
+    public function it_can_get_the_most_frequent_domains_for_yahoo_from_a_tag()
+    {
+        $expectedArguments = [
+            'tags/most_frequent_domains', ['id' => 13, 'engine' => 'yahoo']
+        ];
+
+        $this->statClient
+            ->shouldReceive('performQuery')->withArgs($expectedArguments)
+            ->once()
+            ->andReturn(['Response' => [
+                'responsecode' => "200",
+                'Site' => [
+                    [
+                        'Domain' => 'xxx.com',
+                        'TopTenResults' => '800',
+                        'ResultsAnalyzed' => '16800',
+                        'Coverage' => '4.76',
+                        'AnalyzedOn' => '2016-12-25',
+                    ],
+                    [
+                        'Domain' => 'yyy.com',
+                        'TopTenResults' => '686',
+                        'ResultsAnalyzed' => '16800',
+                        'Coverage' => '4.08',
+                        'AnalyzedOn' => '2016-12-25',
+                    ],
+                ]
+            ]]);
+
+        $response = $this->stat->tags()->mostFrequentDomains(13, 'yahoo');
+
+
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(StatFrequentDomain::class, $response->first());
+        $this->assertEquals(2, $response->count());
+        $this->assertEquals('2016-12-25', $response->first()->analyzed_on->toDateString());
+        $this->assertEquals('xxx.com', $response->first()->domain);
+        $this->assertEquals(800, $response->first()->top_ten_results);
 
     }
 }

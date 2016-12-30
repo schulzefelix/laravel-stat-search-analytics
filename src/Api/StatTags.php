@@ -4,6 +4,7 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatFrequentDomain;
 use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
 use SchulzeFelix\Stat\Objects\StatTag;
@@ -115,5 +116,27 @@ class StatTags extends BaseStat
         });
 
         return $sovSites;
+    }
+
+    /**
+     * @param $tagID
+     * @param string $engine
+     * @return Collection
+     */
+    public function mostFrequentDomains($tagID, $engine = 'google')
+    {
+        $response = $this->performQuery('tags/most_frequent_domains', ['id' => $tagID, 'engine' => $engine]);
+
+        $domains = collect($response['Site'])->transform(function ($site) {
+            return new StatFrequentDomain([
+                'domain'           => array_get($site, 'Domain'),
+                'top_ten_results'  => array_get($site, 'TopTenResults'),
+                'results_analyzed' => array_get($site, 'ResultsAnalyzed'),
+                'coverage'         => array_get($site, 'Coverage'),
+                'analyzed_on'      => array_get($site, 'AnalyzedOn'),
+            ]);
+        });
+
+        return $domains;
     }
 }
