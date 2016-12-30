@@ -4,6 +4,8 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatShareOfVoice;
+use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
 use SchulzeFelix\Stat\Objects\StatTag;
 
 class StatTags extends BaseStat
@@ -17,11 +19,21 @@ class StatTags extends BaseStat
     {
         $response = $this->performQuery('tags/list', ['site_id' => $siteID, 'results' => 5000]);
 
+        $tags = collect();
+
         if ($response['resultsreturned'] == 0) {
-            return collect();
+            return $tags;
         }
 
-        $tags = collect($response['Result'])->transform(function ($item, $key) {
+        if ($response['resultsreturned'] == 1) {
+            $tags->push($response['Result']);
+        }
+
+        if ($response['resultsreturned'] > 1) {
+            $tags = collect($response['Result']);
+        }
+
+        $tags = $tags->transform(function ($item, $key) {
             if ($item['Keywords'] == 'none') {
                 $item['Keywords'] = collect();
             } else {
@@ -62,5 +74,40 @@ class StatTags extends BaseStat
         });
 
         return $rankDistribution;
+    }
+
+    public function sov($siteID, Carbon $fromDate, Carbon $toDate) : Collection
+    {
+        $start = 0;
+        $sovSites = collect();
+
+        do {
+            $response = $this->performQuery('tags/sov', ['id' => $siteID, 'from_date' => $fromDate->toDateString(), 'to_date' => $toDate->toDateString(), 'start' => $start, 'results' => 5000]);
+            $start += 5000;
+            $sovSites = $sovSites->merge($response['ShareOfVoice']);
+
+            if (!isset($response['nextpage'])) {
+                break;
+            }
+        } while ($response['resultsreturned'] < $response['totalresults']);
+
+
+        $sovSites->transform(function ($sov) {
+
+            $shareOfVoice = new StatShareOfVoice([
+                'date' => $sov['date'],
+                'sites' => collect($sov['Site'])->transform(function ($site) {
+                    return new StatShareOfVoiceSite([
+                        'domain' => $site['Domain'],
+                        'share' => (float) $site['Share'],
+                        'pinned' => filter_var(array_get($site, 'Pinned'), FILTER_VALIDATE_BOOLEAN),
+                    ]);
+                }),
+            ]);
+
+            return $shareOfVoice;
+        });
+
+        return $sovSites;
     }
 }
