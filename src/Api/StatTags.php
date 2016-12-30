@@ -76,6 +76,12 @@ class StatTags extends BaseStat
         return $rankDistribution;
     }
 
+    /**
+     * @param $siteID
+     * @param Carbon $fromDate
+     * @param Carbon $toDate
+     * @return Collection
+     */
     public function sov($siteID, Carbon $fromDate, Carbon $toDate) : Collection
     {
         $start = 0;

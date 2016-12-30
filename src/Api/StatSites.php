@@ -4,6 +4,7 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatFrequentDomain;
 use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
 use SchulzeFelix\Stat\Objects\StatSite;
@@ -188,6 +189,12 @@ class StatSites extends BaseStat
         return (int)$response['Result']['Id'];
     }
 
+    /**
+     * @param $siteID
+     * @param Carbon $fromDate
+     * @param Carbon $toDate
+     * @return Collection
+     */
     public function sov($siteID, Carbon $fromDate, Carbon $toDate) : Collection
     {
         $start = 0;
@@ -221,6 +228,28 @@ class StatSites extends BaseStat
         });
 
         return $sovSites;
+    }
+
+    /**
+     * @param $siteID
+     * @param string $engine
+     * @return Collection
+     */
+    public function mostFrequentDomains($siteID, $engine = 'google')
+    {
+        $response = $this->performQuery('sites/most_frequent_domains', ['id' => $siteID, 'engine' => $engine]);
+
+        $domains = collect($response['Site'])->transform(function ($site) {
+            return new StatFrequentDomain([
+                'domain'           => array_get($site, 'Domain'),
+                'top_ten_results'  => array_get($site, 'TopTenResults'),
+                'results_analyzed' => array_get($site, 'ResultsAnalyzed'),
+                'coverage'         => array_get($site, 'Coverage'),
+                'analyzed_on'      => array_get($site, 'AnalyzedOn'),
+            ]);
+        });
+
+        return $domains;
     }
 
 }
