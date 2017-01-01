@@ -35,17 +35,7 @@ class StatBulk extends BaseStat
         }
 
         return $bulkJobs->transform(function ($job, $key) {
-            return new StatBulkJob([
-                'id' => $job['Id'],
-                'job_type' => $job['JobType'],
-                'format' => $job['Format'],
-                'date' => $job['Date'],
-                'site_ids' => array_get($job, 'SiteId', null),
-                'status' => $job['Status'],
-                'url' => array_get($job, 'Url', null),
-                'stream_url' => array_get($job, 'StreamUrl', null),
-                'created_at' => $job['CreatedAt'],
-            ]);
+            return $this->transformBulkJobStatus($job);
         });
     }
 
@@ -85,27 +75,7 @@ class StatBulk extends BaseStat
     {
         $response = $this->performQuery('bulk/status', ['id' => $bulkJobID]);
 
-        $jobStatus = new StatBulkJob();
-        $jobStatus->id = $response['Result']['Id'];
-        $jobStatus->job_type = $response['Result']['JobType'];
-        $jobStatus->format = $response['Result']['Format'];
-        $jobStatus->date = $response['Result']['Date'];
-
-        $jobStatus->sites = collect();
-        if (isset($response['Result']['SiteId'])) {
-            $jobStatus->sites = collect(explode(',', $response['Result']['SiteId']))
-                                ->transform(function ($site, $key) {
-                                    return (int)$site;
-                                });
-        }
-
-        //Current Job Status (NotStarted,InProgress,Completed,Deleted,Failed)
-        $jobStatus->status = $response['Result']['Status'];
-        $jobStatus->url = $response['Result']['Url'] ?? null;
-        $jobStatus->stream_url = $response['Result']['StreamUrl'] ?? null;
-        $jobStatus->created_at = $response['Result']['CreatedAt'];
-
-        return $jobStatus;
+        return $this->transformBulkJobStatus($response['Result']);
     }
 
     public function delete($bulkJobID)
@@ -321,5 +291,36 @@ class StatBulk extends BaseStat
         }
 
         return $modifiedTag;
+    }
+
+    private function transformBulkJobStatus($job)
+    {
+        $bulkJob = new StatBulkJob();
+        $bulkJob->id = $job['Id'];
+        $bulkJob->job_type = $job['JobType'];
+        $bulkJob->format = $job['Format'];
+
+        if(array_has($job, ['Project', 'Folder', 'SiteTitle', 'SiteUrl'])){
+            $bulkJob->project = $job['Project'];
+            $bulkJob->folder = $job['Folder'];
+            $bulkJob->site_title = $job['SiteTitle'];
+            $bulkJob->site_url = $job['SiteUrl'];
+        }
+
+        $bulkJob->date = $job['Date'];
+
+        $bulkJob->sites = collect();
+        if (array_has($job, 'SiteId')) {
+            $bulkJob->sites = collect(explode(',', $job['SiteId']))
+                ->transform(function ($site, $key) {
+                    return (int)$site;
+                });
+        }
+        $bulkJob->status = $job['Status'];
+        $bulkJob->url = array_get($job, 'Url', null);
+        $bulkJob->stream_url = array_get($job, 'StreamUrl', null);
+        $bulkJob->created_at = $job['CreatedAt'];
+
+        return $bulkJob;
     }
 }
