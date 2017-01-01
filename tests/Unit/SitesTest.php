@@ -540,7 +540,6 @@ class SitesTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Carbon::class, $response->first()->date);
         $this->assertEquals('2016-10-01', $response->first()->date->toDateString());
         $this->assertEquals('www.example.de', $response->first()->sites->first()->domain);
-
     }
 
     /** @test */
@@ -582,7 +581,6 @@ class SitesTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('2016-12-25', $response->first()->analyzed_on->toDateString());
         $this->assertEquals('xxx.com', $response->first()->domain);
         $this->assertEquals(800, $response->first()->top_ten_results);
-
     }
 
     /** @test */
@@ -624,6 +622,5 @@ class SitesTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('2016-12-25', $response->first()->analyzed_on->toDateString());
         $this->assertEquals('xxx.com', $response->first()->domain);
         $this->assertEquals(800, $response->first()->top_ten_results);
-
     }
 }

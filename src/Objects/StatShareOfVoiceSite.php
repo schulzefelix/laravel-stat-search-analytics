@@ -8,5 +8,4 @@ class StatShareOfVoiceSite extends DataTransferObject
         'share' => 'float',
         'pinned' => 'boolean'
     ];
-
 }
