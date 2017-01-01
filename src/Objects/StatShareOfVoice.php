@@ -7,5 +7,4 @@ class StatShareOfVoice extends DataTransferObject
     protected $casts = [
         'date' => 'date',
     ];
-
 }

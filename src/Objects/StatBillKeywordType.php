@@ -4,5 +4,4 @@ use SchulzeFelix\DataTransferObject\DataTransferObject;
 
 class StatBillKeywordType extends DataTransferObject
 {
-
 }

@@ -16,7 +16,6 @@ use SchulzeFelix\Stat\Objects\StatTag;
 
 class StatBilling extends BaseStat
 {
-
     public function bill($year, $month)
     {
         $response = $this->performQuery('billing/bill', ['year' => $year, 'month' => $month]);
@@ -105,7 +104,6 @@ class StatBilling extends BaseStat
         }
 
         return $statBill;
-
     }
 
     /**
@@ -131,7 +129,7 @@ class StatBilling extends BaseStat
     {
         $services = new Collection();
 
-        if(is_null($optionalServices['OptionalService'])){
+        if (is_null($optionalServices['OptionalService'])) {
             return $services;
         }
 
@@ -146,5 +144,4 @@ class StatBilling extends BaseStat
 
         return $services;
     }
-
 }

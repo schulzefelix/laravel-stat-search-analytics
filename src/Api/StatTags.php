@@ -100,7 +100,6 @@ class StatTags extends BaseStat
 
 
         $sovSites->transform(function ($sov) {
-
             $shareOfVoice = new StatShareOfVoice([
                 'date' => $sov['date'],
                 'sites' => collect($sov['Site'])->transform(function ($site) {

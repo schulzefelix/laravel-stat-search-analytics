@@ -300,7 +300,7 @@ class StatBulk extends BaseStat
         $bulkJob->job_type = $job['JobType'];
         $bulkJob->format = $job['Format'];
 
-        if(array_has($job, ['Project', 'Folder', 'SiteTitle', 'SiteUrl'])){
+        if (array_has($job, ['Project', 'Folder', 'SiteTitle', 'SiteUrl'])) {
             $bulkJob->project = $job['Project'];
             $bulkJob->folder = $job['Folder'];
             $bulkJob->site_title = $job['SiteTitle'];
