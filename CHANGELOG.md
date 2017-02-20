@@ -2,6 +2,9 @@
 
 All Notable changes to `laravel-stat-search-analytics` will be documented in this file.
 
+## 1.1.1
+- Fixed wrong implemented date mutators
+
 ## 1.1.0
 - Add Billing Methods
 - Add SOV Methods
