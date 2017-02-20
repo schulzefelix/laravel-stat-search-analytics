@@ -9,6 +9,6 @@ class StatBulkJob extends DataTransferObject
     ];
 
     protected $dates = [
-        'date' => 'date'
+        'date',
     ];
 }

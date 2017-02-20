@@ -4,7 +4,7 @@ use SchulzeFelix\DataTransferObject\DataTransferObject;
 
 class StatShareOfVoice extends DataTransferObject
 {
-    protected $casts = [
-        'date' => 'date',
+    protected $dates = [
+        'date'
     ];
 }

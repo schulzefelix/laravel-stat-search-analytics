@@ -5,6 +5,6 @@ use SchulzeFelix\DataTransferObject\DataTransferObject;
 class StatKeywordRanking extends DataTransferObject
 {
     protected $dates = [
-        'date' => 'date'
+        'date'
     ];
 }

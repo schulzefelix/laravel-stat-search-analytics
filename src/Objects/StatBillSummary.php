@@ -15,7 +15,7 @@ class StatBillSummary extends DataTransferObject
     ];
 
     protected $dates = [
-        'start_date' => 'date',
-        'end_date' => 'date'
+        'start_date',
+        'end_date'
     ];
 }
