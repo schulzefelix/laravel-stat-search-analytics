@@ -5,14 +5,14 @@ namespace SchulzeFelix\Stat\Tests\Unit;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Mockery;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Objects\StatKeyword;
 use SchulzeFelix\Stat\Objects\StatKeywordRanking;
 use SchulzeFelix\Stat\Objects\StatKeywordStats;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
-class KeywordsTest extends PHPUnit_Framework_TestCase
+class KeywordsTest extends TestCase
 {
     protected $statClient;
 

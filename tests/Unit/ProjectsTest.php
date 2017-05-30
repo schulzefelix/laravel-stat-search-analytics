@@ -5,12 +5,12 @@ namespace SchulzeFelix\Stat\Tests\Unit;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Mockery;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Objects\StatProject;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
-class ProjectsTest extends PHPUnit_Framework_TestCase
+class ProjectsTest extends TestCase
 {
     protected $statClient;
 

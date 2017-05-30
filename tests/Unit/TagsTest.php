@@ -3,10 +3,9 @@
 namespace SchulzeFelix\Stat\Tests\Unit;
 
 use Carbon\Carbon;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Mockery;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
 use SchulzeFelix\Stat\Objects\StatFrequentDomain;
@@ -17,7 +16,7 @@ use SchulzeFelix\Stat\Objects\StatTag;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
-class TagsTest extends PHPUnit_Framework_TestCase
+class TagsTest extends TestCase
 {
     protected $statClient;
 
@@ -315,7 +314,7 @@ class TagsTest extends PHPUnit_Framework_TestCase
                 'Result' => []
             ]]);
 
-        $this->setExpectedException(ApiException::class);
+        $this->expectException(ApiException::class);
 
         $response = $this->stat->tags()->rankingDistributions(13, Carbon::createFromDate(2016, 9, 1), Carbon::createFromDate(2016, 10, 5));
     }

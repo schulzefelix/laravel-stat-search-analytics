@@ -2,28 +2,20 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Carbon\Carbon;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Mockery;
-use PHPUnit_Framework_TestCase;
-use SchulzeFelix\Stat\Exceptions\ApiException;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Objects\StatBillKeywordType;
 use SchulzeFelix\Stat\Objects\StatBillKeywordTypes;
 use SchulzeFelix\Stat\Objects\StatBillOptionalServiceType;
 use SchulzeFelix\Stat\Objects\StatBillServices;
 use SchulzeFelix\Stat\Objects\StatBillSummary;
-use SchulzeFelix\Stat\Objects\StatBulkJob;
-use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
-use SchulzeFelix\Stat\Objects\StatProject;
-use SchulzeFelix\Stat\Objects\StatRankDistribution;
 use SchulzeFelix\Stat\Objects\StatSite;
 use SchulzeFelix\Stat\Objects\StatSubAccount;
-use SchulzeFelix\Stat\Objects\StatTag;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
-class BillingTest extends PHPUnit_Framework_TestCase
+class BillingTest extends TestCase
 {
     protected $statClient;
 

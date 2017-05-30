@@ -3,17 +3,14 @@
 namespace SchulzeFelix\Stat\Tests\Unit;
 
 use Carbon\Carbon;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Mockery;
-use PHPUnit_Framework_TestCase;
-use SchulzeFelix\Stat\Api\StatSubAccounts;
-use SchulzeFelix\Stat\Exceptions\ApiException;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Objects\StatSubAccount;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
-class SubaccountsTest extends PHPUnit_Framework_TestCase
+class SubaccountsTest extends TestCase
 {
     protected $statClient;
 

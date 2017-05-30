@@ -3,16 +3,14 @@
 namespace SchulzeFelix\Stat\Tests\Unit;
 
 use Carbon\Carbon;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Mockery;
-use PHPUnit_Framework_TestCase;
-use SchulzeFelix\Stat\Exceptions\ApiException;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Objects\StatSerpItem;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
-class SerpsTest extends PHPUnit_Framework_TestCase
+class SerpsTest extends TestCase
 {
     protected $statClient;
 

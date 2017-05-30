@@ -3,10 +3,9 @@
 namespace SchulzeFelix\Stat\Tests\Unit;
 
 use Carbon\Carbon;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
 use Mockery;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Objects\StatBulkJob;
 use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
@@ -16,7 +15,7 @@ use SchulzeFelix\Stat\Objects\StatTag;
 use SchulzeFelix\Stat\Stat;
 use SchulzeFelix\Stat\StatClient;
 
-class BulkTest extends PHPUnit_Framework_TestCase
+class BulkTest extends TestCase
 {
     protected $statClient;
 
@@ -119,7 +118,7 @@ class BulkTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_throw_an_exception_if_i_want_create_a_bulk_job_for_today()
     {
-        $this->setExpectedException(ApiException::class);
+        $this->expectException(ApiException::class);
 
         $response = $this->stat->bulk()->ranks(Carbon::now());
     }
@@ -127,7 +126,7 @@ class BulkTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_throw_an_exception_if_i_want_create_a_bulk_job_for_the_future()
     {
-        $this->setExpectedException(ApiException::class);
+        $this->expectException(ApiException::class);
 
         $response = $this->stat->bulk()->ranks(Carbon::now()->addWeek());
     }
@@ -231,7 +230,7 @@ class BulkTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_throw_an_exception_if_i_want_create_a_bulk_job_site_ranking_distributions_for_the_future()
     {
-        $this->setExpectedException(ApiException::class);
+        $this->expectException(ApiException::class);
         $response = $this->stat->bulk()->siteRankingDistributions(Carbon::now()->addMonth());
     }
 
@@ -259,7 +258,7 @@ class BulkTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_throw_an_exception_if_i_want_create_a_bulk_job_tag_ranking_distributions_for_the_future()
     {
-        $this->setExpectedException(ApiException::class);
+        $this->expectException(ApiException::class);
         $response = $this->stat->bulk()->siteRankingDistributions(Carbon::now()->addDay());
     }
 
