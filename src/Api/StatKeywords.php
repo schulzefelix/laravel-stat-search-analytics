@@ -30,6 +30,7 @@ class StatKeywords extends BaseStat
 
             if (isset($response['Result']['Id'])) {
                 $keywords->push($response['Result']);
+                break;
             }
 
             $keywords = $keywords->merge($response['Result']);

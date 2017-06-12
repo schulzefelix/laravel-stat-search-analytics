@@ -32,7 +32,7 @@ class KeywordsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_list_keywords_for_a_site()
+    public function it_can_list_keywords_for_a_site_with_more_than_one_keyword()
     {
         $expectedArguments = [
             'keywords/list', ['site_id' => 13, 'start' => 0, 'results' => '5000']
@@ -93,6 +93,167 @@ class KeywordsTest extends TestCase
                         'CreatedAt' => '2011-01-25',
                         'RequestUrl' => '/rankings?keyword_id=11&format=json&from_date=2011-01-25&to_date=',
                     ],
+                    [
+                        'Id' => '12',
+                        'Keyword' => 'black celebrity news',
+                        'KeywordMarket' => 'US-en',
+                        'KeywordLocation' => 'Boston',
+                        'KeywordDevice' => 'Smartphone',
+                        'KeywordTags' => 'news, usa',
+                        'KeywordStats' => [
+                            'AdvertiserCompetition' => '0.86748',
+                            'GlobalSearchVolume' => '70000',
+                            'RegionalSearchVolume' => '52000',
+                            'LocalSearchTrendsByMonth' => [
+                                'Oct' => '-',
+                                'Sep' => '49500',
+                                'Aug' => '60500',
+                                'Jul' => '49500',
+                                'Jun' => '49500',
+                                'May' => '49500',
+                                'Apr' => '49500',
+                                'Mar' => '49500',
+                                'Feb' => '49500',
+                                'Jan' => '49500',
+                                'Dec' => '40500',
+                                'Nov' => '49500'
+                            ],
+                            'CPC' => '1.42'
+                        ],
+                        'KeywordRanking' => [
+                            'date' => '2014-07-09',
+                            'Google' => [
+                                'Rank' => '1',
+                                'BaseRank' => '1',
+                                'Url' => 'www.zillow.com/mortgage-rates/ca/',
+                            ],
+                            'Yahoo' => [
+                                'Rank' => '1',
+                                'Url' => 'www.zillow.com/mortgage-rates/ca/',
+                            ],
+                            'Bing' => [
+                                'Rank' => '1',
+                                'Url' => 'www.zillow.com/mortgage-rates/ca/',
+                            ],
+                        ],
+                        'CreatedAt' => '2011-01-25',
+                        'RequestUrl' => '/rankings?keyword_id=11&format=json&from_date=2011-01-25&to_date=',
+                    ],
+                ],
+            ]]);
+
+        $response = $this->stat->keywords()->list(13);
+
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertEquals(2, $response->count());
+        $this->assertInstanceOf(StatKeyword::class, $response->first());
+
+        $this->assertArrayHasKey('id', $response->first());
+        $this->assertArrayHasKey('keyword', $response->first());
+        $this->assertArrayHasKey('keyword_market', $response->first());
+        $this->assertArrayHasKey('keyword_location', $response->first());
+        $this->assertArrayHasKey('keyword_device', $response->first());
+        $this->assertArrayHasKey('keyword_tags', $response->first());
+        $this->assertArrayHasKey('keyword_stats', $response->first());
+        $this->assertArrayHasKey('advertiser_competition', $response->first()['keyword_stats']);
+        $this->assertArrayHasKey('global_search_volume', $response->first()['keyword_stats']);
+
+        $this->assertArrayHasKey('regional_search_volume', $response->first()['keyword_stats']);
+        $this->assertArrayHasKey('local_search_trends_by_month', $response->first()['keyword_stats']);
+        $this->assertInstanceOf(StatKeywordStats::class, $response->first()->keyword_stats);
+        $this->assertInstanceOf(Collection::class, $response->first()->keyword_stats->local_search_trends_by_month);
+
+        $this->assertArrayHasKey('cpc', $response->first()['keyword_stats']);
+
+        $this->assertArrayHasKey('keyword_ranking', $response->first());
+        $this->assertArrayHasKey('date', $response->first()['keyword_ranking']);
+        $this->assertArrayHasKey('google', $response->first()['keyword_ranking']);
+        $this->assertArrayHasKey('yahoo', $response->first()['keyword_ranking']);
+        $this->assertArrayHasKey('bing', $response->first()['keyword_ranking']);
+        $this->assertArrayHasKey('rank', $response->first()['keyword_ranking']['google']);
+        $this->assertArrayHasKey('base_rank', $response->first()['keyword_ranking']['google']);
+        $this->assertArrayHasKey('url', $response->first()['keyword_ranking']['google']);
+        $this->assertArrayHasKey('rank', $response->first()['keyword_ranking']['yahoo']);
+        $this->assertArrayHasKey('url', $response->first()['keyword_ranking']['yahoo']);
+        $this->assertArrayHasKey('rank', $response->first()['keyword_ranking']['bing']);
+        $this->assertArrayHasKey('url', $response->first()['keyword_ranking']['bing']);
+
+        $this->assertArrayHasKey('created_at', $response->first());
+
+        $this->assertEquals(11, $response->first()['id']);
+        $this->assertEquals('black celebrity gossip', $response->first()['keyword']);
+        $this->assertEquals('US-en', $response->first()['keyword_market']);
+        $this->assertEquals('Boston', $response->first()['keyword_location']);
+        $this->assertEquals('Smartphone', $response->first()['keyword_device']);
+        $this->assertInstanceOf(Collection::class, $response->first()['keyword_tags']);
+        $this->assertEquals(2, $response->first()['keyword_tags']->count());
+        $this->assertInstanceOf(StatKeywordRanking::class, $response->first()['keyword_ranking']);
+        $this->assertEquals(1, $response->first()['keyword_ranking']['google']['rank']);
+
+        $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
+        $this->assertInstanceOf(Carbon::class, $response->first()['keyword_ranking']['date']);
+    }
+
+    /** @test */
+    public function it_can_list_keywords_for_a_site_with_exactly_one_keyword()
+    {
+        $expectedArguments = [
+            'keywords/list', ['site_id' => 13, 'start' => 0, 'results' => '5000']
+        ];
+
+        $this->statClient
+            ->shouldReceive('performQuery')->withArgs($expectedArguments)
+            ->once()
+            ->andReturn(['Response' => [
+                'responsecode' => "200",
+                'resultsreturned' => "100",
+                'totalresults' => "100",
+                'nextpage' => "/keywords/list?site_id=1&start=1000&format=json",
+                'Result' => [
+                    'Id' => '11',
+                    'Keyword' => 'black celebrity gossip',
+                    'KeywordMarket' => 'US-en',
+                    'KeywordLocation' => 'Boston',
+                    'KeywordDevice' => 'Smartphone',
+                    'KeywordTags' => 'gossip, usa',
+                    'KeywordStats' => [
+                        'AdvertiserCompetition' => '0.86748',
+                        'GlobalSearchVolume' => '80000',
+                        'RegionalSearchVolume' => '54000',
+                        'LocalSearchTrendsByMonth' => [
+                            'Oct' => '-',
+                            'Sep' => '49500',
+                            'Aug' => '60500',
+                            'Jul' => '49500',
+                            'Jun' => '49500',
+                            'May' => '49500',
+                            'Apr' => '49500',
+                            'Mar' => '49500',
+                            'Feb' => '49500',
+                            'Jan' => '49500',
+                            'Dec' => '40500',
+                            'Nov' => '49500'
+                        ],
+                        'CPC' => '1.42'
+                    ],
+                    'KeywordRanking' => [
+                        'date' => '2014-07-09',
+                        'Google' => [
+                            'Rank' => '1',
+                            'BaseRank' => '1',
+                            'Url' => 'www.zillow.com/mortgage-rates/ca/',
+                        ],
+                        'Yahoo' => [
+                            'Rank' => '1',
+                            'Url' => 'www.zillow.com/mortgage-rates/ca/',
+                        ],
+                        'Bing' => [
+                            'Rank' => '1',
+                            'Url' => 'www.zillow.com/mortgage-rates/ca/',
+                        ],
+                    ],
+                    'CreatedAt' => '2011-01-25',
+                    'RequestUrl' => '/rankings?keyword_id=11&format=json&from_date=2011-01-25&to_date=',
                 ],
             ]]);
 
@@ -147,6 +308,7 @@ class KeywordsTest extends TestCase
         $this->assertInstanceOf(Carbon::class, $response->first()['created_at']);
         $this->assertInstanceOf(Carbon::class, $response->first()['keyword_ranking']['date']);
     }
+
 
     /** @test */
     public function it_can_create_keywords()
