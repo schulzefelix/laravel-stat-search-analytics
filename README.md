@@ -18,7 +18,7 @@ This package can be installed through Composer.
 $ composer require schulzefelix/laravel-stat-search-analytics
 ```
 
-You must install this service provider.
+In Laravel 5.5 the package will autoregister the service provider. In Laravel 5.4 you must install this service provider.
 ```php
 // config/app.php
 'providers' => [
@@ -28,7 +28,7 @@ You must install this service provider.
 ];
 ```
 
-This package also comes with a facade, which provides an easy way to call the the class.
+In Laravel 5.5 the package will autoregister the facade. In Laravel 5.4 you must install the facade manually.
 
 ```php
 // config/app.php

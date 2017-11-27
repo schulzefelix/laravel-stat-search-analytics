@@ -22,8 +22,8 @@
     "require": {
         "php" : "^7.0",
         "illuminate/support": "~5.4.0|~5.5.0",
-        "guzzlehttp/guzzle": "^6.2",
-        "nesbot/carbon": "^1.21",
+        "guzzlehttp/guzzle": "^6.3",
+        "nesbot/carbon": "^1.22",
         "schulzefelix/laravel-data-transfer-object": "^1.0.0"
     },
     "require-dev": {
@@ -36,9 +36,22 @@
             "SchulzeFelix\\Stat\\": "src"
         }
     },
+    "extra":{
+        "laravel":{
+            "providers":[
+                "SchulzeFelix\\Stat\\StatServiceProvider"
+            ],
+            "aliases":{
+                "Stat": "SchulzeFelix\\Stat\\StatFacade"
+            }
+        }
+    },
     "autoload-dev": {
         "psr-4": {
             "SchulzeFelix\\Stat\\Tests\\": "tests"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
