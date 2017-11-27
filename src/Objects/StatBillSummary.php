@@ -1,4 +1,6 @@
-<?php namespace SchulzeFelix\Stat\Objects;
+<?php
+
+namespace SchulzeFelix\Stat\Objects;
 
 use SchulzeFelix\DataTransferObject\DataTransferObject;
 
@@ -16,6 +18,6 @@ class StatBillSummary extends DataTransferObject
 
     protected $dates = [
         'start_date',
-        'end_date'
+        'end_date',
     ];
 }

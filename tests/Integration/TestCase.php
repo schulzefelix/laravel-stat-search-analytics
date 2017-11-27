@@ -2,9 +2,9 @@
 
 namespace SchulzeFelix\Stat\Tests\Integration;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use SchulzeFelix\Stat\StatFacade;
 use SchulzeFelix\Stat\StatServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
 {
@@ -12,6 +12,7 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
     }
+
     /**
      * @param \Illuminate\Foundation\Application $app
      *
@@ -23,6 +24,7 @@ abstract class TestCase extends Orchestra
             StatServiceProvider::class,
         ];
     }
+
     /**
      * @param \Illuminate\Foundation\Application $app
      *

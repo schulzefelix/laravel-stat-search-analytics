@@ -1,4 +1,6 @@
-<?php namespace SchulzeFelix\Stat\Objects;
+<?php
+
+namespace SchulzeFelix\Stat\Objects;
 
 use SchulzeFelix\DataTransferObject\DataTransferObject;
 

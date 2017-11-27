@@ -2,13 +2,13 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Mockery;
-use PHPUnit\Framework\TestCase;
-use SchulzeFelix\Stat\Objects\StatSubAccount;
+use Carbon\Carbon;
 use SchulzeFelix\Stat\Stat;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\StatClient;
+use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatSubAccount;
 
 class SubaccountsTest extends TestCase
 {
@@ -33,14 +33,14 @@ class SubaccountsTest extends TestCase
     public function it_can_list_subaccounts()
     {
         $expectedArguments = [
-            'subaccounts/list', []
+            'subaccounts/list', [],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'User' => [
                     [
                         'Id' => '3008',
@@ -56,7 +56,6 @@ class SubaccountsTest extends TestCase
                     ],
                 ],
             ]]);
-
 
         $response = $this->stat->subaccounts()->list();
 

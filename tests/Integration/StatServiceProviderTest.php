@@ -6,7 +6,6 @@ use SchulzeFelix\Stat\Exceptions\InvalidConfiguration;
 
 class StatServiceProviderTest extends TestCase
 {
-
     /** @test */
     public function it_will_throw_an_exception_if_no_key_is_set()
     {

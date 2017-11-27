@@ -3,16 +3,16 @@
 namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
-use SchulzeFelix\Stat\Exceptions\ApiException;
+use SchulzeFelix\Stat\Objects\StatTag;
+use SchulzeFelix\Stat\Objects\StatSite;
 use SchulzeFelix\Stat\Objects\StatBulkJob;
 use SchulzeFelix\Stat\Objects\StatKeyword;
-use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
-use SchulzeFelix\Stat\Objects\StatKeywordRanking;
-use SchulzeFelix\Stat\Objects\StatKeywordStats;
-use SchulzeFelix\Stat\Objects\StatLocalSearchTrend;
 use SchulzeFelix\Stat\Objects\StatProject;
-use SchulzeFelix\Stat\Objects\StatSite;
-use SchulzeFelix\Stat\Objects\StatTag;
+use SchulzeFelix\Stat\Exceptions\ApiException;
+use SchulzeFelix\Stat\Objects\StatKeywordStats;
+use SchulzeFelix\Stat\Objects\StatKeywordRanking;
+use SchulzeFelix\Stat\Objects\StatLocalSearchTrend;
+use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
 
 class StatBulk extends BaseStat
 {
@@ -61,7 +61,6 @@ class StatBulk extends BaseStat
 
         if (! is_null($sites) && count($sites) > 0) {
             $arguments['site_id'] = implode(',', $sites);
-            ;
         }
         if (! is_null($engines) && count($engines) > 0) {
             $arguments['engines'] = implode(',', $engines);
@@ -82,7 +81,7 @@ class StatBulk extends BaseStat
     {
         $response = $this->performQuery('bulk/delete', ['id' => $bulkJobID]);
 
-        return (int)$response['Result']['Id'];
+        return (int) $response['Result']['Id'];
     }
 
     public function siteRankingDistributions($date)
@@ -90,7 +89,8 @@ class StatBulk extends BaseStat
         $this->validateBulkDate($date);
 
         $response = $this->performQuery('bulk/site_ranking_distributions', ['date' => $date->toDateString()]);
-        return (int)$response['Result']['Id'];
+
+        return (int) $response['Result']['Id'];
     }
 
     public function tagRankingDistributions($date)
@@ -98,6 +98,7 @@ class StatBulk extends BaseStat
         $this->validateBulkDate($date);
 
         $response = $this->performQuery('bulk/tag_ranking_distributions', ['date' => $date->toDateString()]);
+
         return (int) $response['Result']['Id'];
     }
 
@@ -106,7 +107,7 @@ class StatBulk extends BaseStat
         $bulkStatus = $this->status($bulkJobID);
 
         if ($bulkStatus['status'] != 'Completed') {
-            throw ApiException::resultError('Bulk Job is not completed. Current status: ' . $bulkJobID['status'] . '.');
+            throw ApiException::resultError('Bulk Job is not completed. Current status: '.$bulkJobID['status'].'.');
         }
 
         $bulkStream = $this->statClient->downloadBulkJobStream($bulkStatus['stream_url']);
@@ -124,7 +125,6 @@ class StatBulk extends BaseStat
             throw ApiException::resultError('You cannot create bulk jobs for the current date or dates in the future.');
         }
     }
-
 
     private function parseBulkJob($bulkStream)
     {
@@ -161,7 +161,6 @@ class StatBulk extends BaseStat
         return $transformedProject;
     }
 
-
     private function transformSite($site)
     {
         $transformedSite = new StatSite();
@@ -185,7 +184,6 @@ class StatBulk extends BaseStat
                 return $this->transformTag($tag);
             });
         }
-
 
         return $transformedSite;
     }
@@ -229,7 +227,7 @@ class StatBulk extends BaseStat
 
         $modifiedKeyword->ranking = new StatKeywordRanking([
             'date' => $keyword['Ranking']['date'],
-            'type' => $keyword['Ranking']['type']
+            'type' => $keyword['Ranking']['type'],
         ]);
 
         if (array_key_exists('Google', $keyword['Ranking'])) {
@@ -250,7 +248,7 @@ class StatBulk extends BaseStat
         }
 
         if (is_null($rankingForEngine['Result'])) {
-            return null;
+            return;
         }
 
         $rankings = $this->getCollection($rankingForEngine['Result'], 'Rank');
@@ -309,7 +307,7 @@ class StatBulk extends BaseStat
         if (array_has($job, 'SiteId')) {
             $bulkJob->sites = collect(explode(',', $job['SiteId']))
                 ->transform(function ($site, $key) {
-                    return (int)$site;
+                    return (int) $site;
                 });
         }
         $bulkJob->status = $job['Status'];

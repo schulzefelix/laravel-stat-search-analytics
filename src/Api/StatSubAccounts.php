@@ -7,7 +7,6 @@ use SchulzeFelix\Stat\Objects\StatSubAccount;
 
 class StatSubAccounts extends BaseStat
 {
-
     /**
      * @return Collection
      */

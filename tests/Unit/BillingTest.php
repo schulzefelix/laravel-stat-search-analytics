@@ -2,18 +2,18 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Illuminate\Support\Collection;
 use Mockery;
+use SchulzeFelix\Stat\Stat;
 use PHPUnit\Framework\TestCase;
+use SchulzeFelix\Stat\StatClient;
+use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatSite;
+use SchulzeFelix\Stat\Objects\StatSubAccount;
+use SchulzeFelix\Stat\Objects\StatBillSummary;
+use SchulzeFelix\Stat\Objects\StatBillServices;
 use SchulzeFelix\Stat\Objects\StatBillKeywordType;
 use SchulzeFelix\Stat\Objects\StatBillKeywordTypes;
 use SchulzeFelix\Stat\Objects\StatBillOptionalServiceType;
-use SchulzeFelix\Stat\Objects\StatBillServices;
-use SchulzeFelix\Stat\Objects\StatBillSummary;
-use SchulzeFelix\Stat\Objects\StatSite;
-use SchulzeFelix\Stat\Objects\StatSubAccount;
-use SchulzeFelix\Stat\Stat;
-use SchulzeFelix\Stat\StatClient;
 
 class BillingTest extends TestCase
 {
@@ -38,7 +38,7 @@ class BillingTest extends TestCase
     public function it_can_pull_the_montly_bill()
     {
         $expectedArguments = [
-            'billing/bill', ['year' => 2016, 'month' => 12]
+            'billing/bill', ['year' => 2016, 'month' => 12],
         ];
         $expectedResponse = json_decode(file_get_contents('tests/Unit/json-responses/bill.json'), true);
         $this->statClient
@@ -61,7 +61,7 @@ class BillingTest extends TestCase
     public function it_can_pull_the_montly_billing_user_breakdown()
     {
         $expectedArguments = [
-            'billing/user_breakdown', ['year' => 2016, 'month' => 12]
+            'billing/user_breakdown', ['year' => 2016, 'month' => 12],
         ];
         $expectedResponse = json_decode(file_get_contents('tests/Unit/json-responses/user_breakdown.json'), true);
         $this->statClient
@@ -81,7 +81,7 @@ class BillingTest extends TestCase
     public function it_can_pull_the_montly_billing_site_breakdown()
     {
         $expectedArguments = [
-            'billing/site_breakdown', ['year' => 2016, 'month' => 12, 'charged_only' => false]
+            'billing/site_breakdown', ['year' => 2016, 'month' => 12, 'charged_only' => false],
         ];
         $expectedResponse = json_decode(file_get_contents('tests/Unit/json-responses/site_breakdown.json'), true);
         $this->statClient

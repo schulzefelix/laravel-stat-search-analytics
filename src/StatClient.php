@@ -24,12 +24,14 @@ class StatClient
     {
         $request = $this->buildRequest($method, $parameters);
         $response = $this->client->get($request);
+
         return json_decode($response->getBody()->getContents(), true);
     }
 
     public function downloadBulkJobStream($streamUrl)
     {
         $response = $this->client->get($streamUrl);
+
         return json_decode($response->getBody()->getContents(), true);
     }
 
@@ -38,10 +40,10 @@ class StatClient
         $parameterString = '?format=json';
 
         foreach ($parameters as $parameter => $value) {
-            $parameterString .= '&' . $parameter . '=' . $value;
+            $parameterString .= '&'.$parameter.'='.$value;
         }
 
-        $request = $method . $parameterString;
+        $request = $method.$parameterString;
 
         return $request;
     }

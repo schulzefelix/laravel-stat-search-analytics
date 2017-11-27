@@ -7,7 +7,6 @@ use SchulzeFelix\Stat\Objects\StatProject;
 
 class StatProjects extends BaseStat
 {
-
     /**
      * @return Collection
      */
@@ -74,6 +73,6 @@ class StatProjects extends BaseStat
     {
         $response = $this->performQuery('projects/delete', ['id' => $id]);
 
-        return (int)$response['Result']['Id'];
+        return (int) $response['Result']['Id'];
     }
 }
