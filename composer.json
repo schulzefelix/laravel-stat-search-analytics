@@ -21,7 +21,7 @@
     ],
     "require": {
         "php" : "^7.0",
-        "illuminate/support": "~5.1",
+        "illuminate/support": "~5.4.0|~5.5.0",
         "guzzlehttp/guzzle": "^6.2",
         "nesbot/carbon": "^1.21",
         "schulzefelix/laravel-data-transfer-object": "^1.0.0"

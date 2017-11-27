@@ -194,10 +194,6 @@ class StatKeywords extends BaseStat
                     'base_rank' => $keyword['KeywordRanking']['Google']['BaseRank'],
                     'url' => $keyword['KeywordRanking']['Google']['Url'],
                 ]),
-                'yahoo' => new StatKeywordEngineRanking([
-                    'rank' => $keyword['KeywordRanking']['Yahoo']['Rank'],
-                    'url' => $keyword['KeywordRanking']['Yahoo']['Url'],
-                ]),
                 'bing' => new StatKeywordEngineRanking([
                     'rank' => $keyword['KeywordRanking']['Bing']['Rank'],
                     'url' => $keyword['KeywordRanking']['Bing']['Url'],

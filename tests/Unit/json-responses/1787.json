@@ -49,10 +49,6 @@
                 "BaseRank": "9",
                 "Url": "www.example.com/"
               },
-              "Yahoo": {
-                "Rank": null,
-                "Url": null
-              },
               "Bing": {
                 "Rank": null,
                 "Url": null
@@ -96,10 +92,6 @@
                 "BaseRank": null,
                 "Url": null
               },
-              "Yahoo": {
-                "Rank": "29",
-                "Url": "www.example.com/muffins"
-              },
               "Bing": {
                 "Rank": "29",
                 "Url": "www.example.com/muffins"
@@ -141,10 +133,6 @@
               "Google": {
                 "Rank": "5",
                 "BaseRank": "5",
-                "Url": "www.example.com/"
-              },
-              "Yahoo": {
-                "Rank": "5",
                 "Url": "www.example.com/"
               },
               "Bing": {
@@ -190,10 +178,6 @@
                 "BaseRank": null,
                 "Url": null
               },
-              "Yahoo": {
-                "Rank": null,
-                "Url": null
-              },
               "Bing": {
                 "Rank": null,
                 "Url": null
@@ -235,10 +219,6 @@
               "Google": {
                 "Rank": null,
                 "BaseRank": null,
-                "Url": null
-              },
-              "Yahoo": {
-                "Rank": null,
                 "Url": null
               },
               "Bing": {

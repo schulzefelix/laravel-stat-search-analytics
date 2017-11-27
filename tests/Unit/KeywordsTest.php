@@ -81,10 +81,6 @@ class KeywordsTest extends TestCase
                                 'BaseRank' => '1',
                                 'Url' => 'www.zillow.com/mortgage-rates/ca/',
                             ],
-                            'Yahoo' => [
-                                'Rank' => '1',
-                                'Url' => 'www.zillow.com/mortgage-rates/ca/',
-                            ],
                             'Bing' => [
                                 'Rank' => '1',
                                 'Url' => 'www.zillow.com/mortgage-rates/ca/',
@@ -127,10 +123,6 @@ class KeywordsTest extends TestCase
                                 'BaseRank' => '1',
                                 'Url' => 'www.zillow.com/mortgage-rates/ca/',
                             ],
-                            'Yahoo' => [
-                                'Rank' => '1',
-                                'Url' => 'www.zillow.com/mortgage-rates/ca/',
-                            ],
                             'Bing' => [
                                 'Rank' => '1',
                                 'Url' => 'www.zillow.com/mortgage-rates/ca/',
@@ -168,13 +160,10 @@ class KeywordsTest extends TestCase
         $this->assertArrayHasKey('keyword_ranking', $response->first());
         $this->assertArrayHasKey('date', $response->first()['keyword_ranking']);
         $this->assertArrayHasKey('google', $response->first()['keyword_ranking']);
-        $this->assertArrayHasKey('yahoo', $response->first()['keyword_ranking']);
         $this->assertArrayHasKey('bing', $response->first()['keyword_ranking']);
         $this->assertArrayHasKey('rank', $response->first()['keyword_ranking']['google']);
         $this->assertArrayHasKey('base_rank', $response->first()['keyword_ranking']['google']);
         $this->assertArrayHasKey('url', $response->first()['keyword_ranking']['google']);
-        $this->assertArrayHasKey('rank', $response->first()['keyword_ranking']['yahoo']);
-        $this->assertArrayHasKey('url', $response->first()['keyword_ranking']['yahoo']);
         $this->assertArrayHasKey('rank', $response->first()['keyword_ranking']['bing']);
         $this->assertArrayHasKey('url', $response->first()['keyword_ranking']['bing']);
 
@@ -243,10 +232,6 @@ class KeywordsTest extends TestCase
                             'BaseRank' => '1',
                             'Url' => 'www.zillow.com/mortgage-rates/ca/',
                         ],
-                        'Yahoo' => [
-                            'Rank' => '1',
-                            'Url' => 'www.zillow.com/mortgage-rates/ca/',
-                        ],
                         'Bing' => [
                             'Rank' => '1',
                             'Url' => 'www.zillow.com/mortgage-rates/ca/',
@@ -283,13 +268,10 @@ class KeywordsTest extends TestCase
         $this->assertArrayHasKey('keyword_ranking', $response->first());
         $this->assertArrayHasKey('date', $response->first()['keyword_ranking']);
         $this->assertArrayHasKey('google', $response->first()['keyword_ranking']);
-        $this->assertArrayHasKey('yahoo', $response->first()['keyword_ranking']);
         $this->assertArrayHasKey('bing', $response->first()['keyword_ranking']);
         $this->assertArrayHasKey('rank', $response->first()['keyword_ranking']['google']);
         $this->assertArrayHasKey('base_rank', $response->first()['keyword_ranking']['google']);
         $this->assertArrayHasKey('url', $response->first()['keyword_ranking']['google']);
-        $this->assertArrayHasKey('rank', $response->first()['keyword_ranking']['yahoo']);
-        $this->assertArrayHasKey('url', $response->first()['keyword_ranking']['yahoo']);
         $this->assertArrayHasKey('rank', $response->first()['keyword_ranking']['bing']);
         $this->assertArrayHasKey('url', $response->first()['keyword_ranking']['bing']);
 

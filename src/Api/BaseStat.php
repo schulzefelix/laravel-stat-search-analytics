@@ -119,23 +119,6 @@ class BaseStat
             ]);
         }
 
-        if (array_key_exists('Yahoo', $distribution)) {
-            $rankDistribution->yahoo = new StatEngineRankDistribution([
-                'one' => $distribution['Yahoo']['One'],
-                'two' => $distribution['Yahoo']['Two'],
-                'three' => $distribution['Yahoo']['Three'],
-                'four' => $distribution['Yahoo']['Four'],
-                'five' => $distribution['Yahoo']['Five'],
-                'six_to_ten' => $distribution['Yahoo']['SixToTen'],
-                'eleven_to_twenty' => $distribution['Yahoo']['ElevenToTwenty'],
-                'twenty_one_to_thirty' => $distribution['Yahoo']['TwentyOneToThirty'],
-                'thirty_one_to_forty' => $distribution['Yahoo']['ThirtyOneToForty'],
-                'forty_one_to_fifty' => $distribution['Yahoo']['FortyOneToFifty'],
-                'fifty_one_to_hundred' => $distribution['Yahoo']['FiftyOneToHundred'],
-                'non_ranking' => $distribution['Yahoo']['NonRanking'],
-            ]);
-        }
-
         if (array_key_exists('Bing', $distribution)) {
             $rankDistribution->bing = new StatEngineRankDistribution([
                 'one' => $distribution['Bing']['One'],

@@ -1,1 +1,417 @@
-[{"id":147,"name":"Development","total_sites":1,"created_at":"2016-11-18 00:00:00","sites":[{"id":509,"url":"example.com","total_keywords":5,"created_at":"2016-11-18 00:00:00","keywords":[{"id":660350,"keyword":"cheese cake","keyword_market":"DE-de","keyword_location":null,"keyword_device":"desktop","keyword_categories":null,"keyword_tags":["brand","top10"],"keyword_stats":{"advertiser_competition":0.07,"global_search_volume":6600,"targeted_search_volume":6600,"cpc":0.4,"local_search_trends_by_month":[{"month":"sep","search_volume":5400},{"month":"aug","search_volume":5400},{"month":"jul","search_volume":5400},{"month":"jun","search_volume":4400},{"month":"may","search_volume":5400},{"month":"apr","search_volume":5400},{"month":"mar","search_volume":6600},{"month":"feb","search_volume":6600},{"month":"jan","search_volume":8100},{"month":"dec","search_volume":8100},{"month":"nov","search_volume":6600},{"month":"oct","search_volume":6600}]},"created_at":"2016-11-18 00:00:00","ranking":{"date":"2016-11-20 00:00:00","type":"all","google":[{"rank":"9","base_rank":"9","url":"www.example.com\/"}],"yahoo":null,"bing":null}},{"id":660351,"keyword":"muffins","keyword_market":"DE-de","keyword_location":null,"keyword_device":"desktop","keyword_categories":null,"keyword_tags":["brand","top10"],"keyword_stats":{"advertiser_competition":0.2,"global_search_volume":246000,"targeted_search_volume":22200,"cpc":0.41,"local_search_trends_by_month":[{"month":"sep","search_volume":18100},{"month":"aug","search_volume":18100},{"month":"jul","search_volume":18100},{"month":"jun","search_volume":18100},{"month":"may","search_volume":18100},{"month":"apr","search_volume":18100},{"month":"mar","search_volume":22200},{"month":"feb","search_volume":22200},{"month":"jan","search_volume":27100},{"month":"dec","search_volume":33100},{"month":"nov","search_volume":27100},{"month":"oct","search_volume":22200}]},"created_at":"2016-11-18 00:00:00","ranking":{"date":"2016-11-20 00:00:00","type":"all","google":null,"yahoo":[{"rank":"29","url":"www.example.com\/muffins"}],"bing":[{"rank":"29","url":"www.example.com\/muffins"}]}},{"id":660352,"keyword":"coffee","keyword_market":"DE-de","keyword_location":null,"keyword_device":"desktop","keyword_categories":null,"keyword_tags":[],"keyword_stats":{"advertiser_competition":0.06,"global_search_volume":720,"targeted_search_volume":590,"cpc":0.15,"local_search_trends_by_month":[{"month":"sep","search_volume":590},{"month":"aug","search_volume":590},{"month":"jul","search_volume":590},{"month":"jun","search_volume":480},{"month":"may","search_volume":480},{"month":"apr","search_volume":480},{"month":"mar","search_volume":590},{"month":"feb","search_volume":720},{"month":"jan","search_volume":720},{"month":"dec","search_volume":880},{"month":"nov","search_volume":880},{"month":"oct","search_volume":720}]},"created_at":"2016-11-18 00:00:00","ranking":{"date":"2016-11-20 00:00:00","type":"all","google":[{"rank":"5","base_rank":"5","url":"www.example.com\/"}],"yahoo":[{"rank":"5","url":"www.example.com\/"},{"rank":"18","url":"www.example.com\/coffee"},{"rank":"36","url":"www.example.com\/coffee-houses"}],"bing":[{"rank":"5","url":"www.example.com\/"},{"rank":"18","url":"www.example.com\/spezial-coffee"},{"rank":"36","url":"www.example.com\/coffee-houses"}]}},{"id":660353,"keyword":"free wifi","keyword_market":"DE-de","keyword_location":null,"keyword_device":"desktop","keyword_categories":null,"keyword_tags":["brand","typen"],"keyword_stats":{"advertiser_competition":1,"global_search_volume":60500,"targeted_search_volume":60500,"cpc":0.34,"local_search_trends_by_month":[{"month":"sep","search_volume":49500},{"month":"aug","search_volume":49500},{"month":"jul","search_volume":49500},{"month":"jun","search_volume":49500},{"month":"may","search_volume":49500},{"month":"apr","search_volume":49500},{"month":"mar","search_volume":60500},{"month":"feb","search_volume":60500},{"month":"jan","search_volume":74000},{"month":"dec","search_volume":74000},{"month":"nov","search_volume":74000},{"month":"oct","search_volume":60500}]},"created_at":"2016-11-18 00:00:00","ranking":{"date":"2016-11-20 00:00:00","type":"all","google":null,"yahoo":null,"bing":null}},{"id":660354,"keyword":"juice","keyword_market":"DE-de","keyword_location":null,"keyword_device":"desktop","keyword_categories":null,"keyword_tags":[],"keyword_stats":{"advertiser_competition":1,"global_search_volume":74000,"targeted_search_volume":60500,"cpc":0.34,"local_search_trends_by_month":[{"month":"sep","search_volume":49500},{"month":"aug","search_volume":49500},{"month":"jul","search_volume":49500},{"month":"jun","search_volume":49500},{"month":"may","search_volume":49500},{"month":"apr","search_volume":49500},{"month":"mar","search_volume":60500},{"month":"feb","search_volume":60500},{"month":"jan","search_volume":74000},{"month":"dec","search_volume":74000},{"month":"nov","search_volume":74000},{"month":"oct","search_volume":60500}]},"created_at":"2016-11-18 00:00:00","ranking":{"date":"2016-11-20 00:00:00","type":"all","google":null,"yahoo":null,"bing":null}}]}]}]
+[
+  {
+    "id": 147,
+    "name": "Development",
+    "total_sites": 1,
+    "created_at": "2016-11-18 00:00:00",
+    "sites": [
+      {
+        "id": 509,
+        "url": "example.com",
+        "total_keywords": 5,
+        "created_at": "2016-11-18 00:00:00",
+        "keywords": [
+          {
+            "id": 660350,
+            "keyword": "cheese cake",
+            "keyword_market": "DE-de",
+            "keyword_location": null,
+            "keyword_device": "desktop",
+            "keyword_categories": null,
+            "keyword_tags": [
+              "brand",
+              "top10"
+            ],
+            "keyword_stats": {
+              "advertiser_competition": 0.07,
+              "global_search_volume": 6600,
+              "targeted_search_volume": 6600,
+              "cpc": 0.4,
+              "local_search_trends_by_month": [
+                {
+                  "month": "sep",
+                  "search_volume": 5400
+                },
+                {
+                  "month": "aug",
+                  "search_volume": 5400
+                },
+                {
+                  "month": "jul",
+                  "search_volume": 5400
+                },
+                {
+                  "month": "jun",
+                  "search_volume": 4400
+                },
+                {
+                  "month": "may",
+                  "search_volume": 5400
+                },
+                {
+                  "month": "apr",
+                  "search_volume": 5400
+                },
+                {
+                  "month": "mar",
+                  "search_volume": 6600
+                },
+                {
+                  "month": "feb",
+                  "search_volume": 6600
+                },
+                {
+                  "month": "jan",
+                  "search_volume": 8100
+                },
+                {
+                  "month": "dec",
+                  "search_volume": 8100
+                },
+                {
+                  "month": "nov",
+                  "search_volume": 6600
+                },
+                {
+                  "month": "oct",
+                  "search_volume": 6600
+                }
+              ]
+            },
+            "created_at": "2016-11-18 00:00:00",
+            "ranking": {
+              "date": "2016-11-20 00:00:00",
+              "type": "all",
+              "google": [
+                {
+                  "rank": "9",
+                  "base_rank": "9",
+                  "url": "www.example.com\/"
+                }
+              ],
+              "bing": null
+            }
+          },
+          {
+            "id": 660351,
+            "keyword": "muffins",
+            "keyword_market": "DE-de",
+            "keyword_location": null,
+            "keyword_device": "desktop",
+            "keyword_categories": null,
+            "keyword_tags": [
+              "brand",
+              "top10"
+            ],
+            "keyword_stats": {
+              "advertiser_competition": 0.2,
+              "global_search_volume": 246000,
+              "targeted_search_volume": 22200,
+              "cpc": 0.41,
+              "local_search_trends_by_month": [
+                {
+                  "month": "sep",
+                  "search_volume": 18100
+                },
+                {
+                  "month": "aug",
+                  "search_volume": 18100
+                },
+                {
+                  "month": "jul",
+                  "search_volume": 18100
+                },
+                {
+                  "month": "jun",
+                  "search_volume": 18100
+                },
+                {
+                  "month": "may",
+                  "search_volume": 18100
+                },
+                {
+                  "month": "apr",
+                  "search_volume": 18100
+                },
+                {
+                  "month": "mar",
+                  "search_volume": 22200
+                },
+                {
+                  "month": "feb",
+                  "search_volume": 22200
+                },
+                {
+                  "month": "jan",
+                  "search_volume": 27100
+                },
+                {
+                  "month": "dec",
+                  "search_volume": 33100
+                },
+                {
+                  "month": "nov",
+                  "search_volume": 27100
+                },
+                {
+                  "month": "oct",
+                  "search_volume": 22200
+                }
+              ]
+            },
+            "created_at": "2016-11-18 00:00:00",
+            "ranking": {
+              "date": "2016-11-20 00:00:00",
+              "type": "all",
+              "google": null,
+              "bing": [
+                {
+                  "rank": "29",
+                  "url": "www.example.com\/muffins"
+                }
+              ]
+            }
+          },
+          {
+            "id": 660352,
+            "keyword": "coffee",
+            "keyword_market": "DE-de",
+            "keyword_location": null,
+            "keyword_device": "desktop",
+            "keyword_categories": null,
+            "keyword_tags": [],
+            "keyword_stats": {
+              "advertiser_competition": 0.06,
+              "global_search_volume": 720,
+              "targeted_search_volume": 590,
+              "cpc": 0.15,
+              "local_search_trends_by_month": [
+                {
+                  "month": "sep",
+                  "search_volume": 590
+                },
+                {
+                  "month": "aug",
+                  "search_volume": 590
+                },
+                {
+                  "month": "jul",
+                  "search_volume": 590
+                },
+                {
+                  "month": "jun",
+                  "search_volume": 480
+                },
+                {
+                  "month": "may",
+                  "search_volume": 480
+                },
+                {
+                  "month": "apr",
+                  "search_volume": 480
+                },
+                {
+                  "month": "mar",
+                  "search_volume": 590
+                },
+                {
+                  "month": "feb",
+                  "search_volume": 720
+                },
+                {
+                  "month": "jan",
+                  "search_volume": 720
+                },
+                {
+                  "month": "dec",
+                  "search_volume": 880
+                },
+                {
+                  "month": "nov",
+                  "search_volume": 880
+                },
+                {
+                  "month": "oct",
+                  "search_volume": 720
+                }
+              ]
+            },
+            "created_at": "2016-11-18 00:00:00",
+            "ranking": {
+              "date": "2016-11-20 00:00:00",
+              "type": "all",
+              "google": [
+                {
+                  "rank": "5",
+                  "base_rank": "5",
+                  "url": "www.example.com\/"
+                }
+              ],
+              "bing": [
+                {
+                  "rank": "5",
+                  "url": "www.example.com\/"
+                },
+                {
+                  "rank": "18",
+                  "url": "www.example.com\/spezial-coffee"
+                },
+                {
+                  "rank": "36",
+                  "url": "www.example.com\/coffee-houses"
+                }
+              ]
+            }
+          },
+          {
+            "id": 660353,
+            "keyword": "free wifi",
+            "keyword_market": "DE-de",
+            "keyword_location": null,
+            "keyword_device": "desktop",
+            "keyword_categories": null,
+            "keyword_tags": [
+              "brand",
+              "typen"
+            ],
+            "keyword_stats": {
+              "advertiser_competition": 1,
+              "global_search_volume": 60500,
+              "targeted_search_volume": 60500,
+              "cpc": 0.34,
+              "local_search_trends_by_month": [
+                {
+                  "month": "sep",
+                  "search_volume": 49500
+                },
+                {
+                  "month": "aug",
+                  "search_volume": 49500
+                },
+                {
+                  "month": "jul",
+                  "search_volume": 49500
+                },
+                {
+                  "month": "jun",
+                  "search_volume": 49500
+                },
+                {
+                  "month": "may",
+                  "search_volume": 49500
+                },
+                {
+                  "month": "apr",
+                  "search_volume": 49500
+                },
+                {
+                  "month": "mar",
+                  "search_volume": 60500
+                },
+                {
+                  "month": "feb",
+                  "search_volume": 60500
+                },
+                {
+                  "month": "jan",
+                  "search_volume": 74000
+                },
+                {
+                  "month": "dec",
+                  "search_volume": 74000
+                },
+                {
+                  "month": "nov",
+                  "search_volume": 74000
+                },
+                {
+                  "month": "oct",
+                  "search_volume": 60500
+                }
+              ]
+            },
+            "created_at": "2016-11-18 00:00:00",
+            "ranking": {
+              "date": "2016-11-20 00:00:00",
+              "type": "all",
+              "google": null,
+              "bing": null
+            }
+          },
+          {
+            "id": 660354,
+            "keyword": "juice",
+            "keyword_market": "DE-de",
+            "keyword_location": null,
+            "keyword_device": "desktop",
+            "keyword_categories": null,
+            "keyword_tags": [],
+            "keyword_stats": {
+              "advertiser_competition": 1,
+              "global_search_volume": 74000,
+              "targeted_search_volume": 60500,
+              "cpc": 0.34,
+              "local_search_trends_by_month": [
+                {
+                  "month": "sep",
+                  "search_volume": 49500
+                },
+                {
+                  "month": "aug",
+                  "search_volume": 49500
+                },
+                {
+                  "month": "jul",
+                  "search_volume": 49500
+                },
+                {
+                  "month": "jun",
+                  "search_volume": 49500
+                },
+                {
+                  "month": "may",
+                  "search_volume": 49500
+                },
+                {
+                  "month": "apr",
+                  "search_volume": 49500
+                },
+                {
+                  "month": "mar",
+                  "search_volume": 60500
+                },
+                {
+                  "month": "feb",
+                  "search_volume": 60500
+                },
+                {
+                  "month": "jan",
+                  "search_volume": 74000
+                },
+                {
+                  "month": "dec",
+                  "search_volume": 74000
+                },
+                {
+                  "month": "nov",
+                  "search_volume": 74000
+                },
+                {
+                  "month": "oct",
+                  "search_volume": 60500
+                }
+              ]
+            },
+            "created_at": "2016-11-18 00:00:00",
+            "ranking": {
+              "date": "2016-11-20 00:00:00",
+              "type": "all",
+              "google": null,
+              "bing": null
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

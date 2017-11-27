@@ -45,11 +45,6 @@ class StatRankings extends BaseStat
                     'base_rank' => $ranking['Google']['BaseRank'],
                     'url' => $ranking['Google']['Url'] ?? '',
                 ]),
-                'yahoo' => new StatKeywordEngineRanking([
-                    'rank' => $ranking['Yahoo']['Rank'],
-                    'url' => $ranking['Yahoo']['Url'] ?? '',
-                    'base_rank' => $ranking['Yahoo']['BaseRank'],
-                ]),
                 'bing' => new StatKeywordEngineRanking([
                     'rank' => $ranking['Bing']['Rank'],
                     'url' => $ranking['Bing']['Url'] ?? '',

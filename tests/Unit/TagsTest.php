@@ -173,20 +173,6 @@ class TagsTest extends TestCase
                             "FiftyOneToHundred" => "3",
                             "NonRanking" => "11",
                         ],
-                        'Yahoo' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "0",
-                            "Five" => "1",
-                            "SixToTen" => "3",
-                            "ElevenToTwenty" => "6",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "4",
-                            "FortyOneToFifty" => "1",
-                            "FiftyOneToHundred" => "0",
-                            "NonRanking" => "16",
-                        ],
                         'Bing' => [
                             "One" => "0",
                             "Two" => "0",
@@ -232,20 +218,6 @@ class TagsTest extends TestCase
                             "FiftyOneToHundred" => "3",
                             "NonRanking" => "11",
                         ],
-                        'Yahoo' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "0",
-                            "Five" => "1",
-                            "SixToTen" => "3",
-                            "ElevenToTwenty" => "6",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "4",
-                            "FortyOneToFifty" => "1",
-                            "FiftyOneToHundred" => "0",
-                            "NonRanking" => "16",
-                        ],
                         'Bing' => [
                             "One" => "0",
                             "Two" => "0",
@@ -269,14 +241,13 @@ class TagsTest extends TestCase
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertInstanceOf(StatRankDistribution::class, $response->first());
         $this->assertEquals(2, $response->count());
-        $this->assertEquals(5, count($response->first()->toArray()));
+        $this->assertEquals(4, count($response->first()->toArray()));
         $this->assertInstanceOf(StatEngineRankDistribution::class, $response->first()->google);
 
 
         $this->assertArrayHasKey('date', $response->first());
         $this->assertArrayHasKey('google', $response->first());
         $this->assertArrayHasKey('google_base_rank', $response->first());
-        $this->assertArrayHasKey('yahoo', $response->first());
         $this->assertArrayHasKey('bing', $response->first());
 
 
@@ -422,10 +393,10 @@ class TagsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_the_most_frequent_domains_for_yahoo_from_a_tag()
+    public function it_can_get_the_most_frequent_domains_for_bing_from_a_tag()
     {
         $expectedArguments = [
-            'tags/most_frequent_domains', ['id' => 13, 'engine' => 'yahoo']
+            'tags/most_frequent_domains', ['id' => 13, 'engine' => 'bing']
         ];
 
         $this->statClient
@@ -451,7 +422,7 @@ class TagsTest extends TestCase
                 ]
             ]]);
 
-        $response = $this->stat->tags()->mostFrequentDomains(13, 'yahoo');
+        $response = $this->stat->tags()->mostFrequentDomains(13, 'bing');
 
 
         $this->assertInstanceOf(Collection::class, $response);

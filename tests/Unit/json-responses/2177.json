@@ -32,20 +32,6 @@
                   "FiftyOneToHundred": "0",
                   "NonRanking": "1"
                 },
-                "Yahoo": {
-                  "One": "0",
-                  "Two": "0",
-                  "Three": "0",
-                  "Four": "0",
-                  "Five": "1",
-                  "SixToTen": "0",
-                  "ElevenToTwenty": "0",
-                  "TwentyOneToThirty": "0",
-                  "ThirtyOneToForty": "0",
-                  "FortyOneToFifty": "0",
-                  "FiftyOneToHundred": "0",
-                  "NonRanking": "1"
-                },
                 "Bing": {
                   "One": "0",
                   "Two": "0",
@@ -80,20 +66,6 @@
                   "FortyOneToFifty": "0",
                   "FiftyOneToHundred": "0",
                   "NonRanking": "1"
-                },
-                "Yahoo": {
-                  "One": "0",
-                  "Two": "0",
-                  "Three": "0",
-                  "Four": "0",
-                  "Five": "0",
-                  "SixToTen": "0",
-                  "ElevenToTwenty": "0",
-                  "TwentyOneToThirty": "1",
-                  "ThirtyOneToForty": "0",
-                  "FortyOneToFifty": "0",
-                  "FiftyOneToHundred": "0",
-                  "NonRanking": "0"
                 },
                 "Bing": {
                   "One": "0",
@@ -130,20 +102,6 @@
                   "FiftyOneToHundred": "0",
                   "NonRanking": "2"
                 },
-                "Yahoo": {
-                  "One": "0",
-                  "Two": "0",
-                  "Three": "0",
-                  "Four": "0",
-                  "Five": "0",
-                  "SixToTen": "1",
-                  "ElevenToTwenty": "0",
-                  "TwentyOneToThirty": "1",
-                  "ThirtyOneToForty": "0",
-                  "FortyOneToFifty": "0",
-                  "FiftyOneToHundred": "0",
-                  "NonRanking": "1"
-                },
                 "Bing": {
                   "One": "0",
                   "Two": "0",
@@ -178,20 +136,6 @@
                   "FortyOneToFifty": "0",
                   "FiftyOneToHundred": "0",
                   "NonRanking": "1"
-                },
-                "Yahoo": {
-                  "One": "0",
-                  "Two": "0",
-                  "Three": "0",
-                  "Four": "0",
-                  "Five": "0",
-                  "SixToTen": "0",
-                  "ElevenToTwenty": "0",
-                  "TwentyOneToThirty": "1",
-                  "ThirtyOneToForty": "0",
-                  "FortyOneToFifty": "0",
-                  "FiftyOneToHundred": "0",
-                  "NonRanking": "0"
                 },
                 "Bing": {
                   "One": "0",
@@ -228,20 +172,6 @@
                   "FiftyOneToHundred": "0",
                   "NonRanking": "1"
                 },
-                "Yahoo": {
-                  "One": "0",
-                  "Two": "0",
-                  "Three": "0",
-                  "Four": "0",
-                  "Five": "0",
-                  "SixToTen": "1",
-                  "ElevenToTwenty": "0",
-                  "TwentyOneToThirty": "1",
-                  "ThirtyOneToForty": "0",
-                  "FortyOneToFifty": "0",
-                  "FiftyOneToHundred": "0",
-                  "NonRanking": "0"
-                },
                 "Bing": {
                   "One": "0",
                   "Two": "0",
@@ -264,20 +194,6 @@
               "RankDistribution": {
                 "date": "2016-11-23",
                 "Google": {
-                  "One": "0",
-                  "Two": "0",
-                  "Three": "0",
-                  "Four": "0",
-                  "Five": "0",
-                  "SixToTen": "0",
-                  "ElevenToTwenty": "0",
-                  "TwentyOneToThirty": "0",
-                  "ThirtyOneToForty": "0",
-                  "FortyOneToFifty": "0",
-                  "FiftyOneToHundred": "0",
-                  "NonRanking": "1"
-                },
-                "Yahoo": {
                   "One": "0",
                   "Two": "0",
                   "Three": "0",
@@ -340,20 +256,6 @@
                   "FiftyOneToHundred": "0",
                   "NonRanking": "0"
                 },
-                "Yahoo": {
-                  "One": "0",
-                  "Two": "0",
-                  "Three": "0",
-                  "Four": "0",
-                  "Five": "0",
-                  "SixToTen": "1",
-                  "ElevenToTwenty": "2",
-                  "TwentyOneToThirty": "2",
-                  "ThirtyOneToForty": "2",
-                  "FortyOneToFifty": "0",
-                  "FiftyOneToHundred": "0",
-                  "NonRanking": "5"
-                },
                 "Bing": {
                   "One": "0",
                   "Two": "0",
@@ -394,20 +296,6 @@
                   "FortyOneToFifty": "0",
                   "FiftyOneToHundred": "2",
                   "NonRanking": "4"
-                },
-                "Yahoo": {
-                  "One": "0",
-                  "Two": "0",
-                  "Three": "0",
-                  "Four": "1",
-                  "Five": "0",
-                  "SixToTen": "2",
-                  "ElevenToTwenty": "1",
-                  "TwentyOneToThirty": "1",
-                  "ThirtyOneToForty": "1",
-                  "FortyOneToFifty": "1",
-                  "FiftyOneToHundred": "0",
-                  "NonRanking": "5"
                 },
                 "Bing": {
                   "One": "0",
@@ -467,20 +355,6 @@
                   "FortyOneToFifty": "0",
                   "FiftyOneToHundred": "0",
                   "NonRanking": "0"
-                },
-                "Yahoo": {
-                  "One": "0",
-                  "Two": "0",
-                  "Three": "0",
-                  "Four": "0",
-                  "Five": "0",
-                  "SixToTen": "0",
-                  "ElevenToTwenty": "0",
-                  "TwentyOneToThirty": "0",
-                  "ThirtyOneToForty": "0",
-                  "FortyOneToFifty": "0",
-                  "FiftyOneToHundred": "0",
-                  "NonRanking": "1"
                 },
                 "Bing": {
                   "One": "0",

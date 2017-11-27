@@ -45,7 +45,7 @@ class StatBulk extends BaseStat
      * @param Carbon $date Note that you cannot create bulk jobs for the current date or dates in the future.
      * @param array|null $sites If no site IDs are passed in, ranks are reported for all sites in the system on the given date.
      * @param string $rankType This parameter changes the call between getting the highest ranks for the keywords for the date with the value 'highest', or getting all the ranks for each engine for a keyword for a date with the value 'all'.
-     * @param array|null $engines This parameter lets you choose which search engines to include in the export, defaulting to Google, Yahoo, and Bing. Engines can be passed in a array to get multiple. ['google', 'yahoo', 'bing']
+     * @param array|null $engines This parameter lets you choose which search engines to include in the export, defaulting to Google and Bing. Engines can be passed in a array to get multiple. ['google', 'bing']
      * @param bool $currentlyTrackedOnly This parameter will cause the API to output only keywords which currently have tracking on at the time the API request is generated.
      * @param bool $crawledKeywordsOnly This parameter causes the API to only include output for keywords that were crawled on the date parameter provided.
      * @return int
@@ -234,10 +234,6 @@ class StatBulk extends BaseStat
 
         if (array_key_exists('Google', $keyword['Ranking'])) {
             $modifiedKeyword->ranking->google = $this->analyzeRanking($keyword['Ranking']['Google'], $keyword['Ranking']['type']);
-        }
-
-        if (array_key_exists('Yahoo', $keyword['Ranking'])) {
-            $modifiedKeyword->ranking->yahoo = $this->analyzeRanking($keyword['Ranking']['Yahoo'], $keyword['Ranking']['type']);
         }
 
         if (array_key_exists('Bing', $keyword['Ranking'])) {

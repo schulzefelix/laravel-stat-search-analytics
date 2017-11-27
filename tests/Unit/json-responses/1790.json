@@ -51,7 +51,6 @@
                   "Url": "www.example.com/"
                 }
               },
-              "Yahoo": null,
               "Bing": null
             }
           },
@@ -88,12 +87,6 @@
               "date": "2016-11-20",
               "type": "all",
               "Google": null,
-              "Yahoo": {
-                "Result": {
-                  "Rank": "29",
-                  "Url": "www.example.com/muffins"
-                }
-              },
               "Bing": {
                 "Result": {
                   "Rank": "29",
@@ -140,22 +133,6 @@
                   "BaseRank": "5",
                   "Url": "www.example.com/"
                 }
-              },
-              "Yahoo": {
-                "Result": [
-                  {
-                    "Rank": "5",
-                    "Url": "www.example.com/"
-                  },
-                  {
-                    "Rank": "18",
-                    "Url": "www.example.com/coffee"
-                  },
-                  {
-                    "Rank": "36",
-                    "Url": "www.example.com/coffee-houses"
-                  }
-                ]
               },
               "Bing": {
                 "Result": [
@@ -208,7 +185,6 @@
               "date": "2016-11-20",
               "type": "all",
               "Google": null,
-              "Yahoo": null,
               "Bing": null
             }
           },
@@ -245,7 +221,6 @@
               "date": "2016-11-20",
               "type": "all",
               "Google": null,
-              "Yahoo": null,
               "Bing": null
             }
           }

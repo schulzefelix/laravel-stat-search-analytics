@@ -54,11 +54,6 @@ class RankingsTest extends TestCase
                             'BaseRank' => '50',
                             'RequestUrl' => '/serps/show?keyword_id=14&engine=google&date=2011-01-25&format=json',
                         ],
-                        'Yahoo' => [
-                            'Rank' => '0',
-                            'BaseRank' => '0',
-                            'RequestUrl' => '/serps/show?keyword_id=14&engine=yahoo&date=2011-01-25&format=json',
-                        ],
                         'Bing' => [
                             'Rank' => '28',
                             'BaseRank' => '0',
@@ -81,16 +76,11 @@ class RankingsTest extends TestCase
 
         $this->assertArrayHasKey('date', $response->first());
         $this->assertArrayHasKey('google', $response->first());
-        $this->assertArrayHasKey('yahoo', $response->first());
         $this->assertArrayHasKey('bing', $response->first());
 
         $this->assertArrayHasKey('rank', $response->first()['google']);
         $this->assertArrayHasKey('base_rank', $response->first()['google']);
         $this->assertArrayHasKey('url', $response->first()['google']);
-
-        $this->assertArrayHasKey('rank', $response->first()['yahoo']);
-        $this->assertArrayHasKey('base_rank', $response->first()['yahoo']);
-        $this->assertArrayHasKey('url', $response->first()['yahoo']);
 
         $this->assertArrayHasKey('rank', $response->first()['bing']);
         $this->assertArrayHasKey('base_rank', $response->first()['bing']);

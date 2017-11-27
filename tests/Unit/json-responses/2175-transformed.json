@@ -1,1 +1,180 @@
-[{"id":147,"name":"Development","total_sites":1,"created_at":"2016-11-18 00:00:00","sites":[{"id":509,"url":"example.com","total_keywords":5,"created_at":"2016-11-18 00:00:00","rank_distribution":{"date":"2016-11-23 00:00:00","google":{"one":0,"two":0,"three":0,"four":0,"five":1,"six_to_ten":1,"eleven_to_twenty":0,"twenty_one_to_thirty":0,"thirty_one_to_forty":0,"forty_one_to_fifty":0,"fifty_one_to_hundred":0,"non_ranking":3},"yahoo":{"one":0,"two":0,"three":0,"four":0,"five":1,"six_to_ten":1,"eleven_to_twenty":0,"twenty_one_to_thirty":1,"thirty_one_to_forty":0,"forty_one_to_fifty":0,"fifty_one_to_hundred":0,"non_ranking":2},"bing":{"one":0,"two":0,"three":0,"four":0,"five":1,"six_to_ten":1,"eleven_to_twenty":0,"twenty_one_to_thirty":1,"thirty_one_to_forty":0,"forty_one_to_fifty":0,"fifty_one_to_hundred":0,"non_ranking":2}}}]},{"id":149,"name":"getstat.com","total_sites":2,"created_at":"2016-11-21 00:00:00","sites":[{"id":512,"url":"www.getstat.com\/","total_keywords":12,"created_at":"2016-11-21 00:00:00","rank_distribution":{"date":"2016-11-23 00:00:00","google":{"one":0,"two":0,"three":0,"four":0,"five":0,"six_to_ten":1,"eleven_to_twenty":5,"twenty_one_to_thirty":1,"thirty_one_to_forty":2,"forty_one_to_fifty":3,"fifty_one_to_hundred":0,"non_ranking":0},"yahoo":{"one":0,"two":0,"three":0,"four":0,"five":0,"six_to_ten":1,"eleven_to_twenty":2,"twenty_one_to_thirty":2,"thirty_one_to_forty":2,"forty_one_to_fifty":0,"fifty_one_to_hundred":0,"non_ranking":5},"bing":{"one":0,"two":0,"three":0,"four":0,"five":0,"six_to_ten":1,"eleven_to_twenty":2,"twenty_one_to_thirty":2,"thirty_one_to_forty":2,"forty_one_to_fifty":0,"fifty_one_to_hundred":0,"non_ranking":5}}},{"id":513,"url":"www.amazon.com\/","total_keywords":12,"created_at":"2016-11-21 00:00:00","rank_distribution":{"date":"2016-11-23 00:00:00","google":{"one":0,"two":2,"three":0,"four":1,"five":0,"six_to_ten":1,"eleven_to_twenty":0,"twenty_one_to_thirty":0,"thirty_one_to_forty":2,"forty_one_to_fifty":0,"fifty_one_to_hundred":2,"non_ranking":4},"yahoo":{"one":0,"two":0,"three":0,"four":1,"five":0,"six_to_ten":2,"eleven_to_twenty":1,"twenty_one_to_thirty":1,"thirty_one_to_forty":1,"forty_one_to_fifty":1,"fifty_one_to_hundred":0,"non_ranking":5},"bing":{"one":0,"two":0,"three":0,"four":1,"five":0,"six_to_ten":2,"eleven_to_twenty":1,"twenty_one_to_thirty":1,"thirty_one_to_forty":1,"forty_one_to_fifty":1,"fifty_one_to_hundred":0,"non_ranking":5}}}]},{"id":150,"name":"Muffin Top","total_sites":2,"created_at":"2016-11-21 00:00:00","sites":[{"id":514,"url":"www.abc.de","total_keywords":0,"created_at":"2016-11-21 00:00:00"},{"id":516,"url":"www.abc.de\/","total_keywords":1,"created_at":"2016-11-21 00:00:00","rank_distribution":{"date":"2016-11-23 00:00:00","google":{"one":0,"two":0,"three":0,"four":0,"five":1,"six_to_ten":0,"eleven_to_twenty":0,"twenty_one_to_thirty":0,"thirty_one_to_forty":0,"forty_one_to_fifty":0,"fifty_one_to_hundred":0,"non_ranking":0},"yahoo":{"one":0,"two":0,"three":0,"four":0,"five":0,"six_to_ten":0,"eleven_to_twenty":0,"twenty_one_to_thirty":0,"thirty_one_to_forty":0,"forty_one_to_fifty":0,"fifty_one_to_hundred":0,"non_ranking":1},"bing":{"one":0,"two":0,"three":0,"four":0,"five":0,"six_to_ten":0,"eleven_to_twenty":0,"twenty_one_to_thirty":0,"thirty_one_to_forty":0,"forty_one_to_fifty":0,"fifty_one_to_hundred":0,"non_ranking":1}}}]}]
+[
+  {
+    "id": 147,
+    "name": "Development",
+    "total_sites": 1,
+    "created_at": "2016-11-18 00:00:00",
+    "sites": [
+      {
+        "id": 509,
+        "url": "example.com",
+        "total_keywords": 5,
+        "created_at": "2016-11-18 00:00:00",
+        "rank_distribution": {
+          "date": "2016-11-23 00:00:00",
+          "google": {
+            "one": 0,
+            "two": 0,
+            "three": 0,
+            "four": 0,
+            "five": 1,
+            "six_to_ten": 1,
+            "eleven_to_twenty": 0,
+            "twenty_one_to_thirty": 0,
+            "thirty_one_to_forty": 0,
+            "forty_one_to_fifty": 0,
+            "fifty_one_to_hundred": 0,
+            "non_ranking": 3
+          },
+          "bing": {
+            "one": 0,
+            "two": 0,
+            "three": 0,
+            "four": 0,
+            "five": 1,
+            "six_to_ten": 1,
+            "eleven_to_twenty": 0,
+            "twenty_one_to_thirty": 1,
+            "thirty_one_to_forty": 0,
+            "forty_one_to_fifty": 0,
+            "fifty_one_to_hundred": 0,
+            "non_ranking": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 149,
+    "name": "getstat.com",
+    "total_sites": 2,
+    "created_at": "2016-11-21 00:00:00",
+    "sites": [
+      {
+        "id": 512,
+        "url": "www.getstat.com\/",
+        "total_keywords": 12,
+        "created_at": "2016-11-21 00:00:00",
+        "rank_distribution": {
+          "date": "2016-11-23 00:00:00",
+          "google": {
+            "one": 0,
+            "two": 0,
+            "three": 0,
+            "four": 0,
+            "five": 0,
+            "six_to_ten": 1,
+            "eleven_to_twenty": 5,
+            "twenty_one_to_thirty": 1,
+            "thirty_one_to_forty": 2,
+            "forty_one_to_fifty": 3,
+            "fifty_one_to_hundred": 0,
+            "non_ranking": 0
+          },
+          "bing": {
+            "one": 0,
+            "two": 0,
+            "three": 0,
+            "four": 0,
+            "five": 0,
+            "six_to_ten": 1,
+            "eleven_to_twenty": 2,
+            "twenty_one_to_thirty": 2,
+            "thirty_one_to_forty": 2,
+            "forty_one_to_fifty": 0,
+            "fifty_one_to_hundred": 0,
+            "non_ranking": 5
+          }
+        }
+      },
+      {
+        "id": 513,
+        "url": "www.amazon.com\/",
+        "total_keywords": 12,
+        "created_at": "2016-11-21 00:00:00",
+        "rank_distribution": {
+          "date": "2016-11-23 00:00:00",
+          "google": {
+            "one": 0,
+            "two": 2,
+            "three": 0,
+            "four": 1,
+            "five": 0,
+            "six_to_ten": 1,
+            "eleven_to_twenty": 0,
+            "twenty_one_to_thirty": 0,
+            "thirty_one_to_forty": 2,
+            "forty_one_to_fifty": 0,
+            "fifty_one_to_hundred": 2,
+            "non_ranking": 4
+          },
+          "bing": {
+            "one": 0,
+            "two": 0,
+            "three": 0,
+            "four": 1,
+            "five": 0,
+            "six_to_ten": 2,
+            "eleven_to_twenty": 1,
+            "twenty_one_to_thirty": 1,
+            "thirty_one_to_forty": 1,
+            "forty_one_to_fifty": 1,
+            "fifty_one_to_hundred": 0,
+            "non_ranking": 5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 150,
+    "name": "Muffin Top",
+    "total_sites": 2,
+    "created_at": "2016-11-21 00:00:00",
+    "sites": [
+      {
+        "id": 514,
+        "url": "www.abc.de",
+        "total_keywords": 0,
+        "created_at": "2016-11-21 00:00:00"
+      },
+      {
+        "id": 516,
+        "url": "www.abc.de\/",
+        "total_keywords": 1,
+        "created_at": "2016-11-21 00:00:00",
+        "rank_distribution": {
+          "date": "2016-11-23 00:00:00",
+          "google": {
+            "one": 0,
+            "two": 0,
+            "three": 0,
+            "four": 0,
+            "five": 1,
+            "six_to_ten": 0,
+            "eleven_to_twenty": 0,
+            "twenty_one_to_thirty": 0,
+            "thirty_one_to_forty": 0,
+            "forty_one_to_fifty": 0,
+            "fifty_one_to_hundred": 0,
+            "non_ranking": 0
+          },
+          "bing": {
+            "one": 0,
+            "two": 0,
+            "three": 0,
+            "four": 0,
+            "five": 0,
+            "six_to_ten": 0,
+            "eleven_to_twenty": 0,
+            "twenty_one_to_thirty": 0,
+            "thirty_one_to_forty": 0,
+            "forty_one_to_fifty": 0,
+            "fifty_one_to_hundred": 0,
+            "non_ranking": 1
+          }
+        }
+      }
+    ]
+  }
+]
