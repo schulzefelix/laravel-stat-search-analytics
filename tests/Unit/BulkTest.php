@@ -2,18 +2,18 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Mockery;
-use PHPUnit\Framework\TestCase;
-use SchulzeFelix\Stat\Exceptions\ApiException;
-use SchulzeFelix\Stat\Objects\StatBulkJob;
-use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
-use SchulzeFelix\Stat\Objects\StatProject;
-use SchulzeFelix\Stat\Objects\StatRankDistribution;
-use SchulzeFelix\Stat\Objects\StatTag;
+use Carbon\Carbon;
 use SchulzeFelix\Stat\Stat;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\StatClient;
+use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatTag;
+use SchulzeFelix\Stat\Objects\StatBulkJob;
+use SchulzeFelix\Stat\Objects\StatProject;
+use SchulzeFelix\Stat\Exceptions\ApiException;
+use SchulzeFelix\Stat\Objects\StatRankDistribution;
+use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
 
 class BulkTest extends TestCase
 {
@@ -38,16 +38,16 @@ class BulkTest extends TestCase
     public function it_can_list_bulk_exports_jobs()
     {
         $expectedArguments = [
-            'bulk/list', []
+            'bulk/list', [],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'resultsreturned' => "2",
-                'totalresults' => "2",
+                'responsecode' => '200',
+                'resultsreturned' => '2',
+                'totalresults' => '2',
                 'Result' => [
                     [
                         'Id' => '100',
@@ -69,7 +69,6 @@ class BulkTest extends TestCase
                     ],
                 ],
             ]]);
-
 
         $response = $this->stat->bulk()->list();
 
@@ -93,25 +92,24 @@ class BulkTest extends TestCase
         $this->assertEquals('NotStarted', $response->first()['status']);
     }
 
-
     /** @test */
     public function it_can_create_bulk_exports_jobs_for_ranks()
     {
         $expectedArguments = [
-            'bulk/ranks', ['date' => '2016-11-08', 'site_id' => '1,2', 'rank_type' => 'highest', 'crawled_keywords_only' => true, 'currently_tracked_only' => false]
+            'bulk/ranks', ['date' => '2016-11-08', 'site_id' => '1,2', 'rank_type' => 'highest', 'crawled_keywords_only' => true, 'currently_tracked_only' => false],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
                     'Id' => '1',
-                ]
+                ],
             ]]);
 
-        $response = $this->stat->bulk()->ranks(Carbon::create(2016, 11, 8), [1,2], 'highest', null, false, true);
+        $response = $this->stat->bulk()->ranks(Carbon::create(2016, 11, 8), [1, 2], 'highest', null, false, true);
         $this->assertEquals(1, $response);
     }
 
@@ -131,19 +129,18 @@ class BulkTest extends TestCase
         $response = $this->stat->bulk()->ranks(Carbon::now()->addWeek());
     }
 
-
     /** @test */
     public function it_can_get_bulk_exports_jobs_status()
     {
         $expectedArguments = [
-            'bulk/status', ['id' => 1]
+            'bulk/status', ['id' => 1],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
                     'Id' => '1',
                     'JobType' => 'ranks',
@@ -153,7 +150,7 @@ class BulkTest extends TestCase
                     'Status' => 'InProgress',
                     'Url' => null,
                     'CreatedAt' => '2011-05-03',
-                ]
+                ],
             ]]);
 
         $response = $this->stat->bulk()->status(1);
@@ -188,17 +185,17 @@ class BulkTest extends TestCase
     public function it_can_delete_a_bulk_exports_jobs()
     {
         $expectedArguments = [
-            'bulk/delete', ['id' => 1]
+            'bulk/delete', ['id' => 1],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
-                    'Id' => '1'
-                ]
+                    'Id' => '1',
+                ],
             ]]);
 
         $response = $this->stat->bulk()->delete(1);
@@ -210,17 +207,17 @@ class BulkTest extends TestCase
     public function it_can_create_bulk_exports_jobs_for_site_ranking_distributions()
     {
         $expectedArguments = [
-            'bulk/site_ranking_distributions', ['date' => '2016-11-08']
+            'bulk/site_ranking_distributions', ['date' => '2016-11-08'],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
                     'Id' => '1',
-                ]
+                ],
             ]]);
 
         $response = $this->stat->bulk()->siteRankingDistributions(Carbon::create(2016, 11, 8));
@@ -238,17 +235,17 @@ class BulkTest extends TestCase
     public function it_can_create_bulk_exports_jobs_for_tag_ranking_distributions()
     {
         $expectedArguments = [
-            'bulk/tag_ranking_distributions', ['date' => '2016-11-08']
+            'bulk/tag_ranking_distributions', ['date' => '2016-11-08'],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
                     'Id' => '1',
-                ]
+                ],
             ]]);
 
         $response = $this->stat->bulk()->tagRankingDistributions(Carbon::create(2016, 11, 8));
@@ -262,19 +259,18 @@ class BulkTest extends TestCase
         $response = $this->stat->bulk()->siteRankingDistributions(Carbon::now()->addDay());
     }
 
-
     /** @test */
     public function it_can_retrieve_a_ranks_bulk_export_for_a_single_project_with_single_site_type_highest()
     {
         $expectedArguments = [
-            'bulk/status', ['id' => 1787]
+            'bulk/status', ['id' => 1787],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
                     'Id' => '1787',
                     'JobType' => 'ranks',
@@ -285,18 +281,17 @@ class BulkTest extends TestCase
                     'Url' => 'https://try.getstat.com/bulk_reports/download_report/1787?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
                     'StreamUrl' => 'https://try.getstat.com/bulk_reports/stream_report/1787?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
                     'CreatedAt' => '2016-11-21',
-                ]
+                ],
             ]]);
 
         $expectedArguments = [
-            'https://try.getstat.com/bulk_reports/stream_report/1787?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18'
+            'https://try.getstat.com/bulk_reports/stream_report/1787?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
         ];
         $expectedResponse = json_decode(file_get_contents('tests/Unit/json-responses/1787.json'), true);
         $this->statClient
             ->shouldReceive('downloadBulkJobStream')->withArgs($expectedArguments)
             ->once()
             ->andReturn($expectedResponse);
-
 
         $response = $this->stat->bulk()->get(1787);
 
@@ -320,14 +315,14 @@ class BulkTest extends TestCase
     public function it_can_retrieve_a_rank_bulk_export_for_a_single_project_with_single_site_type_all()
     {
         $expectedArguments = [
-            'bulk/status', ['id' => 1790]
+            'bulk/status', ['id' => 1790],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
                     'Id' => '1790',
                     'JobType' => 'ranks',
@@ -337,18 +332,17 @@ class BulkTest extends TestCase
                     'Url' => 'https://try.getstat.com/bulk_reports/download_report/1790?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
                     'StreamUrl' => 'https://try.getstat.com/bulk_reports/stream_report/1790?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
                     'CreatedAt' => '2016-11-21',
-                ]
+                ],
             ]]);
 
         $expectedArguments = [
-            'https://try.getstat.com/bulk_reports/stream_report/1790?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18'
+            'https://try.getstat.com/bulk_reports/stream_report/1790?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
         ];
         $expectedResponse = json_decode(file_get_contents('tests/Unit/json-responses/1790.json'), true);
         $this->statClient
             ->shouldReceive('downloadBulkJobStream')->withArgs($expectedArguments)
             ->once()
             ->andReturn($expectedResponse);
-
 
         $response = $this->stat->bulk()->get(1790);
 
@@ -367,7 +361,6 @@ class BulkTest extends TestCase
 
         $this->assertNull($response->first()->sites->first()->keywords->first()->ranking->bing);
 
-
         $this->assertJsonStringEqualsJsonFile('tests/Unit/json-responses/1790-transformed.json', $response->toJson());
     }
 
@@ -375,14 +368,14 @@ class BulkTest extends TestCase
     public function it_can_retrieve_a_site_rank_distributions_bulk_export()
     {
         $expectedArguments = [
-            'bulk/status', ['id' => 2175]
+            'bulk/status', ['id' => 2175],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
                     'Id' => '2175',
                     'JobType' => 'site_ranking_distributions',
@@ -392,18 +385,17 @@ class BulkTest extends TestCase
                     'Url' => 'https://try.getstat.com/bulk_reports/download_report/2175?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
                     'StreamUrl' => 'https://try.getstat.com/bulk_reports/stream_report/2175?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
                     'CreatedAt' => '2016-11-24',
-                ]
+                ],
             ]]);
 
         $expectedArguments = [
-            'https://try.getstat.com/bulk_reports/stream_report/2175?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18'
+            'https://try.getstat.com/bulk_reports/stream_report/2175?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
         ];
         $expectedResponse = json_decode(file_get_contents('tests/Unit/json-responses/2175.json'), true);
         $this->statClient
             ->shouldReceive('downloadBulkJobStream')->withArgs($expectedArguments)
             ->once()
             ->andReturn($expectedResponse);
-
 
         $response = $this->stat->bulk()->get(2175);
 
@@ -424,14 +416,14 @@ class BulkTest extends TestCase
     public function it_can_retrieve_a_tag_rank_distributions_bulk_export()
     {
         $expectedArguments = [
-            'bulk/status', ['id' => 2177]
+            'bulk/status', ['id' => 2177],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
                     'Id' => '2177',
                     'JobType' => 'tag_ranking_distributions',
@@ -441,18 +433,17 @@ class BulkTest extends TestCase
                     'Url' => 'https://try.getstat.com/bulk_reports/download_report/2177?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
                     'StreamUrl' => 'https://try.getstat.com/bulk_reports/stream_report/2177?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
                     'CreatedAt' => '2016-11-24',
-                ]
+                ],
             ]]);
 
         $expectedArguments = [
-            'https://try.getstat.com/bulk_reports/stream_report/2177?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18'
+            'https://try.getstat.com/bulk_reports/stream_report/2177?key=l3fr7fzxwjolserpep3ndcstgo232uk4ok1l8o18',
         ];
         $expectedResponse = json_decode(file_get_contents('tests/Unit/json-responses/2177.json'), true);
         $this->statClient
             ->shouldReceive('downloadBulkJobStream')->withArgs($expectedArguments)
             ->once()
             ->andReturn($expectedResponse);
-
 
         $response = $this->stat->bulk()->get(2177);
 

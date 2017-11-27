@@ -8,7 +8,6 @@ use SchulzeFelix\Stat\Objects\StatSerpItem;
 
 class StatSerps extends BaseStat
 {
-
     /**
      * @param $keywordID
      * @param Carbon $date

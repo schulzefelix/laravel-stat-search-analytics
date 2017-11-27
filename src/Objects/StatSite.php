@@ -1,4 +1,6 @@
-<?php namespace SchulzeFelix\Stat\Objects;
+<?php
+
+namespace SchulzeFelix\Stat\Objects;
 
 use SchulzeFelix\DataTransferObject\DataTransferObject;
 
@@ -12,14 +14,13 @@ class StatSite extends DataTransferObject
         'drop_directories' => 'boolean',
     ];
 
-
     public function setDropWWWPrefixAttribute($value)
     {
-        return $this->attributes['drop_www_prefix'] = (bool)$value;
+        return $this->attributes['drop_www_prefix'] = (bool) $value;
     }
 
     public function setDropDirectoriesAttribute($value)
     {
-        return $this->attributes['drop_directories'] = (bool)$value;
+        return $this->attributes['drop_directories'] = (bool) $value;
     }
 }

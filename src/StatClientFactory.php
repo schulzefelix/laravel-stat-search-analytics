@@ -12,7 +12,7 @@ class StatClientFactory
             [
                 'headers' => [
                     'User-Agent' => 'Laravel Stat Search Analytics Client',
-                    'Accept-Encoding' => 'gzip, deflate, sdch'
+                    'Accept-Encoding' => 'gzip, deflate, sdch',
                 ],
                 'base_uri' => self::buildBaseUri($statConfig),
                 'timeout'  => 60.0,
@@ -20,13 +20,14 @@ class StatClientFactory
         );
 
         $client = new StatClient($guzzleClient);
+
         return $client;
     }
-
 
     protected static function buildBaseUri(array $statConfig)
     {
         $baseUri = sprintf('https://%s/api/v2/%s/', $statConfig['subdomain'], $statConfig['key']);
+
         return $baseUri;
     }
 }

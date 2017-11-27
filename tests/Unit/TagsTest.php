@@ -2,19 +2,19 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Mockery;
+use Carbon\Carbon;
+use SchulzeFelix\Stat\Stat;
 use PHPUnit\Framework\TestCase;
+use SchulzeFelix\Stat\StatClient;
+use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatTag;
 use SchulzeFelix\Stat\Exceptions\ApiException;
-use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
+use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatFrequentDomain;
 use SchulzeFelix\Stat\Objects\StatRankDistribution;
-use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
-use SchulzeFelix\Stat\Objects\StatTag;
-use SchulzeFelix\Stat\Stat;
-use SchulzeFelix\Stat\StatClient;
+use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
 
 class TagsTest extends TestCase
 {
@@ -35,40 +35,39 @@ class TagsTest extends TestCase
         Mockery::close();
     }
 
-
     /** @test */
     public function it_can_list_tags()
     {
         $expectedArguments = [
-            'tags/list', ['site_id' => 13, 'results' => 5000]
+            'tags/list', ['site_id' => 13, 'results' => 5000],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'resultsreturned' => "100",
-                'totalresults' => "223",
+                'responsecode' => '200',
+                'resultsreturned' => '100',
+                'totalresults' => '223',
                 'Result' => [
                     [
-                        'Id' => "13",
-                        'Tag' => "abc",
-                        'Type' => "Standard",
+                        'Id' => '13',
+                        'Tag' => 'abc',
+                        'Type' => 'Standard',
                         'Keywords' => [
                             'Id' => [
                                 '4525',
-                                '4526'
+                                '4526',
                             ],
-                        ]
+                        ],
                     ],
                     [
-                        'Id' => "16902",
-                        'Tag' => "abcd",
-                        'Type' => "Dynamic",
+                        'Id' => '16902',
+                        'Tag' => 'abcd',
+                        'Type' => 'Dynamic',
                         'Keywords' => 'none',
                     ],
-                ]
+                ],
             ]]);
 
         $response = $this->stat->tags()->list(13);
@@ -91,27 +90,27 @@ class TagsTest extends TestCase
     public function it_can_list_single_tag()
     {
         $expectedArguments = [
-            'tags/list', ['site_id' => 13, 'results' => 5000]
+            'tags/list', ['site_id' => 13, 'results' => 5000],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'resultsreturned' => "1",
-                'totalresults' => "1",
+                'responsecode' => '200',
+                'resultsreturned' => '1',
+                'totalresults' => '1',
                 'Result' => [
-                    'Id' => "13",
-                    'Tag' => "abc",
-                    'Type' => "Standard",
+                    'Id' => '13',
+                    'Tag' => 'abc',
+                    'Type' => 'Standard',
                     'Keywords' => [
                         'Id' => [
                             '4525',
-                            '4526'
+                            '4526',
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ]]);
 
         $response = $this->stat->tags()->list(13);
@@ -134,106 +133,106 @@ class TagsTest extends TestCase
     public function it_can_pull_the_ranking_distributions_for_a_tag()
     {
         $expectedArguments = [
-            'tags/ranking_distributions', ['id' => 13, 'from_date' => '2016-10-01' , 'to_date' => '2016-10-02']
+            'tags/ranking_distributions', ['id' => 13, 'from_date' => '2016-10-01', 'to_date' => '2016-10-02'],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'RankDistribution' => [
                     [
                         'date' => '2016-10-01',
                         'Google' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "2",
-                            "Five" => "2",
-                            "SixToTen" => "6",
-                            "ElevenToTwenty" => "5",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "2",
-                            "FortyOneToFifty" => "0",
-                            "FiftyOneToHundred" => "3",
-                            "NonRanking" => "11",
+                            'One' => '0',
+                            'Two' => '0',
+                            'Three' => '1',
+                            'Four' => '2',
+                            'Five' => '2',
+                            'SixToTen' => '6',
+                            'ElevenToTwenty' => '5',
+                            'TwentyOneToThirty' => '5',
+                            'ThirtyOneToForty' => '2',
+                            'FortyOneToFifty' => '0',
+                            'FiftyOneToHundred' => '3',
+                            'NonRanking' => '11',
                         ],
                         'GoogleBaseRank' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "3",
-                            "Five" => "1",
-                            "SixToTen" => "7",
-                            "ElevenToTwenty" => "5",
-                            "TwentyOneToThirty" => "4",
-                            "ThirtyOneToForty" => "2",
-                            "FortyOneToFifty" => "0",
-                            "FiftyOneToHundred" => "3",
-                            "NonRanking" => "11",
+                            'One' => '0',
+                            'Two' => '0',
+                            'Three' => '1',
+                            'Four' => '3',
+                            'Five' => '1',
+                            'SixToTen' => '7',
+                            'ElevenToTwenty' => '5',
+                            'TwentyOneToThirty' => '4',
+                            'ThirtyOneToForty' => '2',
+                            'FortyOneToFifty' => '0',
+                            'FiftyOneToHundred' => '3',
+                            'NonRanking' => '11',
                         ],
                         'Bing' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "0",
-                            "Five" => "1",
-                            "SixToTen" => "3",
-                            "ElevenToTwenty" => "6",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "4",
-                            "FortyOneToFifty" => "1",
-                            "FiftyOneToHundred" => "0",
-                            "NonRanking" => "16",
-                        ]
+                            'One' => '0',
+                            'Two' => '0',
+                            'Three' => '1',
+                            'Four' => '0',
+                            'Five' => '1',
+                            'SixToTen' => '3',
+                            'ElevenToTwenty' => '6',
+                            'TwentyOneToThirty' => '5',
+                            'ThirtyOneToForty' => '4',
+                            'FortyOneToFifty' => '1',
+                            'FiftyOneToHundred' => '0',
+                            'NonRanking' => '16',
+                        ],
                     ],
                     [
                         'date' => '2016-10-02',
                         'Google' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "2",
-                            "Five" => "2",
-                            "SixToTen" => "6",
-                            "ElevenToTwenty" => "5",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "2",
-                            "FortyOneToFifty" => "0",
-                            "FiftyOneToHundred" => "3",
-                            "NonRanking" => "11",
+                            'One' => '0',
+                            'Two' => '0',
+                            'Three' => '1',
+                            'Four' => '2',
+                            'Five' => '2',
+                            'SixToTen' => '6',
+                            'ElevenToTwenty' => '5',
+                            'TwentyOneToThirty' => '5',
+                            'ThirtyOneToForty' => '2',
+                            'FortyOneToFifty' => '0',
+                            'FiftyOneToHundred' => '3',
+                            'NonRanking' => '11',
                         ],
                         'GoogleBaseRank' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "3",
-                            "Five" => "1",
-                            "SixToTen" => "7",
-                            "ElevenToTwenty" => "5",
-                            "TwentyOneToThirty" => "4",
-                            "ThirtyOneToForty" => "2",
-                            "FortyOneToFifty" => "0",
-                            "FiftyOneToHundred" => "3",
-                            "NonRanking" => "11",
+                            'One' => '0',
+                            'Two' => '0',
+                            'Three' => '1',
+                            'Four' => '3',
+                            'Five' => '1',
+                            'SixToTen' => '7',
+                            'ElevenToTwenty' => '5',
+                            'TwentyOneToThirty' => '4',
+                            'ThirtyOneToForty' => '2',
+                            'FortyOneToFifty' => '0',
+                            'FiftyOneToHundred' => '3',
+                            'NonRanking' => '11',
                         ],
                         'Bing' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "0",
-                            "Five" => "1",
-                            "SixToTen" => "3",
-                            "ElevenToTwenty" => "6",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "4",
-                            "FortyOneToFifty" => "1",
-                            "FiftyOneToHundred" => "0",
-                            "NonRanking" => "16",
-                        ]
+                            'One' => '0',
+                            'Two' => '0',
+                            'Three' => '1',
+                            'Four' => '0',
+                            'Five' => '1',
+                            'SixToTen' => '3',
+                            'ElevenToTwenty' => '6',
+                            'TwentyOneToThirty' => '5',
+                            'ThirtyOneToForty' => '4',
+                            'FortyOneToFifty' => '1',
+                            'FiftyOneToHundred' => '0',
+                            'NonRanking' => '16',
+                        ],
                     ],
-                ]
+                ],
             ]]);
 
         $response = $this->stat->tags()->rankingDistributions(13, Carbon::createFromDate(2016, 10, 1), Carbon::createFromDate(2016, 10, 2));
@@ -244,12 +243,10 @@ class TagsTest extends TestCase
         $this->assertEquals(4, count($response->first()->toArray()));
         $this->assertInstanceOf(StatEngineRankDistribution::class, $response->first()->google);
 
-
         $this->assertArrayHasKey('date', $response->first());
         $this->assertArrayHasKey('google', $response->first());
         $this->assertArrayHasKey('google_base_rank', $response->first());
         $this->assertArrayHasKey('bing', $response->first());
-
 
         $this->assertArrayHasKey('one', $response->first()['google']);
         $this->assertArrayHasKey('two', $response->first()['google']);
@@ -273,16 +270,16 @@ class TagsTest extends TestCase
     public function it_should_throw_an_exception_if_the_date_range_is_higher_than_31_days_for_tag_ranking_distribution()
     {
         $expectedArguments = [
-            'tags/ranking_distributions', ['id' => 13, 'from_date' => '2016-09-01' , 'to_date' => '2016-10-05']
+            'tags/ranking_distributions', ['id' => 13, 'from_date' => '2016-09-01', 'to_date' => '2016-10-05'],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'resultsreturned' => "0",
-                'totalresults' => "0",
-                'Result' => []
+                'responsecode' => '200',
+                'resultsreturned' => '0',
+                'totalresults' => '0',
+                'Result' => [],
             ]]);
 
         $this->expectException(ApiException::class);
@@ -294,49 +291,49 @@ class TagsTest extends TestCase
     public function it_can_get_the_sov_for_a_tag()
     {
         $expectedArguments = [
-            'tags/sov', ['id' => 13, 'from_date' => '2016-10-01' , 'to_date' => '2016-10-02', 'start' => 0, 'results' => 5000]
+            'tags/sov', ['id' => 13, 'from_date' => '2016-10-01', 'to_date' => '2016-10-02', 'start' => 0, 'results' => 5000],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'resultsreturned' => "2",
-                'totalresults' => "2",
+                'responsecode' => '200',
+                'resultsreturned' => '2',
+                'totalresults' => '2',
                 'ShareOfVoice' => [
                     [
                         'date' => '2016-10-01',
                         'Site' => [
                             [
-                                'Domain' => "www.example.de",
-                                'Share' => "13.45",
-                                'Pinned' => "false",
+                                'Domain' => 'www.example.de',
+                                'Share' => '13.45',
+                                'Pinned' => 'false',
                             ],
                             [
-                                'Domain' => "www.example.com",
-                                'Share' => "8.45",
-                                'Pinned' => "false",
+                                'Domain' => 'www.example.com',
+                                'Share' => '8.45',
+                                'Pinned' => 'false',
                             ],
-                        ]
+                        ],
                     ],
                     [
                         'date' => '2016-10-02',
                         'Site' => [
                             [
-                                'Domain' => "www.example.de",
-                                'Share' => "13.55",
-                                'Pinned' => "false",
+                                'Domain' => 'www.example.de',
+                                'Share' => '13.55',
+                                'Pinned' => 'false',
                             ],
                             [
-                                'Domain' => "www.example.com",
-                                'Share' => "4.15",
-                                'Pinned' => "false",
+                                'Domain' => 'www.example.com',
+                                'Share' => '4.15',
+                                'Pinned' => 'false',
                             ],
-                        ]
+                        ],
                     ],
 
-                ]
+                ],
             ]]);
 
         $response = $this->stat->tags()->sov(13, Carbon::createFromDate(2016, 10, 1), Carbon::createFromDate(2016, 10, 2));
@@ -355,14 +352,14 @@ class TagsTest extends TestCase
     public function it_can_get_the_most_frequent_domains_for_google_from_a_tag()
     {
         $expectedArguments = [
-            'tags/most_frequent_domains', ['id' => 13, 'engine' => 'google']
+            'tags/most_frequent_domains', ['id' => 13, 'engine' => 'google'],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Site' => [
                     [
                         'Domain' => 'xxx.com',
@@ -378,11 +375,10 @@ class TagsTest extends TestCase
                         'Coverage' => '4.08',
                         'AnalyzedOn' => '2016-12-25',
                     ],
-                ]
+                ],
             ]]);
 
         $response = $this->stat->tags()->mostFrequentDomains(13);
-
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertInstanceOf(StatFrequentDomain::class, $response->first());
@@ -396,14 +392,14 @@ class TagsTest extends TestCase
     public function it_can_get_the_most_frequent_domains_for_bing_from_a_tag()
     {
         $expectedArguments = [
-            'tags/most_frequent_domains', ['id' => 13, 'engine' => 'bing']
+            'tags/most_frequent_domains', ['id' => 13, 'engine' => 'bing'],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Site' => [
                     [
                         'Domain' => 'xxx.com',
@@ -419,11 +415,10 @@ class TagsTest extends TestCase
                         'Coverage' => '4.08',
                         'AnalyzedOn' => '2016-12-25',
                     ],
-                ]
+                ],
             ]]);
 
         $response = $this->stat->tags()->mostFrequentDomains(13, 'bing');
-
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertInstanceOf(StatFrequentDomain::class, $response->first());

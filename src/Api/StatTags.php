@@ -4,14 +4,13 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use SchulzeFelix\Stat\Objects\StatFrequentDomain;
-use SchulzeFelix\Stat\Objects\StatShareOfVoice;
-use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
 use SchulzeFelix\Stat\Objects\StatTag;
+use SchulzeFelix\Stat\Objects\StatShareOfVoice;
+use SchulzeFelix\Stat\Objects\StatFrequentDomain;
+use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
 
 class StatTags extends BaseStat
 {
-
     /**
      * @param $siteID
      * @return Collection
@@ -93,11 +92,10 @@ class StatTags extends BaseStat
             $start += 5000;
             $sovSites = $sovSites->merge($response['ShareOfVoice']);
 
-            if (!isset($response['nextpage'])) {
+            if (! isset($response['nextpage'])) {
                 break;
             }
         } while ($response['resultsreturned'] < $response['totalresults']);
-
 
         $sovSites->transform(function ($sov) {
             $shareOfVoice = new StatShareOfVoice([

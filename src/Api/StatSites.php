@@ -4,14 +4,13 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use SchulzeFelix\Stat\Objects\StatFrequentDomain;
-use SchulzeFelix\Stat\Objects\StatShareOfVoice;
-use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
 use SchulzeFelix\Stat\Objects\StatSite;
+use SchulzeFelix\Stat\Objects\StatShareOfVoice;
+use SchulzeFelix\Stat\Objects\StatFrequentDomain;
+use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
 
 class StatSites extends BaseStat
 {
-
     /**
      * @return Collection
      */
@@ -25,11 +24,10 @@ class StatSites extends BaseStat
             $start += 5000;
             $sites = $sites->merge($response['Result']);
 
-            if (!isset($response['nextpage'])) {
+            if (! isset($response['nextpage'])) {
                 break;
             }
         } while ($response['resultsreturned'] < $response['totalresults']);
-
 
         $sites->transform(function ($site) {
             return new StatSite([
@@ -148,19 +146,19 @@ class StatSites extends BaseStat
         $arguments = [];
         $arguments['id'] = $siteID;
 
-        if (!is_null($title)) {
+        if (! is_null($title)) {
             $arguments['title'] = rawurlencode($title);
         }
 
-        if (!is_null($url)) {
+        if (! is_null($url)) {
             $arguments['url'] = rawurlencode($url);
         }
 
-        if (!is_null($dropWWWprefix)) {
+        if (! is_null($dropWWWprefix)) {
             $arguments['drop_www_prefix'] = ($dropWWWprefix) ?: 0;
         }
 
-        if (!is_null($dropDirectories)) {
+        if (! is_null($dropDirectories)) {
             $arguments['drop_directories'] = ($dropDirectories) ?: 0;
         }
 
@@ -186,7 +184,7 @@ class StatSites extends BaseStat
     {
         $response = $this->performQuery('sites/delete', ['id' => $siteID]);
 
-        return (int)$response['Result']['Id'];
+        return (int) $response['Result']['Id'];
     }
 
     /**
@@ -205,11 +203,10 @@ class StatSites extends BaseStat
             $start += 5000;
             $sovSites = $sovSites->merge($response['ShareOfVoice']);
 
-            if (!isset($response['nextpage'])) {
+            if (! isset($response['nextpage'])) {
                 break;
             }
         } while ($response['resultsreturned'] < $response['totalresults']);
-
 
         $sovSites->transform(function ($sov) {
             $shareOfVoice = new StatShareOfVoice([

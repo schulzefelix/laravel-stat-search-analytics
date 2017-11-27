@@ -1,4 +1,6 @@
-<?php namespace SchulzeFelix\Stat\Objects;
+<?php
+
+namespace SchulzeFelix\Stat\Objects;
 
 use SchulzeFelix\DataTransferObject\DataTransferObject;
 
@@ -10,6 +12,6 @@ class StatLocalSearchTrend extends DataTransferObject
 
     public function setSearchVolumeAttribute($value)
     {
-        return $this->attributes['search_volume'] = (int)$value;
+        return $this->attributes['search_volume'] = (int) $value;
     }
 }

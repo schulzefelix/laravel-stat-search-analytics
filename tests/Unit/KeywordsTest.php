@@ -2,15 +2,15 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Mockery;
-use PHPUnit\Framework\TestCase;
-use SchulzeFelix\Stat\Objects\StatKeyword;
-use SchulzeFelix\Stat\Objects\StatKeywordRanking;
-use SchulzeFelix\Stat\Objects\StatKeywordStats;
+use Carbon\Carbon;
 use SchulzeFelix\Stat\Stat;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\StatClient;
+use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatKeyword;
+use SchulzeFelix\Stat\Objects\StatKeywordStats;
+use SchulzeFelix\Stat\Objects\StatKeywordRanking;
 
 class KeywordsTest extends TestCase
 {
@@ -35,17 +35,17 @@ class KeywordsTest extends TestCase
     public function it_can_list_keywords_for_a_site_with_more_than_one_keyword()
     {
         $expectedArguments = [
-            'keywords/list', ['site_id' => 13, 'start' => 0, 'results' => '5000']
+            'keywords/list', ['site_id' => 13, 'start' => 0, 'results' => '5000'],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'resultsreturned' => "100",
-                'totalresults' => "100",
-                'nextpage' => "/keywords/list?site_id=1&start=1000&format=json",
+                'responsecode' => '200',
+                'resultsreturned' => '100',
+                'totalresults' => '100',
+                'nextpage' => '/keywords/list?site_id=1&start=1000&format=json',
                 'Result' => [
                     [
                         'Id' => '11',
@@ -70,9 +70,9 @@ class KeywordsTest extends TestCase
                                 'Feb' => '49500',
                                 'Jan' => '49500',
                                 'Dec' => '40500',
-                                'Nov' => '49500'
+                                'Nov' => '49500',
                             ],
-                            'CPC' => '1.42'
+                            'CPC' => '1.42',
                         ],
                         'KeywordRanking' => [
                             'date' => '2014-07-09',
@@ -112,9 +112,9 @@ class KeywordsTest extends TestCase
                                 'Feb' => '49500',
                                 'Jan' => '49500',
                                 'Dec' => '40500',
-                                'Nov' => '49500'
+                                'Nov' => '49500',
                             ],
-                            'CPC' => '1.42'
+                            'CPC' => '1.42',
                         ],
                         'KeywordRanking' => [
                             'date' => '2014-07-09',
@@ -187,17 +187,17 @@ class KeywordsTest extends TestCase
     public function it_can_list_keywords_for_a_site_with_exactly_one_keyword()
     {
         $expectedArguments = [
-            'keywords/list', ['site_id' => 13, 'start' => 0, 'results' => '5000']
+            'keywords/list', ['site_id' => 13, 'start' => 0, 'results' => '5000'],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'resultsreturned' => "100",
-                'totalresults' => "100",
-                'nextpage' => "/keywords/list?site_id=1&start=1000&format=json",
+                'responsecode' => '200',
+                'resultsreturned' => '100',
+                'totalresults' => '100',
+                'nextpage' => '/keywords/list?site_id=1&start=1000&format=json',
                 'Result' => [
                     'Id' => '11',
                     'Keyword' => 'black celebrity gossip',
@@ -221,9 +221,9 @@ class KeywordsTest extends TestCase
                             'Feb' => '49500',
                             'Jan' => '49500',
                             'Dec' => '40500',
-                            'Nov' => '49500'
+                            'Nov' => '49500',
                         ],
-                        'CPC' => '1.42'
+                        'CPC' => '1.42',
                     ],
                     'KeywordRanking' => [
                         'date' => '2014-07-09',
@@ -291,7 +291,6 @@ class KeywordsTest extends TestCase
         $this->assertInstanceOf(Carbon::class, $response->first()['keyword_ranking']['date']);
     }
 
-
     /** @test */
     public function it_can_create_keywords()
     {
@@ -303,16 +302,16 @@ class KeywordsTest extends TestCase
                 'type' => 'regular',
                 'keyword' => 'shirt%5C%2Cshoes,dress,boots',
                 'tag' => 'clothes,brand',
-                'location' => 'Boston'
-            ]
+                'location' => 'Boston',
+            ],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'resultsreturned' => "3",
+                'responsecode' => '200',
+                'resultsreturned' => '3',
                 'Result' => [
                     [
                         'Id' => '3008',
@@ -338,7 +337,7 @@ class KeywordsTest extends TestCase
                         'KeywordDevice' => 'Smartphone',
                         'CreatedAt' => '2011-01-25',
                     ],
-                ]
+                ],
             ]]);
 
         $response = $this->stat->keywords()->create(13, 'US-en', ['shirt,shoes', 'dress', 'boots'], ['clothes', 'brand'], 'Boston', 'smartphone');
@@ -367,12 +366,11 @@ class KeywordsTest extends TestCase
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
                     'Id' => '3008',
-                ]
+                ],
             ]]);
-
 
         $response = $this->stat->keywords()->delete(3008);
 
@@ -383,13 +381,13 @@ class KeywordsTest extends TestCase
     /** @test */
     public function it_can_delete_a_multiple_keywords()
     {
-        $expectedArguments = ['keywords/delete', ['id' => "3008,3009,3010"]];
+        $expectedArguments = ['keywords/delete', ['id' => '3008,3009,3010']];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
                     [
                         'Id' => '3008',
@@ -401,11 +399,10 @@ class KeywordsTest extends TestCase
                         'Id' => '3010',
                     ],
 
-                ]
+                ],
             ]]);
 
-
-        $response = $this->stat->keywords()->delete([3008,3009,3010]);
+        $response = $this->stat->keywords()->delete([3008, 3009, 3010]);
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertEquals(3, $response->count());

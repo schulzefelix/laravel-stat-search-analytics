@@ -4,8 +4,8 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
 use SchulzeFelix\Stat\Objects\StatKeywordRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
 
 class StatRankings extends BaseStat
 {
@@ -30,12 +30,10 @@ class StatRankings extends BaseStat
                 $rankings = $rankings->merge($response['Result']);
             }
 
-
-            if (!isset($response['nextpage'])) {
+            if (! isset($response['nextpage'])) {
                 break;
             }
         } while ($response['resultsreturned'] < $response['totalresults']);
-
 
         $rankings = $rankings->transform(function ($ranking, $key) {
             return new StatKeywordRanking([

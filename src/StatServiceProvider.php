@@ -34,11 +34,13 @@ class StatServiceProvider extends ServiceProvider
             if (empty($statConfig['key'])) {
                 throw InvalidConfiguration::keyNotSpecified();
             }
+
             return StatClientFactory::createForConfig($statConfig);
         });
 
         $this->app->bind(Stat::class, function () {
             $client = app(StatClient::class);
+
             return new Stat($client);
         });
 

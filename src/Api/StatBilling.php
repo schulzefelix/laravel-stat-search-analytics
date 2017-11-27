@@ -2,17 +2,15 @@
 
 namespace SchulzeFelix\Stat\Api;
 
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use SchulzeFelix\Stat\Objects\StatBill;
+use SchulzeFelix\Stat\Objects\StatSite;
+use SchulzeFelix\Stat\Objects\StatSubAccount;
+use SchulzeFelix\Stat\Objects\StatBillSummary;
+use SchulzeFelix\Stat\Objects\StatBillServices;
 use SchulzeFelix\Stat\Objects\StatBillKeywordType;
 use SchulzeFelix\Stat\Objects\StatBillKeywordTypes;
 use SchulzeFelix\Stat\Objects\StatBillOptionalServiceType;
-use SchulzeFelix\Stat\Objects\StatBillServices;
-use SchulzeFelix\Stat\Objects\StatBillSummary;
-use SchulzeFelix\Stat\Objects\StatSite;
-use SchulzeFelix\Stat\Objects\StatSubAccount;
-use SchulzeFelix\Stat\Objects\StatTag;
 
 class StatBilling extends BaseStat
 {
@@ -115,11 +113,11 @@ class StatBilling extends BaseStat
         $statBillSummary = new StatBillSummary([
             'start_date'             => $response['Summary']['StartDate'],
             'end_date'               => $response['Summary']['EndDate'],
-            'min_committed_charge'   => (float)array_get($response, 'Summary.MinCommittedCharge', 0.0),
-            'tracked_keywords'       => (int)$response['Summary']['TrackedKeywords'],
-            'tracked_keywords_total' => (float)$response['Summary']['TrackedKeywordsTotal'],
-            'optional_service_total' => (float)$response['Summary']['OptionalServiceTotal'],
-            'total'                  => (float)$response['Summary']['Total'],
+            'min_committed_charge'   => (float) array_get($response, 'Summary.MinCommittedCharge', 0.0),
+            'tracked_keywords'       => (int) $response['Summary']['TrackedKeywords'],
+            'tracked_keywords_total' => (float) $response['Summary']['TrackedKeywordsTotal'],
+            'optional_service_total' => (float) $response['Summary']['OptionalServiceTotal'],
+            'total'                  => (float) $response['Summary']['Total'],
         ]);
 
         return $statBillSummary;

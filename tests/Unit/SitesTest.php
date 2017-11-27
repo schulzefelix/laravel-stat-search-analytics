@@ -2,19 +2,19 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Mockery;
+use Carbon\Carbon;
+use SchulzeFelix\Stat\Stat;
 use PHPUnit\Framework\TestCase;
+use SchulzeFelix\Stat\StatClient;
+use Illuminate\Support\Collection;
+use SchulzeFelix\Stat\Objects\StatSite;
 use SchulzeFelix\Stat\Exceptions\ApiException;
-use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
+use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatFrequentDomain;
 use SchulzeFelix\Stat\Objects\StatRankDistribution;
-use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
-use SchulzeFelix\Stat\Objects\StatSite;
-use SchulzeFelix\Stat\Stat;
-use SchulzeFelix\Stat\StatClient;
+use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
 
 class SitesTest extends TestCase
 {
@@ -35,50 +35,48 @@ class SitesTest extends TestCase
         Mockery::close();
     }
 
-
-
     /** @test */
     public function it_can_fetch_all_sites()
     {
         $expectedArguments = [
-            'sites/all', ['start' => 0, 'results' => 5000]
+            'sites/all', ['start' => 0, 'results' => 5000],
         ];
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'totalresults' => "50",
-                'resultsreturned' => "50",
-                'nextpage' => "/sites/all?start=50&format=json",
+                'responsecode' => '200',
+                'totalresults' => '50',
+                'resultsreturned' => '50',
+                'nextpage' => '/sites/all?start=50&format=json',
                 'Result' => [
                     [
-                        'Id' => "1",
-                        'ProjectId' => "13",
-                        'FolderId' => "22",
-                        'FolderName' => "Blog",
-                        'Title' => "gawker.com",
-                        'Url' => "gawker.com",
-                        'Synced' => "N/A",
-                        'TotalKeywords' => "63",
-                        'CreatedAt' => "2011-01-25",
-                        'UpdatedAt' => "2011-01-25",
-                        'RequestUrl' => "/keywords/list?site_id=1&format=json",
+                        'Id' => '1',
+                        'ProjectId' => '13',
+                        'FolderId' => '22',
+                        'FolderName' => 'Blog',
+                        'Title' => 'gawker.com',
+                        'Url' => 'gawker.com',
+                        'Synced' => 'N/A',
+                        'TotalKeywords' => '63',
+                        'CreatedAt' => '2011-01-25',
+                        'UpdatedAt' => '2011-01-25',
+                        'RequestUrl' => '/keywords/list?site_id=1&format=json',
                     ],
                     [
-                        'Id' => "2",
-                        'ProjectId' => "13",
-                        'FolderId' => "N/A",
-                        'FolderName' => "N/A",
-                        'Title' => "perezhilton.com",
-                        'Url' => "perezhilton.com",
-                        'Synced' => "1",
-                        'TotalKeywords' => "63",
-                        'CreatedAt' => "2011-01-25",
-                        'UpdatedAt' => "2011-01-25",
-                        'RequestUrl' => "/keywords/list?site_id=2&format=json",
+                        'Id' => '2',
+                        'ProjectId' => '13',
+                        'FolderId' => 'N/A',
+                        'FolderName' => 'N/A',
+                        'Title' => 'perezhilton.com',
+                        'Url' => 'perezhilton.com',
+                        'Synced' => '1',
+                        'TotalKeywords' => '63',
+                        'CreatedAt' => '2011-01-25',
+                        'UpdatedAt' => '2011-01-25',
+                        'RequestUrl' => '/keywords/list?site_id=2&format=json',
                     ],
-                ]
+                ],
             ]]);
 
         $response = $this->stat->sites()->all();
@@ -114,40 +112,40 @@ class SitesTest extends TestCase
     public function it_can_list_sites_for_a_project()
     {
         $expectedArguments = [
-            'sites/list', ['project_id' => 13]
+            'sites/list', ['project_id' => 13],
         ];
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'resultsreturned' => "2",
-                'responsecode' => "200",
+                'resultsreturned' => '2',
+                'responsecode' => '200',
                 'Result' => [
                     [
-                        'Id' => "1",
-                        'FolderId' => "22",
-                        'FolderName' => "Blog",
-                        'Title' => "gawker.com",
-                        'Url' => "gawker.com",
-                        'Synced' => "N/A",
-                        'TotalKeywords' => "63",
-                        'CreatedAt' => "2011-01-25",
-                        'UpdatedAt' => "2011-01-25",
-                        'RequestUrl' => "/keywords/list?site_id=1&format=json",
+                        'Id' => '1',
+                        'FolderId' => '22',
+                        'FolderName' => 'Blog',
+                        'Title' => 'gawker.com',
+                        'Url' => 'gawker.com',
+                        'Synced' => 'N/A',
+                        'TotalKeywords' => '63',
+                        'CreatedAt' => '2011-01-25',
+                        'UpdatedAt' => '2011-01-25',
+                        'RequestUrl' => '/keywords/list?site_id=1&format=json',
                     ],
                     [
-                        'Id' => "2",
-                        'FolderId' => "N/A",
-                        'FolderName' => "N/A",
-                        'Title' => "perezhilton.com",
-                        'Url' => "perezhilton.com",
-                        'Synced' => "1",
-                        'TotalKeywords' => "63",
-                        'CreatedAt' => "2011-01-25",
-                        'UpdatedAt' => "2011-01-25",
-                        'RequestUrl' => "/keywords/list?site_id=2&format=json",
+                        'Id' => '2',
+                        'FolderId' => 'N/A',
+                        'FolderName' => 'N/A',
+                        'Title' => 'perezhilton.com',
+                        'Url' => 'perezhilton.com',
+                        'Synced' => '1',
+                        'TotalKeywords' => '63',
+                        'CreatedAt' => '2011-01-25',
+                        'UpdatedAt' => '2011-01-25',
+                        'RequestUrl' => '/keywords/list?site_id=2&format=json',
                     ],
-                ]
+                ],
             ]]);
 
         $response = $this->stat->sites()->list(13);
@@ -182,22 +180,22 @@ class SitesTest extends TestCase
     public function it_can_create_new_sites_for_a_project()
     {
         $expectedArguments = [
-            'sites/create', ['project_id' => 13, 'url' => 'http%3A%2F%2Fgoogle.com', 'drop_www_prefix' => true, 'drop_directories' => true]
+            'sites/create', ['project_id' => 13, 'url' => 'http%3A%2F%2Fgoogle.com', 'drop_www_prefix' => true, 'drop_directories' => true],
         ];
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
-                        'Id' => "146",
-                        'ProjectId' => "13",
-                        'Title' => "google.com",
-                        'Url' => "google.com",
-                        'DropWWWPrefix' => "true",
-                        'DropDirectories' => "true",
-                        'CreatedAt' => "2011-01-25",
-                ]
+                        'Id' => '146',
+                        'ProjectId' => '13',
+                        'Title' => 'google.com',
+                        'Url' => 'google.com',
+                        'DropWWWPrefix' => 'true',
+                        'DropDirectories' => 'true',
+                        'CreatedAt' => '2011-01-25',
+                ],
             ]]);
 
         $response = $this->stat->sites()->create(13, 'http://google.com');
@@ -213,10 +211,9 @@ class SitesTest extends TestCase
         $this->assertArrayHasKey('drop_directories', $response);
         $this->assertArrayHasKey('created_at', $response);
 
-
         $this->assertEquals(146, $response['id']);
-        $this->assertEquals("google.com", $response['title']);
-        $this->assertEquals("google.com", $response['url']);
+        $this->assertEquals('google.com', $response['title']);
+        $this->assertEquals('google.com', $response['url']);
         $this->assertEquals(true, $response['drop_www_prefix']);
         $this->assertEquals(true, $response['drop_directories']);
         $this->assertInstanceOf(Carbon::class, $response['created_at']);
@@ -226,23 +223,23 @@ class SitesTest extends TestCase
     public function it_can_update_a_site()
     {
         $expectedArguments = [
-            'sites/update', ['id' => 13, 'url' => 'http%3A%2F%2Fgoogle.com', 'title' => 'my%20site', 'drop_www_prefix' => true, 'drop_directories' => true]
+            'sites/update', ['id' => 13, 'url' => 'http%3A%2F%2Fgoogle.com', 'title' => 'my%20site', 'drop_www_prefix' => true, 'drop_directories' => true],
         ];
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
-                        'Id' => "146",
-                        'ProjectId' => "13",
-                        'Title' => "my site",
-                        'Url' => "google.com",
-                        'DropWWWPrefix' => "true",
-                        'DropDirectories' => "true",
-                        'CreatedAt' => "2011-01-25",
-                        'UpdatedAt' => "2011-01-25",
-                ]
+                        'Id' => '146',
+                        'ProjectId' => '13',
+                        'Title' => 'my site',
+                        'Url' => 'google.com',
+                        'DropWWWPrefix' => 'true',
+                        'DropDirectories' => 'true',
+                        'CreatedAt' => '2011-01-25',
+                        'UpdatedAt' => '2011-01-25',
+                ],
             ]]);
 
         $response = $this->stat->sites()->update(13, 'my site', 'http://google.com', true, true);
@@ -259,11 +256,10 @@ class SitesTest extends TestCase
         $this->assertArrayHasKey('created_at', $response);
         $this->assertArrayHasKey('updated_at', $response);
 
-
         $this->assertEquals(146, $response['id']);
         $this->assertEquals(13, $response['project_id']);
-        $this->assertEquals("my site", $response['title']);
-        $this->assertEquals("google.com", $response['url']);
+        $this->assertEquals('my site', $response['title']);
+        $this->assertEquals('google.com', $response['url']);
         $this->assertEquals(true, $response['drop_www_prefix']);
         $this->assertEquals(true, $response['drop_directories']);
         $this->assertInstanceOf(Carbon::class, $response['created_at']);
@@ -274,16 +270,16 @@ class SitesTest extends TestCase
     public function it_can_delete_a_site()
     {
         $expectedArguments = [
-            'sites/delete', ['id' => 13]
+            'sites/delete', ['id' => 13],
         ];
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Result' => [
-                    'Id' => "13",
-                ]
+                    'Id' => '13',
+                ],
             ]]);
 
         $response = $this->stat->sites()->delete(13);
@@ -296,106 +292,106 @@ class SitesTest extends TestCase
     public function it_can_pull_the_ranking_distributions()
     {
         $expectedArguments = [
-            'sites/ranking_distributions', ['id' => 13, 'from_date' => '2016-10-01' , 'to_date' => '2016-10-02']
+            'sites/ranking_distributions', ['id' => 13, 'from_date' => '2016-10-01', 'to_date' => '2016-10-02'],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'RankDistribution' => [
                     [
                         'date' => '2016-10-01',
                         'Google' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "2",
-                            "Five" => "2",
-                            "SixToTen" => "6",
-                            "ElevenToTwenty" => "5",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "2",
-                            "FortyOneToFifty" => "0",
-                            "FiftyOneToHundred" => "3",
-                            "NonRanking" => "11",
+                            'One' => '0',
+                            'Two' => '0',
+                            'Three' => '1',
+                            'Four' => '2',
+                            'Five' => '2',
+                            'SixToTen' => '6',
+                            'ElevenToTwenty' => '5',
+                            'TwentyOneToThirty' => '5',
+                            'ThirtyOneToForty' => '2',
+                            'FortyOneToFifty' => '0',
+                            'FiftyOneToHundred' => '3',
+                            'NonRanking' => '11',
                         ],
                         'GoogleBaseRank' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "3",
-                            "Five" => "1",
-                            "SixToTen" => "7",
-                            "ElevenToTwenty" => "5",
-                            "TwentyOneToThirty" => "4",
-                            "ThirtyOneToForty" => "2",
-                            "FortyOneToFifty" => "0",
-                            "FiftyOneToHundred" => "3",
-                            "NonRanking" => "11",
+                            'One' => '0',
+                            'Two' => '0',
+                            'Three' => '1',
+                            'Four' => '3',
+                            'Five' => '1',
+                            'SixToTen' => '7',
+                            'ElevenToTwenty' => '5',
+                            'TwentyOneToThirty' => '4',
+                            'ThirtyOneToForty' => '2',
+                            'FortyOneToFifty' => '0',
+                            'FiftyOneToHundred' => '3',
+                            'NonRanking' => '11',
                         ],
                         'Bing' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "0",
-                            "Five" => "1",
-                            "SixToTen" => "3",
-                            "ElevenToTwenty" => "6",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "4",
-                            "FortyOneToFifty" => "1",
-                            "FiftyOneToHundred" => "0",
-                            "NonRanking" => "16",
-                        ]
+                            'One' => '0',
+                            'Two' => '0',
+                            'Three' => '1',
+                            'Four' => '0',
+                            'Five' => '1',
+                            'SixToTen' => '3',
+                            'ElevenToTwenty' => '6',
+                            'TwentyOneToThirty' => '5',
+                            'ThirtyOneToForty' => '4',
+                            'FortyOneToFifty' => '1',
+                            'FiftyOneToHundred' => '0',
+                            'NonRanking' => '16',
+                        ],
                     ],
                     [
                         'date' => '2016-10-02',
                         'Google' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "2",
-                            "Five" => "2",
-                            "SixToTen" => "6",
-                            "ElevenToTwenty" => "5",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "2",
-                            "FortyOneToFifty" => "0",
-                            "FiftyOneToHundred" => "3",
-                            "NonRanking" => "11",
+                            'One' => '0',
+                            'Two' => '0',
+                            'Three' => '1',
+                            'Four' => '2',
+                            'Five' => '2',
+                            'SixToTen' => '6',
+                            'ElevenToTwenty' => '5',
+                            'TwentyOneToThirty' => '5',
+                            'ThirtyOneToForty' => '2',
+                            'FortyOneToFifty' => '0',
+                            'FiftyOneToHundred' => '3',
+                            'NonRanking' => '11',
                         ],
                         'GoogleBaseRank' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "3",
-                            "Five" => "1",
-                            "SixToTen" => "7",
-                            "ElevenToTwenty" => "5",
-                            "TwentyOneToThirty" => "4",
-                            "ThirtyOneToForty" => "2",
-                            "FortyOneToFifty" => "0",
-                            "FiftyOneToHundred" => "3",
-                            "NonRanking" => "11",
+                            'One' => '0',
+                            'Two' => '0',
+                            'Three' => '1',
+                            'Four' => '3',
+                            'Five' => '1',
+                            'SixToTen' => '7',
+                            'ElevenToTwenty' => '5',
+                            'TwentyOneToThirty' => '4',
+                            'ThirtyOneToForty' => '2',
+                            'FortyOneToFifty' => '0',
+                            'FiftyOneToHundred' => '3',
+                            'NonRanking' => '11',
                         ],
                         'Bing' => [
-                            "One" => "0",
-                            "Two" => "0",
-                            "Three" => "1",
-                            "Four" => "0",
-                            "Five" => "1",
-                            "SixToTen" => "3",
-                            "ElevenToTwenty" => "6",
-                            "TwentyOneToThirty" => "5",
-                            "ThirtyOneToForty" => "4",
-                            "FortyOneToFifty" => "1",
-                            "FiftyOneToHundred" => "0",
-                            "NonRanking" => "16",
-                        ]
+                            'One' => '0',
+                            'Two' => '0',
+                            'Three' => '1',
+                            'Four' => '0',
+                            'Five' => '1',
+                            'SixToTen' => '3',
+                            'ElevenToTwenty' => '6',
+                            'TwentyOneToThirty' => '5',
+                            'ThirtyOneToForty' => '4',
+                            'FortyOneToFifty' => '1',
+                            'FiftyOneToHundred' => '0',
+                            'NonRanking' => '16',
+                        ],
                     ],
-                ]
+                ],
             ]]);
 
         $response = $this->stat->sites()->rankingDistributions(13, Carbon::createFromDate(2016, 10, 1), Carbon::createFromDate(2016, 10, 2));
@@ -410,7 +406,6 @@ class SitesTest extends TestCase
         $this->assertArrayHasKey('google', $response->first());
         $this->assertArrayHasKey('google_base_rank', $response->first());
         $this->assertArrayHasKey('bing', $response->first());
-
 
         $this->assertArrayHasKey('one', $response->first()['google']);
         $this->assertArrayHasKey('two', $response->first()['google']);
@@ -434,74 +429,73 @@ class SitesTest extends TestCase
     public function it_should_throw_an_exception_if_the_date_range_is_higher_than_31_days_for_site_ranking_distribution()
     {
         $expectedArguments = [
-            'sites/ranking_distributions', ['id' => 13, 'from_date' => '2016-09-01' , 'to_date' => '2016-10-05']
+            'sites/ranking_distributions', ['id' => 13, 'from_date' => '2016-09-01', 'to_date' => '2016-10-05'],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'resultsreturned' => "0",
-                'totalresults' => "0",
-                'Result' => []
+                'responsecode' => '200',
+                'resultsreturned' => '0',
+                'totalresults' => '0',
+                'Result' => [],
             ]]);
 
         $this->expectException(ApiException::class);
 
         $this->stat->sites()->rankingDistributions(13, Carbon::createFromDate(2016, 9, 1), Carbon::createFromDate(2016, 10, 5));
     }
-    
+
     /** @test */
     public function it_can_get_the_sov_for_a_site()
     {
         $expectedArguments = [
-            'sites/sov', ['id' => 13, 'from_date' => '2016-10-01' , 'to_date' => '2016-10-02', 'start' => 0, 'results' => 5000]
+            'sites/sov', ['id' => 13, 'from_date' => '2016-10-01', 'to_date' => '2016-10-02', 'start' => 0, 'results' => 5000],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
-                'resultsreturned' => "2",
-                'totalresults' => "2",
+                'responsecode' => '200',
+                'resultsreturned' => '2',
+                'totalresults' => '2',
                 'ShareOfVoice' => [
                     [
                         'date' => '2016-10-01',
                         'Site' => [
                             [
-                                'Domain' => "www.example.de",
-                                'Share' => "13.45",
-                                'Pinned' => "false",
+                                'Domain' => 'www.example.de',
+                                'Share' => '13.45',
+                                'Pinned' => 'false',
                             ],
                             [
-                                'Domain' => "www.example.com",
-                                'Share' => "8.45",
-                                'Pinned' => "false",
+                                'Domain' => 'www.example.com',
+                                'Share' => '8.45',
+                                'Pinned' => 'false',
                             ],
-                        ]
+                        ],
                     ],
                     [
                         'date' => '2016-10-02',
                         'Site' => [
                             [
-                                'Domain' => "www.example.de",
-                                'Share' => "13.55",
-                                'Pinned' => "false",
+                                'Domain' => 'www.example.de',
+                                'Share' => '13.55',
+                                'Pinned' => 'false',
                             ],
                             [
-                                'Domain' => "www.example.com",
-                                'Share' => "4.15",
-                                'Pinned' => "false",
+                                'Domain' => 'www.example.com',
+                                'Share' => '4.15',
+                                'Pinned' => 'false',
                             ],
-                        ]
+                        ],
                     ],
 
-                ]
+                ],
             ]]);
 
         $response = $this->stat->sites()->sov(13, Carbon::createFromDate(2016, 10, 1), Carbon::createFromDate(2016, 10, 2));
-
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertInstanceOf(StatShareOfVoice::class, $response->first());
@@ -517,14 +511,14 @@ class SitesTest extends TestCase
     public function it_can_get_the_most_frequent_domains_for_google_from_a_site()
     {
         $expectedArguments = [
-            'sites/most_frequent_domains', ['id' => 13, 'engine' => 'google']
+            'sites/most_frequent_domains', ['id' => 13, 'engine' => 'google'],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Site' => [
                     [
                         'Domain' => 'xxx.com',
@@ -540,11 +534,10 @@ class SitesTest extends TestCase
                         'Coverage' => '4.08',
                         'AnalyzedOn' => '2016-12-25',
                     ],
-                ]
+                ],
             ]]);
 
         $response = $this->stat->sites()->mostFrequentDomains(13);
-
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertInstanceOf(StatFrequentDomain::class, $response->first());
@@ -558,14 +551,14 @@ class SitesTest extends TestCase
     public function it_can_get_the_most_frequent_domains_for_bing_from_a_site()
     {
         $expectedArguments = [
-            'sites/most_frequent_domains', ['id' => 13, 'engine' => 'bing']
+            'sites/most_frequent_domains', ['id' => 13, 'engine' => 'bing'],
         ];
 
         $this->statClient
             ->shouldReceive('performQuery')->withArgs($expectedArguments)
             ->once()
             ->andReturn(['Response' => [
-                'responsecode' => "200",
+                'responsecode' => '200',
                 'Site' => [
                     [
                         'Domain' => 'xxx.com',
@@ -581,11 +574,10 @@ class SitesTest extends TestCase
                         'Coverage' => '4.08',
                         'AnalyzedOn' => '2016-12-25',
                     ],
-                ]
+                ],
             ]]);
 
         $response = $this->stat->sites()->mostFrequentDomains(13, 'bing');
-
 
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertInstanceOf(StatFrequentDomain::class, $response->first());

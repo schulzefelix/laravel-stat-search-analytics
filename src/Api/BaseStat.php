@@ -1,12 +1,14 @@
-<?php namespace SchulzeFelix\Stat\Api;
+<?php
+
+namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
+use SchulzeFelix\Stat\StatClient;
 use GuzzleHttp\Exception\ClientException;
 use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Exceptions\RequestException;
-use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
 use SchulzeFelix\Stat\Objects\StatRankDistribution;
-use SchulzeFelix\Stat\StatClient;
+use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
 
 class BaseStat
 {
@@ -23,7 +25,6 @@ class BaseStat
     {
         $this->statClient = $statClient;
     }
-
 
     /**
      * @param $method

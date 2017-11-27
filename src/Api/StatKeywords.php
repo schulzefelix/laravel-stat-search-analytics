@@ -4,10 +4,10 @@ namespace SchulzeFelix\Stat\Api;
 
 use Illuminate\Support\Collection;
 use SchulzeFelix\Stat\Objects\StatKeyword;
-use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
-use SchulzeFelix\Stat\Objects\StatKeywordRanking;
 use SchulzeFelix\Stat\Objects\StatKeywordStats;
+use SchulzeFelix\Stat\Objects\StatKeywordRanking;
 use SchulzeFelix\Stat\Objects\StatLocalSearchTrend;
+use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
 
 class StatKeywords extends BaseStat
 {
@@ -21,7 +21,7 @@ class StatKeywords extends BaseStat
         $keywords = collect();
 
         do {
-            $response = $this->performQuery('keywords/list', ['site_id' => $siteID, 'start' => $start, 'results' => 5000 ]);
+            $response = $this->performQuery('keywords/list', ['site_id' => $siteID, 'start' => $start, 'results' => 5000]);
             $start += 5000;
 
             if ($response['totalresults'] == 0) {
@@ -35,11 +35,10 @@ class StatKeywords extends BaseStat
 
             $keywords = $keywords->merge($response['Result']);
 
-            if (!isset($response['nextpage'])) {
+            if (! isset($response['nextpage'])) {
                 break;
             }
         } while ($response['resultsreturned'] < $response['totalresults']);
-
 
         $keywords = $keywords->transform(function ($keyword) {
             return $this->transformListedKeyword($keyword);
@@ -67,6 +66,7 @@ class StatKeywords extends BaseStat
         $keywords = array_map(function ($keyword) {
             $keyword = str_replace(',', '\,', $keyword);
             $keyword = rawurlencode($keyword);
+
             return $keyword;
         }, $keywords);
         $arguments['keyword'] = implode(',', $keywords);
@@ -75,6 +75,7 @@ class StatKeywords extends BaseStat
             $tags = array_map(function ($tag) {
                 $tag = str_replace(',', '-', $tag);
                 $tag = rawurlencode($tag);
+
                 return $tag;
             }, $tags);
 
@@ -109,7 +110,7 @@ class StatKeywords extends BaseStat
      */
     public function delete($id)
     {
-        if (!is_array($id)) {
+        if (! is_array($id)) {
             $id = [$id];
         }
 
@@ -121,12 +122,10 @@ class StatKeywords extends BaseStat
             return collect($response['Result']['Id']);
         }
 
-
         return collect($response['Result'])->transform(function ($keywordID) {
             return $keywordID['Id'];
         });
     }
-
 
     /**
      * @param $keyword
@@ -144,7 +143,6 @@ class StatKeywords extends BaseStat
         ]);
     }
 
-
     /**
      * @param $keyword
      * @return StatKeyword
@@ -157,7 +155,6 @@ class StatKeywords extends BaseStat
         $modifiedKeyword->keyword_market = $keyword['KeywordMarket'];
         $modifiedKeyword->keyword_location = $keyword['KeywordLocation'];
         $modifiedKeyword->keyword_device = $keyword['KeywordDevice'];
-
 
         if ($keyword['KeywordTags'] == 'none') {
             $modifiedKeyword->keyword_tags = collect();
