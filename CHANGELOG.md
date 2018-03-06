@@ -2,11 +2,13 @@
 
 All Notable changes to `laravel-stat-search-analytics` will be documented in this file.
 
+## 1.3.0
+- Add compatibility with Laravel 5.6
+
 ## 1.2.0
 - Removed Yahoo Integration
 - Add compatibility with Laravel 5.5
 - Add Laravel 5.5 Auto Discovery 
-
 
 ## 1.1.2
 - Updated PHPUnit
