@@ -3,6 +3,7 @@
 namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
+use SchulzeFelix\Stat\ExponentialBackoff;
 use SchulzeFelix\Stat\StatClient;
 use GuzzleHttp\Exception\ClientException;
 use SchulzeFelix\Stat\Exceptions\ApiException;
@@ -31,11 +32,16 @@ class BaseStat
      * @param array $parameters
      * @return mixed
      * @throws ApiException
+     * @throws \Exception
      */
     public function performQuery($method, $parameters = [])
     {
+        $backoff = new ExponentialBackoff(5);
+
         try {
-            $response = $this->statClient->performQuery($method, $parameters);
+            $response = $backoff->execute(function () use ($method, $parameters) {
+                return $this->statClient->performQuery($method, $parameters);
+            });
         } catch (ClientException $e) {
             $xml = simplexml_load_string($e->getResponse()->getBody()->getContents());
             throw ApiException::requestException($xml->__toString());
