@@ -2,8 +2,11 @@
 
 All Notable changes to `laravel-stat-search-analytics` will be documented in this file.
 
-## 1.3.1 - 2018-10-30
+## 1.3.2
 - Add compatibility with Laravel 5.7
+
+## 1.3.1
+- Prevent API Limit Errors
 
 ## 1.3.0
 - Add compatibility with Laravel 5.6
