@@ -61,7 +61,7 @@ class ExponentialBackoff
                     }
                 }
 
-                if($exception->getCode() !== 429) {
+                if ($exception->getCode() !== 429) {
                     break;
                 }
 
