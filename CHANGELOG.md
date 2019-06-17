@@ -2,6 +2,12 @@
 
 All Notable changes to `laravel-stat-search-analytics` will be documented in this file.
 
+## 1.4.0
+- Drop Support vor PHP 7.0
+- BugFix: Submit null as keyword ids for deletion
+- Drop Support for Laravel 5.4
+- Add compatibility with Laravel 5.8
+
 ## 1.3.2
 - Add compatibility with Laravel 5.7
 
