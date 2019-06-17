@@ -114,7 +114,7 @@ class StatKeywords extends BaseStat
             $id = [$id];
         }
 
-        if (!array_filter($id)) {
+        if (! array_filter($id)) {
             return new Collection();
         }
 
