@@ -29,6 +29,5 @@
         <server name="MAIL_DRIVER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
-        <server name="ADWORDS_DEVELOPER_TOKEN" value=""/>
     </php>
 </phpunit>
