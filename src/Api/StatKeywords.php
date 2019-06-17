@@ -114,6 +114,10 @@ class StatKeywords extends BaseStat
             $id = [$id];
         }
 
+        if(!array_filter($id)) {
+            return new Collection();
+        }
+
         $ids = implode(',', $id);
 
         $response = $this->performQuery('keywords/delete', ['id' => $ids]);
