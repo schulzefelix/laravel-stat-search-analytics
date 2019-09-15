@@ -3,6 +3,7 @@
 namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use SchulzeFelix\Stat\Objects\StatTag;
 use SchulzeFelix\Stat\Objects\StatShareOfVoice;
@@ -104,7 +105,7 @@ class StatTags extends BaseStat
                     return new StatShareOfVoiceSite([
                         'domain' => $site['Domain'],
                         'share' => (float) $site['Share'],
-                        'pinned' => filter_var(array_get($site, 'Pinned'), FILTER_VALIDATE_BOOLEAN),
+                        'pinned' => filter_var(Arr::get($site, 'Pinned'), FILTER_VALIDATE_BOOLEAN),
                     ]);
                 }),
             ]);
@@ -126,11 +127,11 @@ class StatTags extends BaseStat
 
         $domains = collect($response['Site'])->transform(function ($site) {
             return new StatFrequentDomain([
-                'domain'           => array_get($site, 'Domain'),
-                'top_ten_results'  => array_get($site, 'TopTenResults'),
-                'results_analyzed' => array_get($site, 'ResultsAnalyzed'),
-                'coverage'         => array_get($site, 'Coverage'),
-                'analyzed_on'      => array_get($site, 'AnalyzedOn'),
+                'domain'           => Arr::get($site, 'Domain'),
+                'top_ten_results'  => Arr::get($site, 'TopTenResults'),
+                'results_analyzed' => Arr::get($site, 'ResultsAnalyzed'),
+                'coverage'         => Arr::get($site, 'Coverage'),
+                'analyzed_on'      => Arr::get($site, 'AnalyzedOn'),
             ]);
         });
 

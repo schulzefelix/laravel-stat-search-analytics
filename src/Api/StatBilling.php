@@ -2,6 +2,7 @@
 
 namespace SchulzeFelix\Stat\Api;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use SchulzeFelix\Stat\Objects\StatBill;
 use SchulzeFelix\Stat\Objects\StatSite;
@@ -42,7 +43,7 @@ class StatBilling extends BaseStat
             'total' => $response['Services']['Keywords']['NonUnique']['Total'],
         ]);
 
-        $statBill->services->optional_services = $this->extractOptionalServices(array_get($response, 'Services.OptionalServices'));
+        $statBill->services->optional_services = $this->extractOptionalServices(Arr::get($response, 'Services.OptionalServices'));
 
         return $statBill;
     }
@@ -57,12 +58,12 @@ class StatBilling extends BaseStat
 
         foreach ($response['Users']['User'] as $user) {
             $statBill->users->push(new StatSubAccount([
-                'id' => array_get($user, 'Id'),
-                'name' => array_get($user, 'Name'),
-                'count' => array_get($user, 'Count'),
-                'percentage_of_bill' => array_get($user, 'PercentageOfBill'),
-                'deleted' => filter_var(array_get($user, 'Deleted'), FILTER_VALIDATE_BOOLEAN),
-                'total' => array_get($user, 'Total'),
+                'id' => Arr::get($user, 'Id'),
+                'name' => Arr::get($user, 'Name'),
+                'count' => Arr::get($user, 'Count'),
+                'percentage_of_bill' => Arr::get($user, 'PercentageOfBill'),
+                'deleted' => filter_var(Arr::get($user, 'Deleted'), FILTER_VALIDATE_BOOLEAN),
+                'total' => Arr::get($user, 'Total'),
             ]));
         }
 
@@ -79,24 +80,24 @@ class StatBilling extends BaseStat
 
         foreach ($response['Sites']['Site'] as $site) {
             $statSite = new StatSite([
-                'id' => array_get($site, 'Id'),
-                'title' => array_get($site, 'Title'),
-                'url' => array_get($site, 'URL'),
-                'project_id' => array_get($site, 'ProjectId'),
-                'project_name' => array_get($site, 'ProjectName'),
-                'folder_id' => array_get($site, 'FolderId'),
-                'folder_name' => array_get($site, 'FolderName'),
-                'deleted' => filter_var(array_get($site, 'Deleted'), FILTER_VALIDATE_BOOLEAN),
+                'id' => Arr::get($site, 'Id'),
+                'title' => Arr::get($site, 'Title'),
+                'url' => Arr::get($site, 'URL'),
+                'project_id' => Arr::get($site, 'ProjectId'),
+                'project_name' => Arr::get($site, 'ProjectName'),
+                'folder_id' => Arr::get($site, 'FolderId'),
+                'folder_name' => Arr::get($site, 'FolderName'),
+                'deleted' => filter_var(Arr::get($site, 'Deleted'), FILTER_VALIDATE_BOOLEAN),
                 'services' => new StatBillServices(),
             ]);
 
             $statSite->services->keywords = new StatBillKeywordType([
-                'count' => array_get($site, 'Services.Keywords.Count'),
-                'percentage_of_bill' => array_get($site, 'Services.Keywords.PercentageOfBill'),
-                'total' => array_get($site, 'Services.Keywords.Total'),
+                'count' => Arr::get($site, 'Services.Keywords.Count'),
+                'percentage_of_bill' => Arr::get($site, 'Services.Keywords.PercentageOfBill'),
+                'total' => Arr::get($site, 'Services.Keywords.Total'),
             ]);
-            $statSite->services->optional_services = $this->extractOptionalServices(array_get($site, 'Services.OptionalServices'));
-            $statSite->services->total = array_get($site, 'Services.Total');
+            $statSite->services->optional_services = $this->extractOptionalServices(Arr::get($site, 'Services.OptionalServices'));
+            $statSite->services->total = Arr::get($site, 'Services.Total');
 
             $statBill->sites->push($statSite);
         }
@@ -113,7 +114,7 @@ class StatBilling extends BaseStat
         $statBillSummary = new StatBillSummary([
             'start_date'             => $response['Summary']['StartDate'],
             'end_date'               => $response['Summary']['EndDate'],
-            'min_committed_charge'   => (float) array_get($response, 'Summary.MinCommittedCharge', 0.0),
+            'min_committed_charge'   => (float) Arr::get($response, 'Summary.MinCommittedCharge', 0.0),
             'tracked_keywords'       => (int) $response['Summary']['TrackedKeywords'],
             'tracked_keywords_total' => (float) $response['Summary']['TrackedKeywordsTotal'],
             'optional_service_total' => (float) $response['Summary']['OptionalServiceTotal'],
@@ -133,10 +134,10 @@ class StatBilling extends BaseStat
 
         foreach ($optionalServices['OptionalService'] as $service) {
             $services->push(new StatBillOptionalServiceType([
-                'type' => array_get($service, 'type'),
-                'count' => array_get($service, 'Count'),
-                'price' => array_get($service, 'Price'),
-                'total' => array_get($service, 'Total'),
+                'type' => Arr::get($service, 'type'),
+                'count' => Arr::get($service, 'Count'),
+                'price' => Arr::get($service, 'Price'),
+                'total' => Arr::get($service, 'Total'),
             ]));
         }
 
