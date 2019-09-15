@@ -17,14 +17,14 @@ class SubaccountsTest extends TestCase
     /** @var \SchulzeFelix\Stat\Stat */
     protected $stat;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->statClient = Mockery::mock(StatClient::class);
 
         $this->stat = new Stat($this->statClient);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }

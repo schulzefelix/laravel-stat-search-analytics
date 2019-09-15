@@ -3,6 +3,7 @@
 namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use SchulzeFelix\Stat\Objects\StatTag;
 use SchulzeFelix\Stat\Objects\StatSite;
 use SchulzeFelix\Stat\Objects\StatBulkJob;
@@ -294,7 +295,7 @@ class StatBulk extends BaseStat
         $bulkJob->job_type = $job['JobType'];
         $bulkJob->format = $job['Format'];
 
-        if (array_has($job, ['Project', 'Folder', 'SiteTitle', 'SiteUrl'])) {
+        if (Arr::has($job, ['Project', 'Folder', 'SiteTitle', 'SiteUrl'])) {
             $bulkJob->project = $job['Project'];
             $bulkJob->folder = $job['Folder'];
             $bulkJob->site_title = $job['SiteTitle'];
@@ -304,15 +305,15 @@ class StatBulk extends BaseStat
         $bulkJob->date = $job['Date'];
 
         $bulkJob->sites = collect();
-        if (array_has($job, 'SiteId')) {
+        if (Arr::has($job, 'SiteId')) {
             $bulkJob->sites = collect(explode(',', $job['SiteId']))
                 ->transform(function ($site, $key) {
                     return (int) $site;
                 });
         }
         $bulkJob->status = $job['Status'];
-        $bulkJob->url = array_get($job, 'Url', null);
-        $bulkJob->stream_url = array_get($job, 'StreamUrl', null);
+        $bulkJob->url = Arr::get($job, 'Url', null);
+        $bulkJob->stream_url = Arr::get($job, 'StreamUrl', null);
         $bulkJob->created_at = $job['CreatedAt'];
 
         return $bulkJob;

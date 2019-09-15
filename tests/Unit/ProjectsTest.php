@@ -17,14 +17,14 @@ class ProjectsTest extends TestCase
     /** @var \SchulzeFelix\Stat\Stat */
     protected $stat;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->statClient = Mockery::mock(StatClient::class);
 
         $this->stat = new Stat($this->statClient);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
@@ -166,7 +166,7 @@ class ProjectsTest extends TestCase
 
         $response = $this->stat->projects()->delete(615);
 
-        $this->assertInternalType('int', $response);
+        $this->assertIsInt($response);
         $this->assertEquals(615, $response);
     }
 }

@@ -14,6 +14,10 @@ class StatProjects extends BaseStat
     {
         $response = $this->performQuery('projects/list');
 
+        if ($response['resultsreturned'] == 1) {
+            $response['Result'] = [$response['Result']];
+        }
+
         $projects = collect($response['Result'])->map(function ($project) {
             return new StatProject([
                 'id' => $project['Id'],
