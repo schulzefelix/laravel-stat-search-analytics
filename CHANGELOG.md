@@ -1,6 +1,11 @@
 # Changelog
 
 All Notable changes to `laravel-stat-search-analytics` will be documented in this file.
+## 1.5.0
+- Add compatibility with Laravel 6
+- Drop Support for PHP 7.1
+- Drop Support for Laravel 5.8
+- BugFix: Parse single project/site in account
 
 ## 1.4.0
 - Drop Support vor PHP 7.0
