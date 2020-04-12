@@ -2,18 +2,18 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Mockery;
-use SchulzeFelix\Stat\Stat;
-use PHPUnit\Framework\TestCase;
-use SchulzeFelix\Stat\StatClient;
 use Illuminate\Support\Collection;
-use SchulzeFelix\Stat\Objects\StatSite;
-use SchulzeFelix\Stat\Objects\StatSubAccount;
-use SchulzeFelix\Stat\Objects\StatBillSummary;
-use SchulzeFelix\Stat\Objects\StatBillServices;
+use Mockery;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Objects\StatBillKeywordType;
 use SchulzeFelix\Stat\Objects\StatBillKeywordTypes;
 use SchulzeFelix\Stat\Objects\StatBillOptionalServiceType;
+use SchulzeFelix\Stat\Objects\StatBillServices;
+use SchulzeFelix\Stat\Objects\StatBillSummary;
+use SchulzeFelix\Stat\Objects\StatSite;
+use SchulzeFelix\Stat\Objects\StatSubAccount;
+use SchulzeFelix\Stat\Stat;
+use SchulzeFelix\Stat\StatClient;
 
 class BillingTest extends TestCase
 {

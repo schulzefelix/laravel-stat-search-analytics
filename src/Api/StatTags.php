@@ -5,10 +5,10 @@ namespace SchulzeFelix\Stat\Api;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use SchulzeFelix\Stat\Objects\StatTag;
-use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatFrequentDomain;
+use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
+use SchulzeFelix\Stat\Objects\StatTag;
 
 class StatTags extends BaseStat
 {
@@ -16,7 +16,7 @@ class StatTags extends BaseStat
      * @param $siteID
      * @return Collection
      */
-    public function list($siteID) : Collection
+    public function list($siteID): Collection
     {
         $response = $this->performQuery('tags/list', ['site_id' => $siteID, 'results' => 5000]);
 
@@ -83,7 +83,7 @@ class StatTags extends BaseStat
      * @param Carbon $toDate
      * @return Collection
      */
-    public function sov($siteID, Carbon $fromDate, Carbon $toDate) : Collection
+    public function sov($siteID, Carbon $fromDate, Carbon $toDate): Collection
     {
         $start = 0;
         $sovSites = collect();

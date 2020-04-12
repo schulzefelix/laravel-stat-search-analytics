@@ -5,17 +5,17 @@ namespace SchulzeFelix\Stat\Api;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use SchulzeFelix\Stat\Objects\StatSite;
-use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatFrequentDomain;
+use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
+use SchulzeFelix\Stat\Objects\StatSite;
 
 class StatSites extends BaseStat
 {
     /**
      * @return Collection
      */
-    public function all() : Collection
+    public function all(): Collection
     {
         $start = 0;
         $sites = collect();
@@ -57,7 +57,7 @@ class StatSites extends BaseStat
      * @param $projectID
      * @return Collection
      */
-    public function list($projectID) : Collection
+    public function list($projectID): Collection
     {
         $response = $this->performQuery('sites/list', ['project_id' => $projectID]);
 
@@ -98,7 +98,7 @@ class StatSites extends BaseStat
      * @param Carbon $toDate
      * @return Collection
      */
-    public function rankingDistributions($siteID, Carbon $fromDate, Carbon $toDate) : Collection
+    public function rankingDistributions($siteID, Carbon $fromDate, Carbon $toDate): Collection
     {
         $this->checkMaximumDateRange($fromDate, $toDate);
 
@@ -199,7 +199,7 @@ class StatSites extends BaseStat
      * @param Carbon $toDate
      * @return Collection
      */
-    public function sov($siteID, Carbon $fromDate, Carbon $toDate) : Collection
+    public function sov($siteID, Carbon $fromDate, Carbon $toDate): Collection
     {
         $start = 0;
         $sovSites = collect();

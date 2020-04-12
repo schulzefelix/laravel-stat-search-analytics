@@ -4,10 +4,10 @@ namespace SchulzeFelix\Stat\Api;
 
 use Illuminate\Support\Collection;
 use SchulzeFelix\Stat\Objects\StatKeyword;
-use SchulzeFelix\Stat\Objects\StatKeywordStats;
-use SchulzeFelix\Stat\Objects\StatKeywordRanking;
-use SchulzeFelix\Stat\Objects\StatLocalSearchTrend;
 use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordStats;
+use SchulzeFelix\Stat\Objects\StatLocalSearchTrend;
 
 class StatKeywords extends BaseStat
 {
@@ -15,7 +15,7 @@ class StatKeywords extends BaseStat
      * @param $siteID
      * @return Collection
      */
-    public function list($siteID) : Collection
+    public function list($siteID): Collection
     {
         $start = 0;
         $keywords = collect();
@@ -56,7 +56,7 @@ class StatKeywords extends BaseStat
      * @param string $device
      * @return Collection
      */
-    public function create($siteID, $market, array $keywords, array $tags = null, $location = null, $device = 'Desktop') : Collection
+    public function create($siteID, $market, array $keywords, array $tags = null, $location = null, $device = 'Desktop'): Collection
     {
         $arguments['site_id'] = $siteID;
         $arguments['market'] = $market;

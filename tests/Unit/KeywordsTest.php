@@ -2,15 +2,15 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Mockery;
 use Carbon\Carbon;
-use SchulzeFelix\Stat\Stat;
-use PHPUnit\Framework\TestCase;
-use SchulzeFelix\Stat\StatClient;
 use Illuminate\Support\Collection;
+use Mockery;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Objects\StatKeyword;
-use SchulzeFelix\Stat\Objects\StatKeywordStats;
 use SchulzeFelix\Stat\Objects\StatKeywordRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordStats;
+use SchulzeFelix\Stat\Stat;
+use SchulzeFelix\Stat\StatClient;
 
 class KeywordsTest extends TestCase
 {
@@ -392,10 +392,10 @@ class KeywordsTest extends TestCase
                     [
                         'Id' => '3008',
                     ],
-                                        [
+                    [
                         'Id' => '3009',
                     ],
-                                        [
+                    [
                         'Id' => '3010',
                     ],
 

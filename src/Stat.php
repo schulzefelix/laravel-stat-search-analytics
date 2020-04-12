@@ -3,16 +3,16 @@
 namespace SchulzeFelix\Stat;
 
 use Carbon\Carbon;
-use SchulzeFelix\Stat\Api\StatBulk;
-use SchulzeFelix\Stat\Api\StatTags;
-use SchulzeFelix\Stat\Api\StatSerps;
-use SchulzeFelix\Stat\Api\StatSites;
+use GuzzleHttp\Exception\ClientException;
 use SchulzeFelix\Stat\Api\StatBilling;
+use SchulzeFelix\Stat\Api\StatBulk;
 use SchulzeFelix\Stat\Api\StatKeywords;
 use SchulzeFelix\Stat\Api\StatProjects;
 use SchulzeFelix\Stat\Api\StatRankings;
-use GuzzleHttp\Exception\ClientException;
+use SchulzeFelix\Stat\Api\StatSerps;
+use SchulzeFelix\Stat\Api\StatSites;
 use SchulzeFelix\Stat\Api\StatSubAccounts;
+use SchulzeFelix\Stat\Api\StatTags;
 
 class Stat
 {

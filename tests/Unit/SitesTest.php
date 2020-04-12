@@ -2,19 +2,19 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Mockery;
 use Carbon\Carbon;
-use SchulzeFelix\Stat\Stat;
-use PHPUnit\Framework\TestCase;
-use SchulzeFelix\Stat\StatClient;
 use Illuminate\Support\Collection;
-use SchulzeFelix\Stat\Objects\StatSite;
+use Mockery;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
-use SchulzeFelix\Stat\Objects\StatShareOfVoice;
+use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
 use SchulzeFelix\Stat\Objects\StatFrequentDomain;
 use SchulzeFelix\Stat\Objects\StatRankDistribution;
+use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
-use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
+use SchulzeFelix\Stat\Objects\StatSite;
+use SchulzeFelix\Stat\Stat;
+use SchulzeFelix\Stat\StatClient;
 
 class SitesTest extends TestCase
 {
@@ -188,13 +188,13 @@ class SitesTest extends TestCase
             ->andReturn(['Response' => [
                 'responsecode' => '200',
                 'Result' => [
-                        'Id' => '146',
-                        'ProjectId' => '13',
-                        'Title' => 'google.com',
-                        'Url' => 'google.com',
-                        'DropWWWPrefix' => 'true',
-                        'DropDirectories' => 'true',
-                        'CreatedAt' => '2011-01-25',
+                    'Id' => '146',
+                    'ProjectId' => '13',
+                    'Title' => 'google.com',
+                    'Url' => 'google.com',
+                    'DropWWWPrefix' => 'true',
+                    'DropDirectories' => 'true',
+                    'CreatedAt' => '2011-01-25',
                 ],
             ]]);
 
@@ -231,14 +231,14 @@ class SitesTest extends TestCase
             ->andReturn(['Response' => [
                 'responsecode' => '200',
                 'Result' => [
-                        'Id' => '146',
-                        'ProjectId' => '13',
-                        'Title' => 'my site',
-                        'Url' => 'google.com',
-                        'DropWWWPrefix' => 'true',
-                        'DropDirectories' => 'true',
-                        'CreatedAt' => '2011-01-25',
-                        'UpdatedAt' => '2011-01-25',
+                    'Id' => '146',
+                    'ProjectId' => '13',
+                    'Title' => 'my site',
+                    'Url' => 'google.com',
+                    'DropWWWPrefix' => 'true',
+                    'DropDirectories' => 'true',
+                    'CreatedAt' => '2011-01-25',
+                    'UpdatedAt' => '2011-01-25',
                 ],
             ]]);
 
