@@ -248,7 +248,7 @@ class StatBulk extends BaseStat
             return $this->transformRanking($rankingForEngine);
         }
 
-        if (is_null($rankingForEngine['Result'])) {
+        if (empty($rankingForEngine) || is_null($rankingForEngine['Result'])) {
             return;
         }
 

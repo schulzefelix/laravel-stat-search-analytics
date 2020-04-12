@@ -128,7 +128,7 @@ class StatBilling extends BaseStat
     {
         $services = new Collection();
 
-        if (is_null($optionalServices['OptionalService'])) {
+        if (empty($optionalServices) || is_null($optionalServices['OptionalService'])) {
             return $services;
         }
 
