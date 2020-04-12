@@ -1,6 +1,11 @@
 # Changelog
 
 All Notable changes to `laravel-stat-search-analytics` will be documented in this file.
+## 1.6.0
+- Add compatibility with Laravel 7
+- Drop Support for Laravel 6
+- Minimum PHP 7.2.5
+
 ## 1.5.0
 - Add compatibility with Laravel 6
 - Drop Support for PHP 7.1
