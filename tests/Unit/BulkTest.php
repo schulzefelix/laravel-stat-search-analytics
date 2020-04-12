@@ -2,18 +2,18 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Mockery;
 use Carbon\Carbon;
-use SchulzeFelix\Stat\Stat;
-use PHPUnit\Framework\TestCase;
-use SchulzeFelix\Stat\StatClient;
 use Illuminate\Support\Collection;
-use SchulzeFelix\Stat\Objects\StatTag;
-use SchulzeFelix\Stat\Objects\StatBulkJob;
-use SchulzeFelix\Stat\Objects\StatProject;
+use Mockery;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
-use SchulzeFelix\Stat\Objects\StatRankDistribution;
+use SchulzeFelix\Stat\Objects\StatBulkJob;
 use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
+use SchulzeFelix\Stat\Objects\StatProject;
+use SchulzeFelix\Stat\Objects\StatRankDistribution;
+use SchulzeFelix\Stat\Objects\StatTag;
+use SchulzeFelix\Stat\Stat;
+use SchulzeFelix\Stat\StatClient;
 
 class BulkTest extends TestCase
 {

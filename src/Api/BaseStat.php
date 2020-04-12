@@ -3,12 +3,12 @@
 namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
-use SchulzeFelix\Stat\StatClient;
 use GuzzleHttp\Exception\ClientException;
-use SchulzeFelix\Stat\ExponentialBackoff;
 use SchulzeFelix\Stat\Exceptions\ApiException;
-use SchulzeFelix\Stat\Objects\StatRankDistribution;
+use SchulzeFelix\Stat\ExponentialBackoff;
 use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
+use SchulzeFelix\Stat\Objects\StatRankDistribution;
+use SchulzeFelix\Stat\StatClient;
 
 class BaseStat
 {

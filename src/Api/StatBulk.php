@@ -4,16 +4,16 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
-use SchulzeFelix\Stat\Objects\StatTag;
-use SchulzeFelix\Stat\Objects\StatSite;
+use SchulzeFelix\Stat\Exceptions\ApiException;
 use SchulzeFelix\Stat\Objects\StatBulkJob;
 use SchulzeFelix\Stat\Objects\StatKeyword;
-use SchulzeFelix\Stat\Objects\StatProject;
-use SchulzeFelix\Stat\Exceptions\ApiException;
-use SchulzeFelix\Stat\Objects\StatKeywordStats;
-use SchulzeFelix\Stat\Objects\StatKeywordRanking;
-use SchulzeFelix\Stat\Objects\StatLocalSearchTrend;
 use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordStats;
+use SchulzeFelix\Stat\Objects\StatLocalSearchTrend;
+use SchulzeFelix\Stat\Objects\StatProject;
+use SchulzeFelix\Stat\Objects\StatSite;
+use SchulzeFelix\Stat\Objects\StatTag;
 
 class StatBulk extends BaseStat
 {

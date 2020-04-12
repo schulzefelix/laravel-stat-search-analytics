@@ -2,19 +2,19 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Mockery;
 use Carbon\Carbon;
-use SchulzeFelix\Stat\Stat;
-use PHPUnit\Framework\TestCase;
-use SchulzeFelix\Stat\StatClient;
 use Illuminate\Support\Collection;
-use SchulzeFelix\Stat\Objects\StatTag;
+use Mockery;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Exceptions\ApiException;
-use SchulzeFelix\Stat\Objects\StatShareOfVoice;
+use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
 use SchulzeFelix\Stat\Objects\StatFrequentDomain;
 use SchulzeFelix\Stat\Objects\StatRankDistribution;
+use SchulzeFelix\Stat\Objects\StatShareOfVoice;
 use SchulzeFelix\Stat\Objects\StatShareOfVoiceSite;
-use SchulzeFelix\Stat\Objects\StatEngineRankDistribution;
+use SchulzeFelix\Stat\Objects\StatTag;
+use SchulzeFelix\Stat\Stat;
+use SchulzeFelix\Stat\StatClient;
 
 class TagsTest extends TestCase
 {

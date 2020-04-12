@@ -4,12 +4,12 @@ namespace SchulzeFelix\Stat\Api;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use SchulzeFelix\Stat\Objects\StatKeywordRanking;
 use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordRanking;
 
 class StatRankings extends BaseStat
 {
-    public function list($keywordID, Carbon $fromDate, Carbon $toDate) : Collection
+    public function list($keywordID, Carbon $fromDate, Carbon $toDate): Collection
     {
         $start = 0;
         $rankings = collect();

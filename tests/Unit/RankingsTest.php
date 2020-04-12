@@ -2,14 +2,14 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Mockery;
 use Carbon\Carbon;
-use SchulzeFelix\Stat\Stat;
-use PHPUnit\Framework\TestCase;
-use SchulzeFelix\Stat\StatClient;
 use Illuminate\Support\Collection;
-use SchulzeFelix\Stat\Objects\StatKeywordRanking;
+use Mockery;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Objects\StatKeywordEngineRanking;
+use SchulzeFelix\Stat\Objects\StatKeywordRanking;
+use SchulzeFelix\Stat\Stat;
+use SchulzeFelix\Stat\StatClient;
 
 class RankingsTest extends TestCase
 {

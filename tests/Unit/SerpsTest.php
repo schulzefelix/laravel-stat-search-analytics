@@ -2,13 +2,13 @@
 
 namespace SchulzeFelix\Stat\Tests\Unit;
 
-use Mockery;
 use Carbon\Carbon;
-use SchulzeFelix\Stat\Stat;
-use PHPUnit\Framework\TestCase;
-use SchulzeFelix\Stat\StatClient;
 use Illuminate\Support\Collection;
+use Mockery;
+use PHPUnit\Framework\TestCase;
 use SchulzeFelix\Stat\Objects\StatSerpItem;
+use SchulzeFelix\Stat\Stat;
+use SchulzeFelix\Stat\StatClient;
 
 class SerpsTest extends TestCase
 {

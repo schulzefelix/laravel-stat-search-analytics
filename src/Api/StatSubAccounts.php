@@ -10,7 +10,7 @@ class StatSubAccounts extends BaseStat
     /**
      * @return Collection
      */
-    public function list() : Collection
+    public function list(): Collection
     {
         $response = $this->performQuery('subaccounts/list');
 
